@@ -1,5 +1,6 @@
 ---
 description: 默认支持流程图，tabs面板，待办列表，作品页面
+publish: false
 ---
 
 # 内置第三方插件能力
@@ -308,7 +309,7 @@ gantt
 ![](https://img.cdn.sugarat.top/mdImg/MTY4NzA4ODczMzkwNg==687088733906)
 
 新建一个`works.md`文件，放入以下内容
-  
+
 ```md
 ---
 layout: page
