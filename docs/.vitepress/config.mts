@@ -50,7 +50,7 @@ export default defineConfig({
     // },
     nav: [
       { text: '首页', link: '/' },
-      { text: 'Golang', link: '/blogs/more'}
+      // { text: 'Golang', link: '/blogs/more'}
       // { text: '关于作者', link: 'https://sugarat.top/aboutme.html' }
     ],
 
