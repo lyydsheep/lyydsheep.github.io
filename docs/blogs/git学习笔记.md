@@ -2,16 +2,18 @@
 title: 文章的标题
 publish: true
 description: 浅学Git的笔记
-date: 2024-09-13 8:12:00
+date: 2024-09-15 10:44:00
 tag: Git
 sticky: 2
-#注意空格
 ---
+
 # Git基础
+
 > 推荐两个学习Git的网站<br>
 > [Git在线练习](https://learngitbranching.js.org/?locale=zh_CN)<br>
 > [Git科普视频](https://www.bilibili.com/video/BV1HM411377j/?spm_id_from=333.337.search-card.all.click&vd_source=a15269894d9b8114cb5f9bb663d22be9)<br>
 > “惟手熟尔”
+
 ## 最小配置
 
 - 配置user信息
