@@ -1,10 +1,12 @@
 ---
+#title: MySQL索引学习
 publish: true
+#description: 记录有关MySQL索引的知识
+#tag: MySQL
+#sticky: 2
 ---
 
-
-
-# 索引
+# MySQL索引学习
 
 ## 索引数据结构
 
