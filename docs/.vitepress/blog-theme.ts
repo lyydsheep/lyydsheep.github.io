@@ -51,11 +51,11 @@ const blogTheme = getThemeConfig({
   // 友链
   friend: [
     {
-      nickname: 'Vitepress',
-      des: 'Vite & Vue Powered Static Site Generator',
+      nickname: 'saber',
+      des: '哲学与人工智能',
       avatar:
-        'https://vitepress.dev/vitepress-logo-large.webp',
-      url: 'https://vitepress.dev/',
+        'https://raw.githubusercontent.com/lyydsheep/pic/main/202409151032331.jpg',
+      url: 'https://emisaber.github.io/White_Box/',
     },
   ],
 
