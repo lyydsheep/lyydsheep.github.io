@@ -1,18 +1,11 @@
-[//]: # (---)
-
-[//]: # (title: Git学习笔记)
-
-[//]: # (publish: true)
-
-[//]: # (description: 浅学Git笔记)
-
-[//]: # (date: 2024-09-15 10:48:00)
-
-[//]: # (#tag: Git)
-
-[//]: # (sticky: 2)
-
-[//]: # (---)
+---
+title: Git学习笔记
+publish: true
+description: 浅学Git笔记
+date: 2024-09-15 10:48:00
+#tag: Git
+sticky: 2
+---
 
 # Git基础
 
@@ -125,15 +118,7 @@
   - `git branch -d <name>`：删除已合并的分支
   - `git branch -D <name>`：强制删除分支
 
-## 解决合并冲突
 
-- 两个分支未修改同一个文件的同一处
-  - Git自动合并
-- 修改了同一个文件的同一位置——产生冲突
-  - 手工修改冲突文件，合并冲突内容
-  - 添加暂存区并提交修改`git commit -a -m "xxx"`
-  - 当不想继续合并两个分支时，可以执行`git merge --abort`命令，中止合并操作
-  - `git log --graph --oneline --decorate --all`：查看合并提交流程图
 
 ## rebase和merge
 
