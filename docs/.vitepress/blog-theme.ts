@@ -54,7 +54,7 @@ const blogTheme = getThemeConfig({
       nickname: 'saber',
       des: '哲学与人工智能',
       avatar:
-        'https://raw.githubusercontent.com/lyydsheep/pic/main/202409151032331.jpg',
+        '4adfa94f441cc908e2d356e43fa5fd1](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151116852.png',
       url: 'https://emisaber.github.io/White_Box/',
     },
   ],
