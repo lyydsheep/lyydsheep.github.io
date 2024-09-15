@@ -9,9 +9,12 @@ sticky: 2
 
 # Git基础
 
-> 推荐两个学习Git的网站<br>
-> [Git在线练习](https://learngitbranching.js.org/?locale=zh_CN)<br>
-> [Git科普视频](https://www.bilibili.com/video/BV1HM411377j/?spm_id_from=333.337.search-card.all.click&vd_source=a15269894d9b8114cb5f9bb663d22be9)<br>
+> 推荐两个学习Git的网站
+>
+> [Git在线练习](https://learngitbranching.js.org/?locale=zh_CN)
+>
+> [Git科普视频](https://www.bilibili.com/video/BV1HM411377j/?spm_id_from=333.337.search-card.all.click&vd_source=a15269894d9b8114cb5f9bb663d22be9)
+>
 > “惟手熟尔”
 
 ## 最小配置
@@ -113,7 +116,7 @@ sticky: 2
 - 查看分支列表：`git branch`
 - 创建分支：`git branch <name>`
 - 切换分支：`git switch <name>`
-- 合并分支：`git merge <name>`，将<name>分支合并到当前的分支
+- 合并分支：`git merge <name>`，将`<name>`分支合并到当前的分支
 - 删除分支：
   - `git branch -d <name>`：删除已合并的分支
   - `git branch -D <name>`：强制删除分支
@@ -202,7 +205,8 @@ local > global > system
 ![img](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151024012.png)
 
 1. 使用`git push -u origin main`命令将本地文件推送至远程仓库
-  - 前提是**本地仓库要有**`main`**分支**
+     - 前提是**本地仓库要有**`main`**分支**
+
 
 ![img](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151024373.png)
 
