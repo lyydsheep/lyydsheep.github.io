@@ -82,7 +82,7 @@ const blogTheme = getThemeConfig({
         ],
         random: true,
         limit: 3,
-        scrollSpeed: 10000
+        scrollSpeed: 5000
     },
 
     // 公告
