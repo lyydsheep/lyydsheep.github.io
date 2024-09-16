@@ -57,6 +57,27 @@ const blogTheme = getThemeConfig({
         'https://raw.githubusercontent.com/lyydsheep/pic/main/202409151116852.png',
       url: 'https://emisaber.github.io/White_Box/',
     },
+    {
+      nickname: 'SimonWuZY',
+      des: '前端大大师',
+      avatar:
+          'https://raw.githubusercontent.com/lyydsheep/pic/main/202409161402731.jpeg',
+      url: 'https://github.com/SimonWuZY',
+    },
+    {
+      nickname: 'Nanami14138',
+      des: '爱莉希雅与人工智能',
+      avatar:
+          'https://raw.githubusercontent.com/lyydsheep/pic/main/202409161403911.jpeg',
+      url: 'https://github.com/Nanami14138',
+    },
+    {
+      nickname: 'madaoQ',
+      des: '前端大师',
+      avatar:
+          'https://raw.githubusercontent.com/lyydsheep/pic/main/202409161406041.jpeg',
+      url: 'https://github.com/madaoQ',
+    }
   ],
 
   // 公告

@@ -123,6 +123,3 @@ Cost = Server Cost + Engine Cost
     
     UPDATE HISTOGRAM ON o_orderstatus;
     ```
-
-    
-

@@ -1,5 +1,4 @@
 ---
-sticky: 1
 publish: false
 ---
 # 关于主题
