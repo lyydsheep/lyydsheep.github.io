@@ -94,3 +94,35 @@ aba
 
 > MySQL数据库中的优化器是怎么执行的？根据什么标准选择索引的？
 
+![image-20240916132934153](https://raw.githubusercontent.com/lyydsheep/pic/main/202409161330104.png)
+
+MySQL数据库由Server层和Engine层组成：
+
+- Server层有SQL分析器、SQL优化器、SQL执行器，用于负责SQL语句的具体执行过程
+- Engine层用于存储具体的数据，例如InnoDB引擎，还有用于在内存中存储临时结果集的TempTable引擎
+
+其中SQL优化器用于分析SQL语句在使用不同索引时所需要的成本，并选择成本最小的执行计划（或全局扫描），作为SQL最优执行方案，这种优化器也叫做CBO（Cost-based optimizer）优化器
+
+在MySQL中，一条SQL的计算成本按如下公式计算：
+
+```sql
+Cost = Server Cost + Engine Cost
+	 = CPU Cost + IO Cost
+```
+
+基于SQL优化器的工作原理，有如下实际案例经验：
+
+- 一般只对**高选择度的字段和字段组合**建立索引，低选择度的字段如**性别**，不创建索引
+
+- 低选择性，但是存在数据倾斜，例如优化器认为P状态有1/3，实际上P状态只有1/100，可以考虑创建索引
+
+  - 通过创建直方图，让优化器知道实际的数据分布
+
+  - ```sql
+    ANALYZE TABLE orders 
+    
+    UPDATE HISTOGRAM ON o_orderstatus;
+    ```
+
+    
+
