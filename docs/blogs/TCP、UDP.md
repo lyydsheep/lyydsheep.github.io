@@ -91,7 +91,7 @@ TCP Keepalive机制就是**TCP连接的保活机制**，当连接的双方很长
   - 而在UDP中，接收方以无序的方式接收数据包
 - 可靠性
   - 每当接收方通过TCP连接接收到数据包后，都会向发送方发送一个响应包，明确不需要重传这个数据包
-  - UDP是尽力而为的，只能依赖于高层协议实现可靠传输，例如[QUIC]([QUIC - Wikipedia](https://en.wikipedia.org/wiki/QUIC))协议
+  - UDP是尽力而为的，只能依赖于高层协议实现可靠传输，例如[QUIC](https://en.wikipedia.org/wiki/QUIC)协议
 - 错误检查
   - TCP中有广泛的错误检查规则，
   - 而UDP中只有基本的校验和错误检查技术
