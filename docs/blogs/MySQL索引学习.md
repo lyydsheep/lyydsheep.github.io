@@ -1,3 +1,10 @@
+---
+publish: true
+tag: MySQL
+sticky: 2
+date: 2024-09-19 18:29:00
+---
+
 # MySQL索引学习
 
 ## 索引数据结构
@@ -213,9 +220,7 @@ SELECT * FROM users WHERE id = 1 AND name = 'lyydsheep';
 从四个角度对索引进行分类：
 
 - 以**数据结构**分类：<font color="blue">B+树索引、Hash索引、Full-text索引</font>
-
-- 以**物理存储**分类：<font color="blue">聚簇索引、二级索引
-  </font>
+- 以**物理存储**分类：<font color="blue">聚簇索引、二级索引</font>
 - 以**字段特性**分类：<font color="blue">主键索引、唯一索引、普通索引、前缀索引</font>
 - 以字段个数分类：<font color="blue">单列索引、联合索引</font>
 
