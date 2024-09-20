@@ -3,8 +3,8 @@
 publish: true
 #description: 记录有关MySQL索引的知识
 tag: MySQL
-sticky: 2
-date: 2024-09-19 18:29:00
+#sticky: 2
+#date: 2024-09-19 18:29:00
 ---
 
 # MySQL索引学习
