@@ -1,10 +1,3 @@
----
-publish: true
-tag: MySQL
-sticky: 2
-date: 2024-09-19 18:29:00
----
-
 # MySQL索引学习
 
 ## 索引数据结构
@@ -167,7 +160,7 @@ SELECT * FROM users WHERE name = 'lyydsheep' AND age = 1;
 SELECT * FROM users WHERE id = 1 AND name = 'lyydsheep';
 ```
 
-根本原因就是**`id`字段是全局有序**，而`name`、`age`字段是**局部有序**的
+根本原因就是`id`字段是**全局有序**，而`name`、`age`字段是**局部有序**的
 
 #### 1.3 唯一索引的快慢问题
 
