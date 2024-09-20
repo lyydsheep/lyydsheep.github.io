@@ -213,7 +213,7 @@ SELECT * FROM users WHERE id = 1 AND name = 'lyydsheep';
 
 ## 索引常见考题
 
-参考[原文](https://xiaolincoding.com/mysql/index/index_interview.html)
+[//]: # (参考[原文]&#40;https://xiaolincoding.com/mysql/index/index_interview.html&#41;)
 
 ### 索引的分类
 
