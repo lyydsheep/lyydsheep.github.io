@@ -70,7 +70,7 @@ const blogTheme = getThemeConfig({
                 des: '爱莉希雅与人工智能',
                 avatar:
                     'https://raw.githubusercontent.com/lyydsheep/pic/main/202409161403911.jpeg',
-                url: 'https://github.com/Nanami14138',
+                url: 'https://nanami14138.github.io/Nanami14138/',
             },
             {
                 nickname: 'madaoQ',
