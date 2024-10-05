@@ -77,3 +77,39 @@ struct __attribute__ ((__packed__)) sdshdr8 {
 - **alloc**：表示分配了多少内存空间，**具有一定的预留空间，无需进行扩容操作**
 - **flags**：用于区分具体是什么类型的SDS
   - 在Redis中SDS分为sdshdr8、sdshdr16、sdshdr32、sdshdr64
+
+## List
+
+3.2版本之前，List对象有两种编码方式
+
+- ZIPLIST
+- LINKLIST
+
+当满足以下条件时，采用ZIPLIST编码方式
+
+- 列表对象中所有存储的字符串对象长度都小于64字节
+- 列表对象中存储的对象数量不超过512个（这是LIST的限制，而不是ZIPLIST的限制）
+
+🌰：
+
+![image-20241005112548274](https://raw.githubusercontent.com/lyydsheep/pic/main/202410051125337.png)
+
+ZIPLIST中数据都是紧密排列的，在数据量小的时候可以有效节约内存；而LINKLIST顾名思义，数据是以链表形式串联起来的，在数据量大的时候采用LINKLIST编码可以加快处理性能
+
+🌰：
+
+![image-20241005112658713](https://raw.githubusercontent.com/lyydsheep/pic/main/202410051126746.png)
+
+### QUICKLIST
+
+ZIPLIST在数据较少时节约内存，LINKLIST是为了在数据较多时提高更新效率。但是ZIPLIST在数据稍多时插入数据会导致大量数据复制，占用内存空间；同样地，LINKLIST由于节点数量也异常多，也会占用不少内存
+
+基于上述问题，3.2版本就引入了QUICKLIST。QUICKLIST本质就是**ZIPLIST和LINKLIST的结合体**
+
+QUICKLIST的实现思路是，将原本LINKLIST的**单个节点存储单个数据**的模式，更换成一个**单个节点（ZIPLIST）存储多个数据**的形式
+
+![image-20241005113525108](https://raw.githubusercontent.com/lyydsheep/pic/main/202410051135173.png)
+
+当数据较少时，QUICKLIST节点只有一个，退化成ZIPLIST
+
+当数据较多时，则同时利用了ZIPLIST和LINKLIST的优势
