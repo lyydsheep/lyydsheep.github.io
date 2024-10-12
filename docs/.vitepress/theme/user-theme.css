@@ -11,9 +11,9 @@ html[theme] {
 
 /* 深色模式使用的变量 */
 html[theme].dark {
-  --vp-c-user-1:yellow;
-  --vp-c-user-2:purple;
-  --vp-c-user-3:orange;
+  --vp-c-user-1: #f6a986;
+  --vp-c-user-2: #c28eff;
+  --vp-c-user-3: #403b54;
   --vp-c-user-soft:rgba(255,255,0,.5);
 }
 

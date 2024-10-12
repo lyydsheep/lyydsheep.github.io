@@ -2,7 +2,6 @@ import { defineConfig } from 'vitepress'
 
 // 导入主题的配置
 import { blogTheme } from './blog-theme'
-import markdownItKatex from 'markdown-it-katex'
 
 // 如果使用 GitHub/Gitee Pages 等公共平台部署
 // 通常需要修改 base 路径，通常为“/仓库名/”
@@ -27,13 +26,6 @@ export default defineConfig({
     // 配置网站的图标（显示在浏览器的 tab 上）
     // ['link', { rel: 'icon', href: `${base}favicon2.ico` }], // 修改了 base 这里也需要同步修改
     ['link', { rel: 'icon', href: '/favicon.ico' }],
-    ['link', {rel:'stylesheet', href:'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css'}],
-    ['link', {rel:'stylesheet', href:'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js'}],
-    ['link', {rel:'stylesheet', href:'https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css'}],
-    ['link', {rel:'stylesheet', href:'https://gitcdn.xyz/cdn/goessner/markdown-it-texmath/master/texmath.css'}],
-    ['script', {src: 'https://github.com/markdown-it/markdown-it/blob/master/bin/markdown-it.js'}],
-    ['script', {src: 'https://gitcdn.xyz/cdn/goessner/markdown-it-texmath/master/texmath.js'}],
-    ['script', {src: 'https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js'}],
   ],
 
   themeConfig: {
@@ -68,10 +60,5 @@ export default defineConfig({
         link: 'https://github.com/lyydsheep'
       }
     ],
-
-    extendsMarkdown: (md) => {
-      md.use(katex);
-      md.linkify.set({ fuzzyEmail: false });
-    },
   }
 })

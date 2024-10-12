@@ -207,3 +207,86 @@ Set底层有两种编码方式：**INTSET、HASHTABLE**
 
 - INTSET编码适用于存储少量整数场景以节约内存空间
 - HASHTABLE编码适用于快速定位某个元素的位置
+
+## Hash
+
+// to do
+
+panic("implement me")
+
+## HashTable
+
+>  HAHSTABLE是Redis中的一种底层数据结构
+
+通过HASHTABLE可以在$O(1)$时间复杂度内快速定位到Key对于的Value
+
+### 结构
+
+总所周知，Redis是用C语言实现的。HASHTABLE的C实现涉及到三个结构体：`dict`、`dictht`、`dicEntry`
+
+简单地说，`dict`封装了两个`dictht`结构，每一个`dictht`结构都有一个大小为`size`的**bucket**，bucket中存放着`dicEntry`链表。三个结构体之间的关系如下图所示：
+
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410122043279.png" alt="image-20241012204338184" style="zoom:67%;" />
+
+可以看到dict结构中有两个dictht结构，也就是HASHTABLE结构。dicEntry是链表结构，通过拉链法解决Hash冲突
+
+接下来，结合源码j解释每一个结构体的字段含义：
+
+```c
+typedef struct dict{
+    dictType *type; //直线dictType结构，dictType结构中包含自定义的函数，这些函数使得key和value能够存储任何类型的数据
+    void *privdata; //私有数据，保存着dictType结构中函数的 参数
+    dictht ht[2]; //两张哈希表
+    long rehashidx; //rehash的标记，rehashidx=-1表示没有进行rehash，rehash时每迁移一个桶就对rehashidx加一
+    int itreators;  //正在迭代的迭代器数量
+}
+```
+
+```c
+#dict结构中ht[0]、ht[1]哈希表的数据结构
+typedef struct dictht{
+    dictEntry[] table;        //存放一个数组的地址，数组中存放哈希节点dictEntry的地址
+    unsingned long size;      //哈希表table的大小，出始大小为4
+    unsingned long  sizemask; //用于将hash值映射到table位置的索引，大小为（size-1）
+    unsingned long  used;     //记录哈希表已有节点（键值对）的数量
+}
+```
+
+```c
+#哈希表节点结构定义
+typedef struct dictEntity{
+    void *key;//键
+    //值
+    union{
+        //“我之所以要提醒你注意这里，其实是为了说明，这种实现方法是一种节省内存的开发小技巧，非常值得学习。因为当值为整数或双精度浮点数时，由于其本身就是 64 位，就可以不用指针指向了，而是可以直接存在键值对的结构体中，这样就避免了再用一个指针，从而节省了内存空间。”
+        void *val;//自定义类型
+        uint64_t u64;//无符号整形
+        int64_t s64;//符合整形
+        double d;//浮点型
+    } v;
+    struct dictEntity *next;//发生哈希冲突时使用。指向下一个哈希表节点，形成链表
+}
+```
+
+### HashTable渐进式扩容
+
+渐进式扩容，顾名思义就是一点一点扩容容量。相比于一次性扩容大量空间，并进行大量的拷贝工作，渐进式扩容不易导致Redis在一段时间内由于进行扩容工作而无法提供其他服务，用户体验感更好。
+
+当dict满足扩容条件后，就会进行Rehash操作。Rehash操作大致分为三步：
+
+- 为**ht[1]**哈希表开辟一块空间，空间大小设定为**第一个大于2 * ht[0]的2整数次幂**。🌰：h[0] = 500，那么在进行Rehash操作时开辟的空间为$2^{\left\lceil log_2(2*500) \right\rceil} = 1024$
+
+- 迁移ht[0]数据至ht[1]：在Rehash期间，每次对字典进行增删改查操作，程序会顺带迁移当前`rehashidx`所指向的数据，并递增下标值。如果当前`rehashidx`命中了一个空位置，则会先尝试继续往后查找若干位置，如果查询无果就直接返回
+- 最终，ht[0]的数据将会全部迁移至ht[1]中。此时，需要交换ht[0]和ht[1]的指针，并将`rehash`设为-1，表示处于非Rehash状态
+  - 为什么要交换两张哈希表的指针呢？因为ht[0]代表着正在使用的哈希表
+
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410122114045.png" alt="image-20241012211414978" style="zoom:80%;" />
+
+⚠️：值得注意的是，在Rehash阶段，由于存在两张哈希表，此时进行的删除、查找、更新操作会在两个表上进行。比如查找元素时，如果ht[0]表没有找到，则会接着查询ht[1]表。但进行插入操作时，只会在ht[1]表上增添数据
+
+### 扩（缩）容时机
+
+HASHTABLE由一个变量——**负载因子**决定是否扩容（缩容）
+
+**负载因子的算法：`ht[0].used / ht[0].size`**
+

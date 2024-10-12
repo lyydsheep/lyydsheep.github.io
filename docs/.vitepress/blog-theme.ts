@@ -78,7 +78,21 @@ const blogTheme = getThemeConfig({
                 avatar:
                     'https://raw.githubusercontent.com/lyydsheep/pic/main/202409161406041.jpeg',
                 url: 'https://github.com/madaoQ',
-            }
+            },
+            {
+                nickname: '℡傲雪&星火ぴ',
+                des: '宝可梦',
+                avatar:
+                    'https://raw.githubusercontent.com/lyydsheep/pic/main/202410112024259.png',
+                url: 'https://aoxuexinghuo.github.io/',
+            },
+            {
+                nickname: 'Sazerac',
+                des: '他不是咸鱼',
+                avatar:
+                    'https://raw.githubusercontent.com/lyydsheep/pic/main/202410112026262.png',
+                url: 'https://sazerac-kk.github.io/',
+            },
         ],
         random: true,
         limit: 3,
