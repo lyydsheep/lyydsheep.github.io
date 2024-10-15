@@ -2,7 +2,9 @@
 title: Redis对象
 publish: true
 description: 记录Redis对象知识点
-tag: Redis
+tag: 
+- Redis
+- 数据结构
 sticky: 2
 ---
 
@@ -299,5 +301,68 @@ HASHTABLE由一个变量——**负载因子**决定是否扩容（缩容）
 
 - 负载因子小于0.1并且没有BGSAVE或BGWRITEAOF命令在执行
 
-## 跳表
+## SkipList
 
+## 跳表的结构
+
+跳表是Redis中ZSET的底层数据结构，跳表本质上就是由**链表+多级索引**组成的
+
+但Redis使用的跳表并非标准跳表，Redis中的跳表在标准跳表基础之上**允许score值重复**以及**0层节点具有向后指针**，如下图所示：
+
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410141047754.png" alt="image-20241014104743623" style="zoom:67%;" />
+
+其中红色框中的属于同一个节点的不同层级，跳表中节点的数量体现在0层（最底层）节点的个数
+
+结合源码，分析节点的组成：
+
+```C
+// from Redis 7.0.8
+/* ZSETs use a specialized version of Skiplists */
+typedef struct zskiplistNode {
+    sds ele;
+    double score;
+    struct zskiplistNode *backward;
+    struct zskiplistLevel {
+        struct zskiplistNode *forward;
+        unsigned long span;
+    } level[];
+} zskiplistNode;
+```
+
+- **ele**：sds结构，一个被封装过的字符串，本质上是一个char数组，用于存储数据
+- **score**：双精度浮点数类型，表示该节点的分数，决定了跳表中节点的位置次序
+- **backward**：指向上一个节点的回退指针
+- **level**：是一个zskiplistLeve结构体数组，用于表示高层索引。zskiplistLeve结构体包含了两个字段，一个是**forward**，指向同层的下一个索引；另一个是**span**，记录了距离下一个索引（节点）的步长
+
+示意图：
+
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410141101384.png" alt="image-20241014110129253" style="zoom:67%;" />
+
+### 实现细节
+
+- Redis**跳表中单个节点的层数**由概率决定。每插入一个节点到0层，Redis决定该节点是否增加一层索引的**概率为25%**
+
+- 跳表将纯粹的有序单链表在插入、删除、更新操作从$O(n)$时间复杂度降低至$O(logN)$
+
+## ZSet
+
+Zset也叫Sorted Set即有序集合，是按照元素的分数进行排序的集合。分数相同的情况下，按照元素的字典序进行排序
+
+ZSet常用于排序集合的场景，最典型的就是**游戏排行榜**
+
+### 编码方式
+
+ZSet有两种底层编码方式，一种是ZIPLIST，另一种是SKIPLIST+HASHTABLE
+
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410141759086.png" alt="image-20241014175901004" style="zoom:67%;" />
+
+如果满足下列条件，ZSet就用ZIPLIST编码方式：
+
+- 列表对象保存的所有字符串长度均小于64字节
+- 列表对象保存的元素个数少于128个
+
+ZIPLIST依旧保持着它的优点，在数据量较少时，十分节约内存空间。当ZSet采用ZIPLIST编码时，底层结构如下图：
+
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410141802693.png" alt="image-20241014180256647" style="zoom:67%;" />
+
+但凡上述的两个条件有一个不满足，ZSet就采用**SKIPLIST+HASHTABLE**的编码方式。其中，SKIPLIST是一个具有多级索引的有序链表，**可以实现高效的查询、插入、删除操作**。除此之外，Redis还利用HASHTABLE结构实现在$O(1)$时间复杂度下**查询到ZSet中任一成员的`score`值**
