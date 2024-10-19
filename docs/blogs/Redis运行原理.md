@@ -48,3 +48,53 @@ typedef struct dict{
 <img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410171608652.png" alt="image-20241017160835599" style="zoom: 67%;" />
 
 可以看到，在dict和expire其实是具有一些相同的key的，Redis为了节省内存开销，实际上并没有存储了两份一模一样的key，而是进行了内存复用操作。什么意思？简单地说，dict字典和expire字典都指向了同一块内存空间的key。🌰：dict中的`animal`执行内存`0xababababa`，expire中的`animal`也指向内存`0xababababa`
+
+## Redis是单线程还是多线程？
+
+先上结论，Redis作为一个能够高效处理数据请求的组件，**主模块使用单线程**；**辅助模块，例如异步操作、网络I/O则使用多线程**
+
+> 为什么Redis主模块不使用多线程？
+
+如果对底层存储有一定了解的话，那么对下面这张图一定不陌生。（[来源](https://www.toutiao.com/article/7204821418587144736/?wid=1729307852409)）
+
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410191118868.png" alt="image-20241019111805677" style="zoom:50%;" />
+
+我们知道，多线程可以充分利用CPU多核的运算能力，但是对于主要工作内存上的Redis来说，CPU并不是主要的性能瓶颈。由上图我们也可以很容易猜到Redis性能**主要受限于网络IO**。
+
+另一方面，Redis的宗旨是“惜内存如金，简单高效”，引入多线程反而导致项目复杂、不易维护，同时也会带来一定的成本开销。具体有以下几个方面：
+
+- 引入多线程后，Redis为了支持事务的ACID就不得不额外添加一些复杂的操作，甚至需要将原有的数据结构改造成并发安全的
+- 上下文切换成本：CPU在进行线程调度时需要先保存当前线程的上下文数据，再切换到下一个线程
+- 多线程同步机制（加锁、解锁）会引入一定的CPU开销
+- 内存消耗：每一个线程都是占用一定的内存资源的，对于Redis来说，内存资源十分宝贵，能省则省
+
+## 为什么Redis单线程这么快？
+
+我们知道，Redis是单线程处理请求，但是Redis却能做到10w量级的QPS，关键点有以下几个：
+
+- Redis大部分操作都是在内存上完成的，内存操作本身就很快
+- Redis中各式各样的数据结构底层依据不同场景采用不同的编码实现方式，使得Redis在各种场景下都能保持高性能（[来源](https://www.toutiao.com/article/7204821418587144736/?wid=1729307852409)）
+  - ![image-20241019152651588](https://raw.githubusercontent.com/lyydsheep/pic/main/202410191526662.png)
+- Redis采用IO多路复用机制解决网络IO阻塞问题，避免Redis单线程在处理网络请求时频繁发生阻塞，提高了Redis网络吞吐量
+
+>  下面着重讲讲Redis的网络IO多路复用机制
+
+一般地，如果没有IO多路复用，那么Redis是如何处理请求的？
+
+🌰以一个GET请求为例：
+
+1. 客户端发送GET请求，Redis调用**accept**函数与其建立连接
+2. Redis调用**recv**函数从套接字中获取请求
+3. 解析客户端请求，获取参数
+4. Redis处理来自客户端的参数，本例中就是获取key所对应的value
+5. Redis通过**send**函数将结果返回给客户端
+
+![image-20241019154821888](https://raw.githubusercontent.com/lyydsheep/pic/main/202410191548939.png)
+
+由于套接字采用默认阻塞模式，因此Redis在进行**accept和recv**时就有可能出现阻塞，比如accept建立链接时间过长、调用recv后，客户端迟迟没有发送数据，这对单线程的Redis来说是致命的。
+
+于是Redis采用IO多路复用机制解决阻塞问题。在Redis中，将套接字设置成**非阻塞**模式，并且基于系统函数封装了一个**reactor**模型。简单来说，每当有事件发生，reactor模型就通知不同的处理器去处理事件，这样就不会阻塞在某一个操作上，充分利用了CPU
+
+![image-20241019160842167](https://raw.githubusercontent.com/lyydsheep/pic/main/202410191608206.png)
+
+**⚠️：这是仍是并发运行，而非并行**
