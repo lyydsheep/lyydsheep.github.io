@@ -59,7 +59,107 @@ string转为[]byte的大致过程：
 
 ## slice
 
-aba
+在Go语言中，slice是基于数组封装出来的抽象数据结构。因此在解析slice之前，需要先认识认识golang中的数组。
+
+Go语言中的数组是一种值类型，和C语言中的指针类型不同，所以在Go中对数组进行复制、传参都是进行**值复制**操作，就和`int`、`float64`这些基本数据类型类似
+
+数组类型在golang中由**数组大小和数据类型**共同决定，验证例子如下：
+
+```go
+	arr := [3]int{1, 2, 3}
+	fmt.Printf("arr`s type is %T", arr)
+	//arr`s type is [3]int
+```
+
+正因为数组类型在初始时就被确定（大小和数据类型），所以在面对一些动态存储的场景时数组就有点力不从心了。
+
+**slice**就是为了解决数组在长度上不可增长的问题，基于数组实现了**变长数组**的机制
+
+### slice底层结构
+
+slice底层结构如下：
+
+```go
+type slice struct {
+    // 底层数组指针
+    array unsafe.Pointer
+    // slice的长度
+    len int
+    // 容量
+    cap int
+}
+```
+
+slice扩容两步骤：
+
+1. 计算所需容量
+   1. 如果**新切片的长度＞旧切片的容量的两倍**，那么新切片的容量等于长度
+   2. 否则
+      1. 如果**旧切片的容量＜256**，那么新切片的容量就是原容量的两倍
+      2. 否则新切片的容量就是**1.25 * 原切片容量+3/4 * 256**
+2. 内存对齐，确定最终容量
+   1. 按照Go内存管理的级别确对齐内存，最终容量以此为准
+
+### slice问题解密
+
+- slice通过函数传递的是什么？
+
+  - 传递的是底层slice结构体的拷贝
+
+  - ```go
+    func PrintSliceStruct(s *[]int) {
+    	ss := (*reflect.SliceHeader)(unsafe.Pointer(s))
+    	fmt.Printf("slice struct: %+v, slice is %v\n", ss, s)
+    }
+    
+    func test(s []int) {
+    	fmt.Printf("slice address in main is %p	", &s)
+    	PrintSliceStruct(&s)
+    }
+    
+    func main() {
+    	s := make([]int, 5, 10)
+    	fmt.Printf("slice address in main is %p	", &s)
+    	PrintSliceStruct(&s)
+    	test(s)
+    	/*
+    	slice address in main is 0xc000008048	slice struct: &{Data:824633788048 Len:5 Cap:10}, slice is &[0 0 0 0 0]
+    	slice address in main is 0xc000008078	slice struct: &{Data:824633788048 Len:5 Cap:10}, slice is &[0 0 0 0 0]
+    	 */
+    }
+    ```
+
+- 在函数里面改变slice，外层会受到影响吗？
+
+  - 只要修改的底层数组是同一个，那么就会受到影响
+
+  - ```go
+    func test1(s []int) {
+    	s[0] = 7
+    	fmt.Printf("test1 value %v\n", s)
+    }
+    
+    func test2(s []int) {
+    	s = append(s, 4)
+    	fmt.Printf("test2 value %v\n", s)
+    }
+    
+    func main() {
+    	s := []int{1, 2, 3}
+    	fmt.Printf("initial value of s: %v\n", s)
+    	test1(s) // 底层数组相同，会受到影响
+    	fmt.Printf("after test1, value of s: %v\n", s)
+    	test2(s) // 底层数组发生变化，不受影响
+    	fmt.Printf("after test2, value of s: %v\n", s)
+    	/*
+    	initial value of s: [1 2 3]
+    	test1 value [7 2 3]
+    	after test1, value of s: [7 2 3]
+    	test2 value [7 2 3 4]
+    	after test2, value of s: [7 2 3]
+    	 */
+    }
+    ```
 
 ## map
 

@@ -98,3 +98,17 @@ typedef struct dict{
 ![image-20241019160842167](https://raw.githubusercontent.com/lyydsheep/pic/main/202410191608206.png)
 
 **⚠️：这是仍是并发运行，而非并行**
+
+## 内存淘汰策略
+
+我们知道Redis将所有的数据保存在内存上，但是内存空间是有限的，随着时间的推移，有限的内存空间肯定是不能满足无限的数据。因此，Redis需要采用一些内存淘汰策略将“无用”的数据丢弃，以获得更多的空闲内存空间保存数据。
+
+在Redis中有如下几种内存淘汰策略：
+
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410221850573.png" alt="image-20241022185052519" style="zoom: 50%;" />
+
+现着重考虑**LRU和LFU**算法
+
+### LRU算法
+
+LRU，即
