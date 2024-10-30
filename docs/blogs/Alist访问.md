@@ -1,5 +1,5 @@
 ---
-publish: false
+publish: true
 ---
 
 
@@ -23,6 +23,6 @@ publish: false
 - 取消勾选`Use browse default`，并将字段值自定义为`pan.baidu.com`。最终结果如下图
   - <img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410191916203.png" alt="image-20241019191634164" style="zoom: 67%;" />
 
-- 修改完后刷新即可播放。若后续仍出现不可播放的情况，请检查`User-Agent`是否为`pan.baidu.com`
+- 修改完后刷新（**刷新时不要关闭开发者工具**）即可播放。若后续仍出现不可播放的情况，请检查`User-Agent`是否为`pan.baidu.com`
   - <img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410191920677.png" alt="image-20241019192045600" style="zoom:50%;" />
 
