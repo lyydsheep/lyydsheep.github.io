@@ -1,6 +1,6 @@
 ---
 description: 记录go:embed的一些使用方法
-tag:Go
+tag: Go
 ---
 
 
