@@ -1,4 +1,11 @@
-# Golang数据结构
+---
+description: 记录Go数据结构相关知识
+tag: Go
+---
+
+
+
+# Go数据结构
 
 ## string
 
@@ -160,6 +167,4 @@ slice扩容两步骤：
     	 */
     }
     ```
-
-## map
 
