@@ -1,6 +1,8 @@
 ---
 description: 记录Go数据结构相关知识
-tag: Go
+tags:
+  - Go
+date: 2024-12-12
 ---
 
 
@@ -139,8 +141,7 @@ slice扩容两步骤：
 - 在函数里面改变slice，外层会受到影响吗？
 
   - 只要修改的底层数组是同一个，那么就会受到影响
-
-  - ```go
+```
     func test1(s []int) {
     	s[0] = 7
     	fmt.Printf("test1 value %v\n", s)
@@ -166,5 +167,7 @@ slice扩容两步骤：
     	after test2, value of s: [7 2 3]
     	 */
     }
-    ```
+```
+## sync.map
 
+这里是sync.map

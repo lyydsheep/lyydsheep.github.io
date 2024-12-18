@@ -308,10 +308,135 @@ func (h *Handler[T]) ConsumeClaim(session sarama.ConsumerGroupSession, claim sar
 
 ![image-20241127185624318](https://raw.githubusercontent.com/lyydsheep/pic/main/202411271856428.png)
 
-### 消费者消费消息
+### 封装批量消费
 
-start
+前文提及`cg.consumer()`方法第三个参数是一个`ConsumeGroupHandler`接口参数，我们可以封装一个Handler结构体实现这个接口，这个结构体初始化时接受业务方的消费函数，并在`ConsumeClaim()`方法中调用下游的消费函数对消息进行处理。具体（批量消费）封装下：
 
-二次封装 ----> 只提供对处理消息的方法
+```go
+type Handler[T any] struct {
+	l     *zap.Logger
+	fn    func(msgs []*sarama.ConsumerMessage, evts []T) error
+	batch int
+}
 
-​			批量消费
+func (h *Handler[T]) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.ConsumerGroupClaim) error {
+	msgCh := claim.Messages()
+	for {
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+		msgs := make([]*sarama.ConsumerMessage, 0, h.batch)
+		evts := make([]T, 0, h.batch)
+		done := false
+		for i := 0; i < h.batch && !done; i++ {
+			select {
+			case msg, ok := <-msgCh:
+				if !ok {
+					// channel关闭
+					cancel()
+					return nil
+				}
+				var t T
+				err := json.Unmarshal(msg.Value, &t)
+				if err != nil {
+					// 记录日志
+					continue
+				}
+				msgs = append(msgs, msg)
+				evts = append(evts, t)
+			case <-ctx.Done():
+				// 超时
+				done = true
+			}
+		}
+		cancel()
+		err := h.fn(msgs, evts)
+		if err != nil {
+			// 记录日志
+			// 记录整个批次
+			// 继续消费
+		}
+		// 标记消息
+		for i := range msgs {
+			session.MarkMessage(msgs[i], "")
+		}
+	}
+}
+```
+
+上述代码实现了对消费者批量消费的封装，可以提高系统处理消息的性能。这是因为批量处理可以将DAO层面10次（假定batch为10）事务处理缩减至在一次事务中处理十次操作。两个注意点：
+
+- 注意超时
+- 调用下游
+
+### 组装消费者
+
+在依赖注入的过程中，消费者类似于Web、GRpc服务器的东西，需要启动。因此引入一个App结构体，对Web和消费者进行组合
+
+```go
+// app.go
+type App struct {
+    Web *gin.Engine
+    Consumers []events.Consumer
+}
+
+// ioc/kafka.go
+// 由于Go没有动态类型，因此每一个消费者都需要进行注册操作
+func NewConsumers(c1 *articles.InteractiveReadEventConsumer) []events.Consumer {
+    return []events.Consumer{c1}
+}
+
+// wire.go
+// 组合结构体所有的字段，*表示所有
+wire.Struct(new(App), "*")
+```
+
+### 批量生产
+
+svc通过channel将消息发送给生产者，当生产者积累足够多的消息后，就将这一批消息发送给Kafka
+
+```go
+func NewBasicInteractService(repo repository.InteractRepository, producer events.Producer) *BasicInteractService {
+	ch := make(chan events.ReadEvent, 10)
+    // 凑足一批消息
+	go func() {
+		for {
+			ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+			evts := make([]events.ReadEvent, 0, 10)
+			done := false
+			for i := 0; i < 10 && !done; i++ {
+				select {
+				case evt, ok := <-ch:
+					if !ok {
+						cancel()
+						break
+					}
+					evts = append(evts, evt)
+				case <-ctx.Done():
+					done = true
+				}
+			}
+			cancel()
+			err := producer.ProduceReadEventV1(ctx, evts)
+			if err != nil {
+				// 日志
+			}
+		}
+	}()
+	return &BasicInteractService{repo: repo, producer: producer, ch: ch}
+}
+
+
+// 积累消息
+func (svc *BasicInteractService) IncReadCnt(ctx context.Context, biz string, bizId, uid int64) error {
+	_, err := svc.Get(ctx, biz, bizId, uid)
+	go func() {
+		if err == nil {
+			svc.ch <- events.ReadEvent{
+				Uid: uid,
+				Aid: bizId,
+			}
+		}
+	}()
+	return err
+}
+```
+
