@@ -4,16 +4,30 @@
     "type": "split",
     "children": [
       {
-        "id": "46268f658682d007",
+        "id": "b9319b30a77da512",
         "type": "tabs",
         "children": [
           {
-            "id": "8399f9be29cd5481",
+            "id": "5ec9e1feff486bda",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "草稿.md",
+                "file": "设计模式.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "设计模式"
+            }
+          },
+          {
+            "id": "a43e29a79b169de4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Asyncflow/草稿.md",
                 "mode": "source",
                 "source": false
               },
@@ -21,7 +35,8 @@
               "title": "草稿"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -77,8 +92,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 210.5,
-    "collapsed": true
+    "width": 210.5
   },
   "right": {
     "id": "78a40b77b42d745f",
@@ -160,21 +174,30 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "8399f9be29cd5481",
+  "active": "a43e29a79b169de4",
   "lastOpenFiles": [
+    "GC.md",
     "设计模式.md",
+    "Asyncflow/草稿.md",
+    "Kafka.md",
+    "Asyncflow",
+    "GMP原理.md",
+    "MySQL连接池优化.md",
+    "理睬.md",
+    "接入日志模块.md",
+    "接入配置模块.md",
+    "发帖功能实现.md",
+    "阅读、点赞、收藏功能.md",
+    "草稿.md",
     "总有一天会觉得是信手捏来.md",
     "优质好文合集.md",
-    "草稿.md",
     "Excalidraw/Drawing 2024-12-17 15.07.21.excalidraw.md",
     "Excalidraw",
     "异步框架.md",
     "Docker学习笔记.md",
     "Golang数据结构.md",
-    "Untitled",
     "定时微服务.md",
     "Sync.md",
-    "Kafka.md",
     "git学习笔记.md",
     "more.md",
     "style.md",
