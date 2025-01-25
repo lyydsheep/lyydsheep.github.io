@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>lyydsheep</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="theme-color" content="#10b981">
+
+  <link rel="canonical" href="http://example.com/2024/09/19/MySQL/MySQL%E7%B4%A2%E5%BC%95%E5%AD%A6%E4%B9%A0/">
+
+  <link rel="shortcut icon" href="/">
+
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+
+  
+  <meta name="description" content="MySQL索引学习索引数据结构 什么是索引？为什么索引能加快查询？ 索引的数据结构是什么？ B+树和B树、红黑树有什么区别？为什么使用B+树？  索引是一种排好序的快速查找的数据结构。在索引上查找数据的过程可以类比在二叉搜索树上进行数据查询，可以根据数据的大小关系省略对一些数据的查询操作，从而减少磁盘I&#x2F;O的次数，加快查询效率。 索引的具体实现由底层的存储引擎决定，例如在InnoDB存储">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lyydsheep">
+<meta property="og:url" content="http://example.com/2024/09/19/MySQL/MySQL%E7%B4%A2%E5%BC%95%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="lyydsheep">
+<meta property="og:description" content="MySQL索引学习索引数据结构 什么是索引？为什么索引能加快查询？ 索引的数据结构是什么？ B+树和B树、红黑树有什么区别？为什么使用B+树？  索引是一种排好序的快速查找的数据结构。在索引上查找数据的过程可以类比在二叉搜索树上进行数据查询，可以根据数据的大小关系省略对一些数据的查询操作，从而减少磁盘I&#x2F;O的次数，加快查询效率。 索引的具体实现由底层的存储引擎决定，例如在InnoDB存储">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409181420334.png">
+<meta property="article:published_time" content="2024-09-19T10:29:00.000Z">
+<meta property="article:modified_time" content="2024-12-27T11:03:15.343Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409181420334.png">
+
+  <style>
+    :root {
+      --sea-color-primary: #10b981;
+    }
+  </style>
+
+  
+<script src="/js/theme_mode.js"></script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+  <header class="sea-header">
+    <nav class="sea-nav-wrap">
+  <h1 class="sea-nav-logo" title="">
+    <a href="/">lyydsheep</a>
+  </h1>
+  <div class="sea-nav-menus">
+    <div id="sea-nav-toggle">
+      <svg t="1716965724278" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10878" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M950.857143 768v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429v-73.142857c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z m0-292.571429v73.142858c0 20.004571-16.566857 36.571429-36.571429 36.571428H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571428v-73.142858c0-20.004571 16.566857-36.571429 36.571429-36.571428h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571428z m0-292.571428v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429V182.857143c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z" p-id="10879"></path></svg>
+    </div>
+
+    <div class="sea-menu-wrap">
+  
+
+  <span class="sea-menu-sep">|</span>
+
+  
+
+  <span class="sea-menu-icon" id="sea-theme-dark">
+    <svg t="1725413107294" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10118" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M557.553778 976.355556c-257.265778 0-466.56-207.160889-466.56-464.426667 0-253.923556 206.577778-464.284444 460.501333-464.284445h0.355556c10.766222 0 20.622222 3.953778 25.443555 13.610667 4.878222 9.756444 3.740444 20.394667-2.915555 29.027556-55.722667 72.220444-85.162667 158.108444-85.162667 249.372444 0 225.891556 183.779556 409.386667 409.671111 409.386667l5.248-0.256c10.325333-0.142222 20.977778 5.859556 25.841778 15.644444a28.302222 28.302222 0 0 1-2.915556 30.051556C837.902222 910.08 703.203556 976.355556 557.553778 976.355556zM495.274667 105.016889C299.192889 135.281778 147.882667 306.161778 147.882667 509.809778c0 225.877333 183.779556 409.656889 409.671111 409.656889 108.686222 0 210.403556-42.055111 286.577778-116.977778-231.566222-27.192889-411.804444-224.625778-411.804445-463.36 0-83.427556 21.617778-163.299556 62.947556-234.112z" fill="" p-id="10119"></path><path d="M578.830222 879.132444c-186.865778 0-345.784889-133.418667-377.841778-317.269333a14.222222 14.222222 0 1 1 28.017778-4.878222c29.681778 170.183111 176.810667 293.703111 349.824 293.703111a14.222222 14.222222 0 1 1 0 28.444444zM209.991111 531.2c-7.537778 0-13.838222-6.997333-14.193778-14.606222-0.312889-6.584889-0.483556-13.795556-0.483555-20.465778 0-7.864889 6.357333-14.492444 14.222222-14.492444s14.222222 6.229333 14.222222 14.094222c0 6.229333 0.170667 13.425778 0.455111 19.584 0.369778 7.850667-5.674667 15.886222-13.525333 15.886222h-0.696889z" fill="" p-id="10120"></path><path d="M622.350222 309.930667m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10121"></path><path d="M787.072 188.273778m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10122"></path><path d="M731.960889 415.303111m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" p-id="10123"></path></svg>
+  </span>
+  <span class="sea-menu-icon" id="sea-theme-light">
+    <svg t="1725410359322" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4274" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M512 768c-141.376 0-256-114.624-256-256s114.624-256 256-256 256 114.624 256 256-114.624 256-256 256z m0-85.333333a170.666667 170.666667 0 1 0 0-341.333334 170.666667 170.666667 0 0 0 0 341.333334zM469.333333 85.333333a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0V85.333333z m0 768a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0v-85.333334zM85.333333 554.666667a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334H85.333333z m768 0a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334h-85.333334zM161.834667 222.165333a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m576 576a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m-515.669334 64a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z m576-576a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z" p-id="4275"></path></svg>
+  </span>
+
+  <span id="sea-menu-close-icon">
+    <svg t="1725435896874" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4408" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M556.8 512l265.6-265.6c12.8-12.8 12.8-32 0-44.8s-32-12.8-44.8 0L512 467.2 246.4 201.6c-12.8-12.8-32-12.8-44.8 0s-12.8 32 0 44.8l265.6 265.6-265.6 265.6c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 12.8 9.6 22.4 9.6s16-3.2 22.4-9.6l265.6-265.6 265.6 265.6c6.4 6.4 16 9.6 22.4 9.6s16-3.2 22.4-9.6c12.8-12.8 12.8-32 0-44.8L556.8 512z" p-id="4409"></path></svg>
+  </span>
+</div>
+<div id="sea-nav-dimmer"></div>
+  </div>
+</nav>
+  </header>
+  <main id="sea-main-wrapper">
+    <article class="sea-page-card-wrapper">
+  <header class="sea-article-header">
+    <h1 class="sea-article-title"></h1>
+    
+      <div class="sea-post-meta sea-post-meta__center">
+        <div class="sea-post-time">
+  <svg t="1716964550804" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2621" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M805.49888 981.49888l-602.3168-0.76288c-86.59456-8.192-154.56768-81.3056-154.56768-170.01472L48.6144 291.73248c0-94.1568 76.60032-170.75712 170.7776-170.75712l586.10176 0c94.1568 0 170.73152 76.60032 170.73152 170.75712L976.22528 810.7008C976.2304 904.87296 899.63008 981.49888 805.49888 981.49888L805.49888 981.49888zM219.3664 190.57152c-55.79776 0-101.20192 45.38368-101.20192 101.18144l0 518.96832c0 55.79776 45.40416 101.20704 101.20192 101.20704l586.13248 0c55.77728 0 101.16096-45.40928 101.16096-101.20704L906.65984 291.73248c0-55.79776-45.38368-101.18656-101.16096-101.18656L219.3664 190.54592 219.3664 190.57152zM698.84416 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L745.22624 244.1216C745.22624 269.7472 724.46976 290.51904 698.84416 290.51904L698.84416 290.51904zM315.65824 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L362.04032 244.1216C362.04032 269.7472 341.28896 290.51904 315.65824 290.51904L315.65824 290.51904zM534.8864 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C581.26848 774.01088 560.4864 794.78784 534.8864 794.78784L534.8864 794.78784zM930.79552 452.608 121.24672 452.608c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l809.5744 0c25.6 0 46.38208 20.77696 46.38208 46.38208C977.2032 431.82592 956.42624 452.608 930.79552 452.608L930.79552 452.608zM327.92576 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208C374.30784 628.25472 353.52576 649.03168 327.92576 649.03168L327.92576 649.03168zM534.8864 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208S560.4864 649.03168 534.8864 649.03168L534.8864 649.03168zM741.27872 649.03168l-44.26752 0c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.77696 46.38208 46.38208C787.6608 628.25472 766.90944 649.03168 741.27872 649.03168L741.27872 649.03168zM327.92576 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C374.30784 774.01088 353.52576 794.78784 327.92576 794.78784L327.92576 794.78784zM741.27872 794.78784l-44.26752 0c-25.60512 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.78208 46.38208 46.38208C787.6608 774.01088 766.90944 794.78784 741.27872 794.78784L741.27872 794.78784z" p-id="2622"></path></svg>
+  <time datetime="2024-09-19T10:29:00.000Z">2024-09-19</time>
+</div>
+        
+        
+  <div class="sea-post-tags">
+    <svg t="1716964811431" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6117" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M384 977.152c-20.5312 0-39.8336-7.9872-54.3232-22.4256l-260.4032-260.4032c-14.4896-14.4896-22.4256-33.7408-22.4256-54.3232s7.9872-39.8336 22.4256-54.3232l439.6032-439.6032c24.9344-24.9344 70.2464-43.7248 105.5232-43.7248h230.4c42.3424 0 76.8 34.4576 76.8 76.8v230.4c0 35.2256-18.7904 80.5888-43.6736 105.5232l-439.6032 439.6032a76.1856 76.1856 0 0 1-54.3232 22.4256zM614.4 153.6c-21.248 0-54.272 13.6704-69.2736 28.7232l-439.6032 439.6032c-4.8128 4.8128-7.424 11.2128-7.424 18.1248s2.6624 13.312 7.424 18.0736l260.4032 260.4032c4.8128 4.8128 11.2128 7.424 18.1248 7.424s13.312-2.6624 18.1248-7.424l439.6032-439.6032c15.0016-15.0016 28.7232-48.0768 28.7232-69.3248V179.2a25.6 25.6 0 0 0-25.6-25.6h-230.4z" p-id="6118"></path><path d="M742.4 358.4c-42.3424 0-76.8-34.4576-76.8-76.8S700.0576 204.8 742.4 204.8s76.8 34.4576 76.8 76.8S784.7424 358.4 742.4 358.4z m0-102.4a25.6 25.6 0 1 0 0 51.2 25.6 25.6 0 0 0 0-51.2z" p-id="6119"></path></svg>
+    <a class="tag-link" href="/tags/MySQL/" rel="tag">MySQL</a>
+  </div>
+
+      </div>
+    
+  </header>
+  <div class="sea-doc">
+    
+    
+      <div class="sea-article-catalog">
+        <h2>Table of contents</h2>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL%E7%B4%A2%E5%BC%95%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">MySQL索引学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">索引数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%AD%98%E5%82%A8"><span class="toc-number">1.2.</span> <span class="toc-text">索引存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95"><span class="toc-number">1.3.</span> <span class="toc-text">联合索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88"><span class="toc-number">1.4.</span> <span class="toc-text">索引失效</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E7%9A%84%E5%BF%AB%E6%85%A2%E9%97%AE%E9%A2%98"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">1.3 唯一索引的快慢问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%BB%BA%E7%AB%8B%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8E%9F%E5%88%99"><span class="toc-number">1.4.1.</span> <span class="toc-text">二、建立索引的原则</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E5%BA%94%E8%AF%A5%E9%81%B5%E5%AE%88%E7%9A%84%E5%8E%9F%E5%88%99"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">2.1 应该遵守的原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E9%A2%9D%E5%A4%96%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">2.2 额外的注意点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%B8%B8%E8%A7%81%E8%80%83%E9%A2%98"><span class="toc-number">1.5.</span> <span class="toc-text">索引常见考题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.5.1.</span> <span class="toc-text">索引的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">按数据结构分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E7%89%A9%E7%90%86%E5%AD%98%E5%82%A8%E5%88%86%E7%B1%BB"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">按物理存储分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E5%AD%97%E6%AE%B5%E7%89%B9%E6%80%A7%E5%88%86%E7%B1%BB"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">按字段特性分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E5%AD%97%E6%AE%B5%E4%B8%AA%E6%95%B0%E5%88%86%E7%B1%BB"><span class="toc-number">1.5.1.4.</span> <span class="toc-text">按字段个数分类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E7%B4%A2%E5%BC%95%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.2.</span> <span class="toc-text">优化索引的方法</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+    <div class="sea-article-content">
+      <h1 id="MySQL索引学习"><a href="#MySQL索引学习" class="headerlink" title="MySQL索引学习"></a>MySQL索引学习</h1><h2 id="索引数据结构"><a href="#索引数据结构" class="headerlink" title="索引数据结构"></a>索引数据结构</h2><blockquote>
+<p>什么是索引？为什么索引能加快查询？</p>
+<p>索引的数据结构是什么？</p>
+<p>B+树和B树、红黑树有什么区别？为什么使用B+树？</p>
+</blockquote>
+<p>索引是一种排好序的快速查找的数据结构。在索引上查找数据的过程可以类比在二叉搜索树上进行数据查询，可以根据数据的大小关系省略对一些数据的查询操作，从而<strong>减少磁盘I&#x2F;O的次数</strong>，加快查询效率。</p>
+<p>索引的具体实现由<strong>底层的存储引擎决定</strong>，例如在InnoDB存储引擎下，索引是由B+树实现的。</p>
+<p>B树和B+树都是通过多叉树的形式，将树的高度降低，以此减少磁盘I&#x2F;O的次数。但较于B树，B+树有以下优点：</p>
+<ul>
+<li>B+的树<strong>非叶子节点不存放数据只存放索引</strong>，而B树的内节点既存数据又存索引。因此数据量相同的情况下，B+树的内节点可以存放更多的索引，这使得B+树可以比B树更“矮胖”，查询底层节点时磁盘I&#x2F;O次数更少</li>
+<li>B+树<strong>有大量的冗余节点</strong>（所有非叶子节点都是冗余节点），这些冗余节点使得B+树在插入、删除的情况下，树形变化不大，效率更高</li>
+<li>B+树的叶子节点之间通过<strong>链表相互连接</strong>，有利于范围查询</li>
+</ul>
+<h2 id="索引存储"><a href="#索引存储" class="headerlink" title="索引存储"></a>索引存储</h2><blockquote>
+<p>堆表和索引组织有什么区别？分别应用场景是什么？</p>
+</blockquote>
+<p>在<strong>堆表</strong>的组织中，<strong>数据和索引是分开存储的</strong>，B+树叶子节点存放的是<strong>索引+数据的地址，地址指向堆表中的数据</strong>。索引是排序后的数据，而堆表中的数据是无序的</p>
+<ul>
+<li>堆表中的索引<strong>都是二级索引</strong>，即使是主键索引也是二级索引，每次查询都要回表</li>
+<li>由于索引的叶子节点存放了数据在堆表中的地址，当堆表的数据发生变化且位置发生了改变，那么所有索引中的地址都要进行变更</li>
+<li>只支持表锁，并发性能差</li>
+</ul>
+<p>在<strong>索引组织表</strong>（聚簇索引，InnoDB存储引擎实现的数据组织方式）中，数据和索引是一起存储在B+树中的，B+树叶子节点存放的是<strong>索引+行记录</strong>。</p>
+<p>索引就是数据，数据就是索引</p>
+<ul>
+<li>索引和数据保存在同一个B+树中，因此从聚簇索引中获取数据比非聚簇索引更快</li>
+<li>在索引组织表中，二级索引具有天然优势：若记录发生了改变，其他索引无须进行维护，除非记录的主键发生了改变</li>
+<li>支持行级锁，并发性能高</li>
+</ul>
+<h2 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h2><p>aba</p>
+<h2 id="索引失效"><a href="#索引失效" class="headerlink" title="索引失效"></a>索引失效</h2><blockquote>
+<p>有哪些索引失效的场景？为什么会失效？</p>
+</blockquote>
+<ul>
+<li><p>对索引使用左或者左右模糊匹配</p>
+<ul>
+<li>B+树索引是按照<strong>索引值</strong>有序排列存储的，只能根据前缀进行匹配比较</li>
+</ul>
+</li>
+<li><p>对索引使用函数</p>
+<ul>
+<li>索引保存的是索引字段的原始值，而不是经过函数计算后的结果，自然不能进行索引比较</li>
+</ul>
+</li>
+<li><p>对索引进行表达式计算</p>
+<ul>
+<li>索引保存的是索引字段的原始值，而不是经过表达式计算后的结果，自然不能进行索引比较</li>
+</ul>
+</li>
+<li><p>对索引隐式类型转换</p>
+<ul>
+<li><p>MySQL在遇到字符串和数字比较时，会先将字符串转换成数字，再进行数字比大小</p>
+</li>
+<li><p>如下两条SQL语句，第一条索引失效，第二条索引正常工作</p>
+</li>
+<li><pre><code class="sql"># 先将name转换为整型数字，再进行比较
+select * from users where name = 101010
+# 等价于 select * from users where cast(name as signed int) = 101010
+
+
+select * from users where id = &#39;1&#39;
+# 等价于 select * from users where id = cast(&#39;1&#39; as signed int)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 联合索引非最左匹配</span><br><span class="line"></span><br><span class="line">  - 联合索引是先按照第一个索引键排序，再按照第二个索引键排序，以此类推</span><br><span class="line"></span><br><span class="line">- where子句中的or</span><br><span class="line"></span><br><span class="line">  - or前的条件列是索引列，而or后的条件列不是索引列则会导致索引失效</span><br><span class="line"></span><br><span class="line">## 索引选择</span><br><span class="line"></span><br><span class="line">&gt; MySQL数据库中的优化器是怎么执行的？根据什么标准选择索引的？</span><br><span class="line"></span><br><span class="line">![image-20240916132934153](https://raw.githubusercontent.com/lyydsheep/pic/main/202409161330104.png)</span><br><span class="line"></span><br><span class="line">MySQL数据库由Server层和Engine层组成：</span><br><span class="line"></span><br><span class="line">- Server层有SQL分析器、SQL优化器、SQL执行器，用于负责SQL语句的具体执行过程</span><br><span class="line">- Engine层用于存储具体的数据，例如InnoDB引擎，还有用于在内存中存储临时结果集的TempTable引擎</span><br><span class="line"></span><br><span class="line">其中SQL优化器用于分析SQL语句在使用不同索引时所需要的成本，并选择成本最小的执行计划（或全局扫描），作为SQL最优执行方案，这种优化器也叫做CBO（Cost-based optimizer）优化器</span><br><span class="line"></span><br><span class="line">在MySQL中，一条SQL的计算成本按如下公式计算：</span><br><span class="line"></span><br><span class="line">```sql</span><br><span class="line">Cost = Server Cost + Engine Cost</span><br><span class="line">	 = CPU Cost + IO Cost</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>基于SQL优化器的工作原理，有如下实际案例经验：</p>
+<ul>
+<li><p>一般只对<strong>高选择度的字段和字段组合</strong>建立索引，低选择度的字段如<strong>性别</strong>，不创建索引</p>
+</li>
+<li><p>低选择性，但是存在数据倾斜，例如优化器认为P状态有1&#x2F;3，实际上P状态只有1&#x2F;100，可以考虑创建索引</p>
+<ul>
+<li><p>通过创建直方图，让优化器知道实际的数据分布</p>
+</li>
+<li><pre><code class="sql">ANALYZE TABLE orders 
+
+UPDATE HISTOGRAM ON o_orderstatus;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 索引应用</span><br><span class="line"></span><br><span class="line">&gt; 建立索引有什么优点和缺点？</span><br><span class="line">&gt;</span><br><span class="line">&gt; 如何正确建立索引？</span><br><span class="line">&gt;</span><br><span class="line">&gt; 哪些场景下适合建立索引？</span><br><span class="line">&gt;</span><br><span class="line">&gt; 哪些场景下不适合建立索引？</span><br><span class="line"></span><br><span class="line">可以参考[原文](https://juejin.cn/post/7149074488649318431)</span><br><span class="line"></span><br><span class="line">### 一、MySQL中各索引分析</span><br><span class="line"></span><br><span class="line">#### 1.1 为什么选自增Id作为主键？</span><br><span class="line"></span><br><span class="line">在MySQL表中，一般都是用**自增Id**作为主键，这确保了数据的唯一性，但为什么又需要**自增**性质？</span><br><span class="line"></span><br><span class="line">在InnoDB存储引擎中，主键索引以聚簇的形式**有序**存储，即索引即数据、数据即索引按照主键大小依次排列存储在磁盘上。如果使用无序的uuid作为主键，虽然uuid也能保证数据的唯一性，但是很有可能会破坏原本的树结构</span><br><span class="line"></span><br><span class="line">举个例子：</span><br><span class="line"></span><br><span class="line">灰色节点作为一条新数据，如果按照**uuid大小排列**，它应该插入在第二个位置，那么后续节点都要挪动，时间复杂度（不小于）$$O(n)$$，这就导致插入数据十分占用CPU资源。</span><br><span class="line"></span><br><span class="line">![image-20240917114122420](https://raw.githubusercontent.com/lyydsheep/pic/main/202409171141423.png)</span><br><span class="line"></span><br><span class="line">但使用**自增Id**就不会有这个问题，新来的数据直接放到最后，因此数据表的主键值最好选用带有顺序性的值。</span><br><span class="line"></span><br><span class="line">#### 1.2 联合索引的最左匹配原则</span><br><span class="line"></span><br><span class="line">&gt; 最左匹配原则就是指在联合索引中，如果你的 SQL 语句中用到了联合索引中的最左边的索引，那么这条 SQL 语句就可以利用这个联合索引去进行匹配。</span><br><span class="line"></span><br><span class="line">为`id, name, age`这三个字段建立联合索引，此时一个SQL语句如下：</span><br><span class="line"></span><br><span class="line">```sql</span><br><span class="line">SELECT * FROM users WHERE name = &#x27;lyydsheep&#x27; AND age = 1;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>这条SQL语句是用不上联合索引的，因为查询条件中没有出现<strong>从最左端开始的连续字段</strong>。而下列这条SQL语句就能使用上联合索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">AND</span> name <span class="operator">=</span> <span class="string">&#x27;lyydsheep&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>根本原因就是<code>id</code>字段是<strong>全局有序</strong>，而<code>name</code>、<code>age</code>字段是<strong>局部有序</strong>的</p>
+<h4 id="1-3-唯一索引的快慢问题"><a href="#1-3-唯一索引的快慢问题" class="headerlink" title="1.3 唯一索引的快慢问题"></a>1.3 唯一索引的快慢问题</h4><p>唯一索引相比于普通索引的优势就在于唯一索引限定了字段值必须是唯一的，当找到一条数据后旧立马停止检索。而普通索引仍需要走完整个索引树，因为可能存在多个相同的字段值的数据。</p>
+<p>唯一索引在查询时比普通索引快上一截，但插入数据时就不同了，因为要确保数据唯一性，插入数据前要检察一遍表中是否存在相同的数据。普通索引就没有这顾虑了，因此普通索引插入数据会更快一些。</p>
+<h3 id="二、建立索引的原则"><a href="#二、建立索引的原则" class="headerlink" title="二、建立索引的原则"></a>二、建立索引的原则</h3><h4 id="2-1-应该遵守的原则"><a href="#2-1-应该遵守的原则" class="headerlink" title="2.1 应该遵守的原则"></a>2.1 应该遵守的原则</h4><ul>
+<li><p>①经常<strong>频繁用作查询条件的字段</strong>应酌情考虑为其创建索引。</p>
+</li>
+<li><p>②表的<strong>主外键或连表字段</strong>，必须建立索引，因为能很大程度提升连表查询的性能。</p>
+</li>
+<li><p>③建立索引的字段，一般值的<strong>区分性要足够高</strong>，这样才能提高索引的检索效率。</p>
+</li>
+<li><p>④建立索引的字段，值不应该过长，如果<strong>较长的字段要建立索引，可以选择前缀索引</strong>。</p>
+</li>
+<li><p>⑤建立<strong>联合索引</strong>，应当遵循<strong>最左前缀原则</strong>，将多个字段之间按优先级顺序组合。</p>
+</li>
+<li><p>⑥经常根据<strong>范围取值、排序、分组的字段应建立索引</strong>，因为索引有序，能加快排序时间。</p>
+</li>
+<li><p>⑦对于<strong>唯一索引</strong>，如果确认不会利用该字段排序，那可以将<strong>结构改为<code>Hash</code>结构</strong>。</p>
+</li>
+<li><p>⑧尽量使用<strong>联合索引代替单值索引</strong>，联合索引比多个单值索引查询效率要高。</p>
+</li>
+</ul>
+<h4 id="2-2-额外的注意点"><a href="#2-2-额外的注意点" class="headerlink" title="2.2 额外的注意点"></a>2.2 额外的注意点</h4><ul>
+<li><p>❶<strong>值经常会增删改的字段</strong>，不合适建立索引，因为每次改变后需维护索引结构。</p>
+</li>
+<li><p>❷一个<strong>字段存在大量的重复值</strong>时，不适合建立索引，比如之前举例的性别字段。</p>
+</li>
+<li><p>❸索引<strong>不能参与计算</strong>，因此经常<strong>带函数查询</strong>的字段，并不适合建立索引。</p>
+</li>
+<li><p>❹一张表中的索引<strong>数量并不是越多越好</strong>，一般控制在<code>3</code>，最多不能超过<code>5</code>。</p>
+</li>
+<li><p>❺建立联合索引时，一定要考虑优先级，查询频率最高的字段应当放首位。</p>
+</li>
+<li><p>❻<strong>当表的数据较少，不应当建立索引</strong>，因为数据量不大时，维护索引反而开销更大。</p>
+</li>
+<li><p>❼索引的<strong>字段值无序时</strong>，不推荐建立索引，因为会造成页分裂，尤其是主键索引。</p>
+</li>
+</ul>
+<h2 id="索引常见考题"><a href="#索引常见考题" class="headerlink" title="索引常见考题"></a>索引常见考题</h2><p>参考<a target="_blank" rel="noopener" href="https://xiaolincoding.com/mysql/index/index_interview.html">原文</a></p>
+<h3 id="索引的分类"><a href="#索引的分类" class="headerlink" title="索引的分类"></a>索引的分类</h3><p>从四个角度对索引进行分类：</p>
+<ul>
+<li>以<strong>数据结构</strong>分类：<font color="blue">B+树索引、Hash索引、Full-text索引</font></li>
+<li>以<strong>物理存储</strong>分类：<font color="blue">聚簇索引、二级索引</font></li>
+<li>以<strong>字段特性</strong>分类：<font color="blue">主键索引、唯一索引、普通索引、前缀索引</font></li>
+<li>以字段个数分类：<font color="blue">单列索引、联合索引</font></li>
+</ul>
+<h4 id="按数据结构分类"><a href="#按数据结构分类" class="headerlink" title="按数据结构分类"></a>按数据结构分类</h4><p>不同的存储引擎所支持的索引类型不同，具体如下图</p>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409181420334.png" alt="image-20240918142021754"></p>
+<h4 id="按物理存储分类"><a href="#按物理存储分类" class="headerlink" title="按物理存储分类"></a>按物理存储分类</h4><ul>
+<li>聚簇索引的B+树叶子节点存放的是实际数据，包含了数据行所有字段的数据</li>
+<li>二级索引的B+树叶子节点存放的是主键值，并非实际数据。因此，如果所查询数据不二级索引叶子节点中，那么需要再进行一次<strong>回表</strong>操作；反之则是<strong>索引覆盖</strong></li>
+</ul>
+<h4 id="按字段特性分类"><a href="#按字段特性分类" class="headerlink" title="按字段特性分类"></a>按字段特性分类</h4><p><strong>主键索引</strong></p>
+<p>建立在主键之上的索引，一般在建表时创建，一张表最多只能有一个主键索引，并且主键字段不允许有<code>NULL</code>值</p>
+<p>如果没有指明主键，则系统会按照一下规则挑选并创建主键索引</p>
+<ul>
+<li>选择第一个不包含<code>NULL</code>值的<strong>唯一列</strong>作为主键列</li>
+<li>下下策，InnoDB自动生成一个自增的隐藏id列作为聚簇索引的索引键</li>
+</ul>
+<p>建表时，创建主键索引的方式如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> table_name (</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">PRIMARY KEY</span> (column_name) <span class="keyword">USING</span> BTREE</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>唯一索引</strong></p>
+<p>建立在UNIQUE字段上的索引，一张表可以有多个唯一索引，但是索引键值必须唯一，允许有<code>NULL</code>值</p>
+<p>建表时，创建唯一索引的方式如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> table_name(</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">UNIQUE</span> KEY(column1, column2...)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>建表后，创建唯一索引的方式如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">UNIQUE</span> INDEX idx_name <span class="keyword">ON</span> table_name(column1, column2...)</span><br></pre></td></tr></table></figure>
+
+<p><strong>前缀索引</strong></p>
+<p>以字符类型字段的前缀为键值建立索引，主要目的是为了减少存储空间，优化查询效率，可以用在字符类型为<code>char</code>、<code>varchat</code>、<code>binary</code>、<code>varbinary</code>的列上</p>
+<p>建表时，创建前缀索引的方式如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> table_name(</span><br><span class="line">    ...</span><br><span class="line">    INDEX(column1(length))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>建表后，创建前缀索引的方式如下 :</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX idx_name <span class="keyword">ON</span> table_name (column1(length))</span><br></pre></td></tr></table></figure>
+
+<h4 id="按字段个数分类"><a href="#按字段个数分类" class="headerlink" title="按字段个数分类"></a>按字段个数分类</h4><p>主要介绍联合索引的几个特点</p>
+<ul>
+<li>范围查询<ul>
+<li>联合索引的最左匹配，在遇到范围查询（&gt;、&lt;）时，就会停止匹配。也就是说，范围查询的字段会用到联合索引，但之后的字段不会使用联合索引</li>
+<li>值得注意的是，对于<code>&gt;=</code>、<code>&lt;=</code>、<code>between xxx and</code>、<code>like</code>这类含有相等意义的范围查询，不会立刻停止匹配，即再范围查询之后的字段仍会用上联合索引，但只针对部分数据</li>
+</ul>
+</li>
+<li>索引下推<ul>
+<li>MySQL 5.6 引入索引下推优化，可以在联合索引遍历过程中，利用联合索引中未用上的查询条件对数据进行过滤，减少回表次数</li>
+</ul>
+</li>
+<li>索引区分度<ul>
+<li>在建立联合索引时，要尽可能 把区分度大的字段放在前面，这样联合索引被SQL用到的概率更大</li>
+</ul>
+</li>
+<li>用于排序<ul>
+<li>减少<code>Using filesort</code>的次数</li>
+</ul>
+</li>
+</ul>
+<h3 id="优化索引的方法"><a href="#优化索引的方法" class="headerlink" title="优化索引的方法"></a>优化索引的方法</h3><ul>
+<li>前缀索引优化<ul>
+<li>使用前缀索引可以减小索引字段的大小，增加一个索引页中存储的数据量，有效提高索引查询的效率</li>
+</ul>
+</li>
+<li>覆盖索引优化<ul>
+<li>将所要查询的字段建立成联合索引，在SQL查询过程中就能在二级索引B+树的叶子节点上找到所需要的全部数据，而不需要再通过聚簇索引查询获得，减少回表的操作</li>
+</ul>
+</li>
+<li>主键索引最好是自增的<ul>
+<li>插入一条数据都是追加操作，不需要移动数据，避免了页分裂带来的性能消耗和大量的内存碎片</li>
+<li>索引字段不宜过长，减少二级索引的存储空间</li>
+</ul>
+</li>
+<li>索引最好设置为<code>NOT NULL</code><ul>
+<li>索引列存在<code>NULL</code>值会加重索引选择的负担</li>
+<li>减少物理存储空间，如果表中存在允许为<code>NULL</code>的字段，那么行格式中至少会占用1字节空间存储<code>NULL</code>值列表</li>
+</ul>
+</li>
+<li>防止索引失效</li>
+</ul>
+
+    </div>
+  </div>
+
+  
+    
+  <div class="sea-prev-next-wrapper">
+    
+      <div class="prev">
+        <span><</span>
+        <a class="link" href="/2024/09/21/%E7%BD%91%E7%BB%9C%E5%B1%82%E7%9F%A5%E8%AF%86%E7%82%B9/">
+          网络层知识点
+        </a>
+      </div>
+    
+    
+      <div class="next">
+        <a class="link" href="/2024/09/15/git%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+          Git学习笔记
+        </a>
+        <span>></span>
+      </div>
+    
+  </div>
+
+  
+</article>
+
+
+  </main>
+  <footer id="sea-footer-container">
+  <div class="sea-footer-row">
+    <div class="sea-footer-menu-link">
+      
+    </div>
+  </div>
+  
+  
+  <div class="sea-footer-row">
+    <div class="sea-footer-copyright">
+      <span>©</span>
+      
+        2025
+      
+      <span>·</span>
+      John Doe
+    </div>
+    <span class="split-line">|</span>
+    <div class="sea-footer-theme-by">
+      Theme by <a class="theme" href="https://github.com/hai-zou/hexo-theme-sea" target="_blank">Sea</a>
+    </div>
+  </div>
+</footer>
+
+  
+<script src="/js/main.js"></script>
+
+
+<script src="/js/theme.js"></script>
+
+</body>
+</html>

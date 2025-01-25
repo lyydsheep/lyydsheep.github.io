@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>lyydsheep</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="theme-color" content="#10b981">
+
+  <link rel="canonical" href="http://example.com/2024/12/27/%E5%AE%9A%E6%97%B6%E5%BE%AE%E6%9C%8D%E5%8A%A1/">
+
+  <link rel="shortcut icon" href="/">
+
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+
+  
+  <meta name="description" content="记录定时微服务项目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lyydsheep">
+<meta property="og:url" content="http://example.com/2024/12/27/%E5%AE%9A%E6%97%B6%E5%BE%AE%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="lyydsheep">
+<meta property="og:description" content="记录定时微服务项目">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202411251841204.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202411251851062.png">
+<meta property="article:published_time" content="2024-12-27T11:03:15.344Z">
+<meta property="article:modified_time" content="2024-12-27T11:03:15.344Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="项目">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202411251841204.png">
+
+  <style>
+    :root {
+      --sea-color-primary: #10b981;
+    }
+  </style>
+
+  
+<script src="/js/theme_mode.js"></script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+  <header class="sea-header">
+    <nav class="sea-nav-wrap">
+  <h1 class="sea-nav-logo" title="">
+    <a href="/">lyydsheep</a>
+  </h1>
+  <div class="sea-nav-menus">
+    <div id="sea-nav-toggle">
+      <svg t="1716965724278" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10878" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M950.857143 768v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429v-73.142857c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z m0-292.571429v73.142858c0 20.004571-16.566857 36.571429-36.571429 36.571428H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571428v-73.142858c0-20.004571 16.566857-36.571429 36.571429-36.571428h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571428z m0-292.571428v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429V182.857143c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z" p-id="10879"></path></svg>
+    </div>
+
+    <div class="sea-menu-wrap">
+  
+
+  <span class="sea-menu-sep">|</span>
+
+  
+
+  <span class="sea-menu-icon" id="sea-theme-dark">
+    <svg t="1725413107294" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10118" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M557.553778 976.355556c-257.265778 0-466.56-207.160889-466.56-464.426667 0-253.923556 206.577778-464.284444 460.501333-464.284445h0.355556c10.766222 0 20.622222 3.953778 25.443555 13.610667 4.878222 9.756444 3.740444 20.394667-2.915555 29.027556-55.722667 72.220444-85.162667 158.108444-85.162667 249.372444 0 225.891556 183.779556 409.386667 409.671111 409.386667l5.248-0.256c10.325333-0.142222 20.977778 5.859556 25.841778 15.644444a28.302222 28.302222 0 0 1-2.915556 30.051556C837.902222 910.08 703.203556 976.355556 557.553778 976.355556zM495.274667 105.016889C299.192889 135.281778 147.882667 306.161778 147.882667 509.809778c0 225.877333 183.779556 409.656889 409.671111 409.656889 108.686222 0 210.403556-42.055111 286.577778-116.977778-231.566222-27.192889-411.804444-224.625778-411.804445-463.36 0-83.427556 21.617778-163.299556 62.947556-234.112z" fill="" p-id="10119"></path><path d="M578.830222 879.132444c-186.865778 0-345.784889-133.418667-377.841778-317.269333a14.222222 14.222222 0 1 1 28.017778-4.878222c29.681778 170.183111 176.810667 293.703111 349.824 293.703111a14.222222 14.222222 0 1 1 0 28.444444zM209.991111 531.2c-7.537778 0-13.838222-6.997333-14.193778-14.606222-0.312889-6.584889-0.483556-13.795556-0.483555-20.465778 0-7.864889 6.357333-14.492444 14.222222-14.492444s14.222222 6.229333 14.222222 14.094222c0 6.229333 0.170667 13.425778 0.455111 19.584 0.369778 7.850667-5.674667 15.886222-13.525333 15.886222h-0.696889z" fill="" p-id="10120"></path><path d="M622.350222 309.930667m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10121"></path><path d="M787.072 188.273778m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10122"></path><path d="M731.960889 415.303111m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" p-id="10123"></path></svg>
+  </span>
+  <span class="sea-menu-icon" id="sea-theme-light">
+    <svg t="1725410359322" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4274" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M512 768c-141.376 0-256-114.624-256-256s114.624-256 256-256 256 114.624 256 256-114.624 256-256 256z m0-85.333333a170.666667 170.666667 0 1 0 0-341.333334 170.666667 170.666667 0 0 0 0 341.333334zM469.333333 85.333333a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0V85.333333z m0 768a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0v-85.333334zM85.333333 554.666667a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334H85.333333z m768 0a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334h-85.333334zM161.834667 222.165333a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m576 576a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m-515.669334 64a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z m576-576a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z" p-id="4275"></path></svg>
+  </span>
+
+  <span id="sea-menu-close-icon">
+    <svg t="1725435896874" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4408" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M556.8 512l265.6-265.6c12.8-12.8 12.8-32 0-44.8s-32-12.8-44.8 0L512 467.2 246.4 201.6c-12.8-12.8-32-12.8-44.8 0s-12.8 32 0 44.8l265.6 265.6-265.6 265.6c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 12.8 9.6 22.4 9.6s16-3.2 22.4-9.6l265.6-265.6 265.6 265.6c6.4 6.4 16 9.6 22.4 9.6s16-3.2 22.4-9.6c12.8-12.8 12.8-32 0-44.8L556.8 512z" p-id="4409"></path></svg>
+  </span>
+</div>
+<div id="sea-nav-dimmer"></div>
+  </div>
+</nav>
+  </header>
+  <main id="sea-main-wrapper">
+    <article class="sea-page-card-wrapper">
+  <header class="sea-article-header">
+    <h1 class="sea-article-title"></h1>
+    
+      <div class="sea-post-meta sea-post-meta__center">
+        <div class="sea-post-time">
+  <svg t="1716964550804" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2621" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M805.49888 981.49888l-602.3168-0.76288c-86.59456-8.192-154.56768-81.3056-154.56768-170.01472L48.6144 291.73248c0-94.1568 76.60032-170.75712 170.7776-170.75712l586.10176 0c94.1568 0 170.73152 76.60032 170.73152 170.75712L976.22528 810.7008C976.2304 904.87296 899.63008 981.49888 805.49888 981.49888L805.49888 981.49888zM219.3664 190.57152c-55.79776 0-101.20192 45.38368-101.20192 101.18144l0 518.96832c0 55.79776 45.40416 101.20704 101.20192 101.20704l586.13248 0c55.77728 0 101.16096-45.40928 101.16096-101.20704L906.65984 291.73248c0-55.79776-45.38368-101.18656-101.16096-101.18656L219.3664 190.54592 219.3664 190.57152zM698.84416 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L745.22624 244.1216C745.22624 269.7472 724.46976 290.51904 698.84416 290.51904L698.84416 290.51904zM315.65824 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L362.04032 244.1216C362.04032 269.7472 341.28896 290.51904 315.65824 290.51904L315.65824 290.51904zM534.8864 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C581.26848 774.01088 560.4864 794.78784 534.8864 794.78784L534.8864 794.78784zM930.79552 452.608 121.24672 452.608c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l809.5744 0c25.6 0 46.38208 20.77696 46.38208 46.38208C977.2032 431.82592 956.42624 452.608 930.79552 452.608L930.79552 452.608zM327.92576 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208C374.30784 628.25472 353.52576 649.03168 327.92576 649.03168L327.92576 649.03168zM534.8864 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208S560.4864 649.03168 534.8864 649.03168L534.8864 649.03168zM741.27872 649.03168l-44.26752 0c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.77696 46.38208 46.38208C787.6608 628.25472 766.90944 649.03168 741.27872 649.03168L741.27872 649.03168zM327.92576 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C374.30784 774.01088 353.52576 794.78784 327.92576 794.78784L327.92576 794.78784zM741.27872 794.78784l-44.26752 0c-25.60512 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.78208 46.38208 46.38208C787.6608 774.01088 766.90944 794.78784 741.27872 794.78784L741.27872 794.78784z" p-id="2622"></path></svg>
+  <time datetime="2024-12-27T11:03:15.344Z">2024-12-27</time>
+</div>
+        
+        
+  <div class="sea-post-tags">
+    <svg t="1716964811431" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6117" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M384 977.152c-20.5312 0-39.8336-7.9872-54.3232-22.4256l-260.4032-260.4032c-14.4896-14.4896-22.4256-33.7408-22.4256-54.3232s7.9872-39.8336 22.4256-54.3232l439.6032-439.6032c24.9344-24.9344 70.2464-43.7248 105.5232-43.7248h230.4c42.3424 0 76.8 34.4576 76.8 76.8v230.4c0 35.2256-18.7904 80.5888-43.6736 105.5232l-439.6032 439.6032a76.1856 76.1856 0 0 1-54.3232 22.4256zM614.4 153.6c-21.248 0-54.272 13.6704-69.2736 28.7232l-439.6032 439.6032c-4.8128 4.8128-7.424 11.2128-7.424 18.1248s2.6624 13.312 7.424 18.0736l260.4032 260.4032c4.8128 4.8128 11.2128 7.424 18.1248 7.424s13.312-2.6624 18.1248-7.424l439.6032-439.6032c15.0016-15.0016 28.7232-48.0768 28.7232-69.3248V179.2a25.6 25.6 0 0 0-25.6-25.6h-230.4z" p-id="6118"></path><path d="M742.4 358.4c-42.3424 0-76.8-34.4576-76.8-76.8S700.0576 204.8 742.4 204.8s76.8 34.4576 76.8 76.8S784.7424 358.4 742.4 358.4z m0-102.4a25.6 25.6 0 1 0 0 51.2 25.6 25.6 0 0 0 0-51.2z" p-id="6119"></path></svg>
+    <a class="tag-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a>
+  </div>
+
+      </div>
+    
+  </header>
+  <div class="sea-doc">
+    
+    
+      <div class="sea-article-catalog">
+        <h2>Table of contents</h2>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.</span> <span class="toc-text">定时微服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87"><span class="toc-number">1.1.</span> <span class="toc-text">前置准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E5%92%8C%E7%8E%B0%E7%8A%B6"><span class="toc-number">1.1.1.</span> <span class="toc-text">背景和现状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%BE%E7%82%B9"><span class="toc-number">1.1.2.</span> <span class="toc-text">难点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E7%B2%BE%E5%87%86"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">高精准</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E8%B4%9F%E8%BD%BD"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">高负载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">任务异常处理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.2.</span> <span class="toc-text">架构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="toc-number">1.2.1.</span> <span class="toc-text">实现思路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%E4%BC%98%E5%8C%96%EF%BC%9A%E6%9C%89%E5%BA%8F%E8%A1%A8"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">存储结构优化：有序表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%E4%BC%98%E5%8C%96%EF%BC%9A%E6%A8%AA%E5%90%91%E5%88%87%E7%89%87"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">存储结构优化：横向切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%E4%BC%98%E5%8C%96%EF%BC%9A%E7%BA%B5%E5%90%91%E5%88%87%E7%89%87"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">存储结构优化：纵向切片</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="toc-number">1.2.2.</span> <span class="toc-text">整体架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">定时任务调度流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E7%94%9F%E6%88%90%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">定时任务生成流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="toc-number">1.2.3.</span> <span class="toc-text">调度流程模块化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E5%99%A8%E6%A8%A1%E5%9D%97"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">调度器模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E5%99%A8%E6%A8%A1%E5%9D%97"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">触发器模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E5%99%A8%E6%A8%A1%E5%9D%97"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">执行器模块</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E8%BF%81%E7%A7%BB%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="toc-number">1.2.4.</span> <span class="toc-text">任务迁移模块化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Migrator%E6%A8%A1%E5%9D%97"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">Migrator模块</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%B2%E8%A1%8C%E6%89%93%E7%82%B9%E8%BF%98%E6%98%AF%E6%89%B9%E9%87%8F%E6%89%93%E7%82%B9%EF%BC%9F"><span class="toc-number">1.2.4.1.1.</span> <span class="toc-text">串行打点还是批量打点？</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.3.</span> <span class="toc-text">存储结构设计</span></a></li></ol></li></ol>
+      </div>
+    
+    <div class="sea-article-content">
+      <h1 id="定时微服务"><a href="#定时微服务" class="headerlink" title="定时微服务"></a>定时微服务</h1><h2 id="前置准备"><a href="#前置准备" class="headerlink" title="前置准备"></a>前置准备</h2><h3 id="背景和现状"><a href="#背景和现状" class="headerlink" title="背景和现状"></a>背景和现状</h3><p>市面上已有的定时微服务技术：Java Timer、Rocket MQ、xxl-job、Quartz、Robfig&#x2F;Cron</p>
+<ul>
+<li>很多公司的业务只需要一个简单的“定时”功能。为了满足一个简单定时功能而引入过于强大而且臃肿的任务调度组件是不合适的</li>
+<li>设计一个<strong>功能聚焦、轻量级、维护成本低</strong>的定时微服务组件是很有必要的</li>
+</ul>
+<p><strong>定时微服务LyyTimer</strong></p>
+<ol>
+<li>依赖简单：只需要提供MySQL、Redis和Kafka组件的支持即可，接入和维护的成本低</li>
+<li>学习成本低：整个定时微服务功能聚焦，容易上手</li>
+<li>特性优：LyyTimer具有高精准、高负载、异常处理等特性，能基本满足大部分的定时需求</li>
+</ol>
+<h3 id="难点"><a href="#难点" class="headerlink" title="难点"></a>难点</h3><h4 id="高精准"><a href="#高精准" class="headerlink" title="高精准"></a><strong>高精准</strong></h4><p>相对于单点定时（例如Java.Timer）基本能做到毫秒级触发，几乎所有定时任务框架或者消息队列，都只能保证秒级别误差</p>
+<p>常见导致时间误差大的原因：</p>
+<ul>
+<li>定时脚本运行耗时</li>
+<li>等待定时脚本运行</li>
+<li>消息队列中消息堆积</li>
+<li>分布式定时器延时受网络影响</li>
+<li>数据库中查找任务数据耗时</li>
+<li>特殊时间段任务过多</li>
+</ul>
+<h4 id="高负载"><a href="#高负载" class="headerlink" title="高负载"></a><strong>高负载</strong></h4><p>能够支持同时处理大量任务，并且尽可能少的堆积任务</p>
+<p>高负载解决思路和方法：</p>
+<ul>
+<li>应用层方面减少任务量，选择将同一时刻的多个独立任务合并成一个“计划列表”</li>
+<li>分库分表：将一个大型数据库分成多个较小的数据库，并将每个数据库进一步分成多个较小的表，每个表只包含部分数据<ul>
+<li>垂直分表：保持列完整</li>
+<li>水平分表：只保留部分列</li>
+<li>分库分表组合</li>
+</ul>
+</li>
+<li>数据分区：将大数据拆分成多个小数据分区，将这些小分区存储在不同的物理设备或服务器上，提供数据的存取效率和处理速度</li>
+<li>线程池技术<ul>
+<li>复用线程，降低了资源消耗</li>
+<li>高效地管理多个线程</li>
+</ul>
+</li>
+</ul>
+<h4 id="任务异常处理"><a href="#任务异常处理" class="headerlink" title="任务异常处理"></a><strong>任务异常处理</strong></h4><blockquote>
+<p> 定时任务需求可以允许有一定的误差，但是不能不触发</p>
+</blockquote>
+<p><strong>任务异常的原因：</strong></p>
+<ul>
+<li><p>创建（激活）任务接口异常：在创建任务阶段发生异常，系统可以直接将异常原因返回给用户。用户感知到异常后，可通过主动重试解决问题，即该阶段的异常不应该由框架解决</p>
+</li>
+<li><p>任务流转异常：一旦任务成功存储在数据库中，就认为该定时任务创建成功，微服务框架就要负责该任务后续的流转（查询数据库、发送消息队列、缓存等）。因此，框架需要解决任务流转过程中发生的异常</p>
+</li>
+<li><p>任务触发阶段异常：当任务执行后，系统需要回调告知业务方任务结果。对于业务方来说，如果回调失败导致结果丢失，就相当于该任务没有执行过</p>
+</li>
+</ul>
+<p><strong>常用的解决方案</strong></p>
+<ul>
+<li><strong>（立即）重试机制</strong>：可以应付一些偶发性异常，例如数据库抖动、Redis抖动</li>
+<li><strong>失败兜底机制</strong>：一般来说，兜底策略都是采用一些“无脑”脚本，全表扫描数据库，针对失败记录进行重试操作。但是兜底策略一般在性能上不占优势，所以需要选择合适的时间间隔执行兜底脚本</li>
+<li><strong>失败报警机制</strong>：当短时间内有大量任务失败时，需要及时报警</li>
+<li><strong>人工干预</strong></li>
+</ul>
+<h2 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h2><h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p><strong>定时器本质实现思路：查询 + 触发</strong>，以及暴露给用户一个<strong>注册任务</strong>接口</p>
+<ul>
+<li><strong>注册</strong>定时器：接受用户的创建请求，明确每一个任务的<strong>执行时间</strong></li>
+<li><strong>查询</strong>数据库：每隔一段时间间隔就<strong>查询</strong>任务列表，筛选出未触发的任务</li>
+<li><strong>触发</strong>任务：触发<strong>执行时间小于当前时间（时刻）</strong>的任务</li>
+</ul>
+<h4 id="存储结构优化：有序表"><a href="#存储结构优化：有序表" class="headerlink" title="存储结构优化：有序表"></a>存储结构优化：有序表</h4><p><strong>基于有序数据结构，加快数据查询</strong></p>
+<p>常见的有序数据结构：红黑树、跳表、平衡树等，这些数据结构通过在插入操作均摊查询操作的时间复杂度实现**查询时间复杂度$$O(N) —&gt; O(logN)$$**的优化</p>
+<h4 id="存储结构优化：横向切片"><a href="#存储结构优化：横向切片" class="headerlink" title="存储结构优化：横向切片"></a>存储结构优化：横向切片</h4><p><strong>根据时间区间对数据分片，减少查询时涉及的数据数量</strong></p>
+<p>每次查询数据的时候，真正的目标是<strong>即将执行</strong>的任务，而<strong>稍后执行</strong>的任务属于无关任务。基于这个理念，我们可以将数据进行横向切分，例如每一分钟划分一个数据切片，然后从包含目标数据的数据切片中查询数据</p>
+<p>这种做法可以将大大降低每一次查询的任务数量级：N —&gt; N’，其中N’ &lt;&lt; N，即使没有改变查询的时间复杂度，但减少了查询时涉及的数据数量</p>
+<h4 id="存储结构优化：纵向切片"><a href="#存储结构优化：纵向切片" class="headerlink" title="存储结构优化：纵向切片"></a>存储结构优化：纵向切片</h4><p><strong>对数据分区进行分桶，提高数据操作的并发度</strong></p>
+<p>截止到上一步，时间数据分区是定时器中的最小资源单位，每一个数据分区都由一个goroutine（或线程）控制。为了提高数据操作的并发度，可以对分区中的数据进一步<strong>分桶</strong>，把每一个桶交付给一个goroutine（或线程）处理，在纵向增加分桶的维度，提高并发度</p>
+<blockquote>
+<p>总结：依然是“查询 + 触发”的定时器机制，只不过相较于丐版定时器有如下变化：每次查询都只查询一个（当前）时间范围内的数据，这些数据由ZSet数据结构存储。接着基于并发的考虑，令多个goroutine负责从分区中的多个桶中查询数据，最后将触发获取到的任务。</p>
+</blockquote>
+<h3 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h3><h4 id="定时任务调度流程"><a href="#定时任务调度流程" class="headerlink" title="定时任务调度流程"></a>定时任务调度流程</h4><p>任务调度流程<strong>服务架构：三个模块 + 两个协程池</strong></p>
+<p>LyyTimer是一个<strong>去中心化的定时任务调度框架</strong>，定时任务调度服务根据职责边界可以将服务拆分为：<strong>调度器模块</strong>、<strong>触发器模块</strong>、<strong>执行模块</strong>，这三个模块存在着依赖关系。父模块通过协程池异步启动子模块执行相应工作</p>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202411251841204.png" alt="image-20241125183915443"></p>
+<h4 id="定时任务生成流程"><a href="#定时任务生成流程" class="headerlink" title="定时任务生成流程"></a>定时任务生成流程</h4><p><strong>定时任务的创建设计到Web Server和Migrator Scheduler两个模块</strong></p>
+<ul>
+<li>用户通过Web Server提供的API创建定时任务</li>
+<li>Migrator Scheduler定时根据cron表达式预热定时任务数据</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202411251851062.png" alt="image-20241125185145008"></p>
+<blockquote>
+<p>为什么需要两种方式预热数据？</p>
+<p>为了确保在定时脚本执行间隔内创建的任务生效。例如，定时脚本每两小时执行一次，每一次执行都会预热两小时后的数据。第一次定时脚本执行时刻是18:58，创建了18:58-20:58定时任务。倘若有用户在19:00想要创建一个19:58分的定时任务，那么只依靠定时脚本是无法实现的，因为下一次定时脚本的执行时间是20:58。综上所诉，仅仅有定时脚本是有缺陷的，还需要一个Web Server模块完成任务的第一次创建，确保用户在任何时候创建的任务都能生效。</p>
+</blockquote>
+<h3 id="调度流程模块化"><a href="#调度流程模块化" class="headerlink" title="调度流程模块化"></a>调度流程模块化</h3><h4 id="调度器模块"><a href="#调度器模块" class="headerlink" title="调度器模块"></a>调度器模块</h4><p><strong>确定二维数据分区目标对象，统筹分配触发器</strong></p>
+<p>调度器的作用就是要确保在分布式场景下，每一个二维数据分区都能被一个触发器负责处理，既不能遗漏，也不能重复</p>
+<ul>
+<li>调度器基于time ticker每秒钟进行一次工作，根据当前时刻推算出<strong>分钟级别</strong>的字符串表达式</li>
+<li>根据配置中最大桶数量，依次拼接分钟Key值得到若干个二维数据分区的Key值。例如<code>20:47:39_0</code>、<code>20:48:11_1</code></li>
+<li>尝试抢占数据分区的分布式锁，并把锁的过期时间设置为<strong>大于1倍分片时间，小于2倍分片时间</strong></li>
+<li>如果抢锁成功，就调度一个触发器进行作业</li>
+</ul>
+<h4 id="触发器模块"><a href="#触发器模块" class="headerlink" title="触发器模块"></a>触发器模块</h4><p><strong>按时唤醒二维数据分区中的定时任务</strong></p>
+<ul>
+<li>触发器被创建后，每秒对负责的数据分区进行扫描，以当前时刻为基准，将符合条件的定时任务取出并交付给执行器执行</li>
+<li>当触发器协程完成任务后，需要将分布式锁的过期时间延期至<strong>大于两个分区时间</strong></li>
+</ul>
+<blockquote>
+<p>为什么要对分布式锁进行延期？</p>
+<p>回答这个问题之前，需要补充的一点：为了对前一分钟的数据分区执行失败做兜底，每次触发器对当前分区进行扫描时都会对前一分钟的数据分区进行重试扫描。</p>
+<p>因此，如果前一个数据分区的任务执行失败，那么该分区的分布式锁无法得到延时，必然会在当前分钟内再次获得进而进行重试操作。反之，分布式锁得到了延时，那么当前分钟内就不会重复执行已成功执行的任务。</p>
+<p>也正是出于这个机制考虑，延迟的时间必须大于两个分区时间</p>
+</blockquote>
+<p>问题在于很难实现百分百的分布式事务，即无法保证<strong>完成分区任务 + 延迟分布式锁</strong>操作是原子的，因此这里只能是<strong>At least once</strong>语义。</p>
+<h4 id="执行器模块"><a href="#执行器模块" class="headerlink" title="执行器模块"></a>执行器模块</h4><p><strong>执行定时任务</strong></p>
+<ul>
+<li>一个执行器由触发器调度，对应一个具体的定时任务</li>
+<li>执行器首先对定时任务进行幂等检查</li>
+<li>执行任务</li>
+<li>更新定时任务的状态</li>
+</ul>
+<h3 id="任务迁移模块化"><a href="#任务迁移模块化" class="headerlink" title="任务迁移模块化"></a>任务迁移模块化</h3><p>LyyTimer项目使用MySQL + Redis二级存储模型，并设置了一个Migrator根据时间由近及远<strong>通过处于激活状态的定时器（cron表达式）生成一系列定时任务</strong>，并迁移同步至两个存储介质中</p>
+<h4 id="Migrator模块"><a href="#Migrator模块" class="headerlink" title="Migrator模块"></a>Migrator模块</h4><ul>
+<li>每隔一段时间步长就扫描所有的定时器，根据处于激活状态的定时器生成未来两个时间步长的定时任务（本质上就一个时间步长，都是为了失败兜底😂）<ul>
+<li>例如，每隔一小时就进行一次全表扫描，若14:45:34对所有的定时器进行一次扫描，迁移模块就会生成14:45:34 - 16:45:34这两个小时的定时任务并迁移至MySQL和Redis中。但14:45:34 - 15:45:34这个时间段的任务已经在13:45:34被Migrator模块生成并存储了，所以本质上迁移模块只生成了一小时的任务。重复的任务将会由于唯一约束而插入失败，所以不必担心任务重复插入</li>
+</ul>
+</li>
+</ul>
+<h5 id="串行打点还是批量打点？"><a href="#串行打点还是批量打点？" class="headerlink" title="串行打点还是批量打点？"></a>串行打点还是批量打点？</h5><p>串行打点就是指每次根据cron表达式<strong>只生成最近的一次</strong>定时任务，然后在执行器执行完这个任务后就立马生成下一次的定时任务，如此循环。</p>
+<p>串行打点比较节约资源，可以缓解生成任务过多导致的短时间内资源浪费问题，但是针对于短间隔高频执行的定时器（例如：1s执行一次）就有些力不从心了。</p>
+<p><strong>优化方案：批量打点</strong></p>
+<p>每隔一段时间程序就根据cron表达式生成一个时间步长的任务，这样可以有效解决短间隔高频率的任务生成问题。但如果用户对定时器进行频繁的修改，那为了保证数据一致性，就需要引入删除、修改已生成任务等复杂操作。为了规避这种情况，我们可以要求用户无法对已有的定时器进行修改，只允许<strong>激活</strong>和<strong>去激活</strong>两种操作</p>
+<p>此外，即使用户<strong>去激活</strong>某一个定时器，我们也无需修改已有的任务，只需要在回调之前检查定时器状态是否合法即可。</p>
+<h2 id="存储结构设计"><a href="#存储结构设计" class="headerlink" title="存储结构设计"></a>存储结构设计</h2><p><strong>定时器表</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>timer_id</td>
+<td>bigint</td>
+<td>自增主键ID（或有序UUID）</td>
+</tr>
+<tr>
+<td>ctime</td>
+<td>bigint</td>
+<td>创建时间（避免时区问题）</td>
+</tr>
+<tr>
+<td>utime</td>
+<td>bigint</td>
+<td>修改时间</td>
+</tr>
+<tr>
+<td>app</td>
+<td>varchar(128)</td>
+<td>业务方标识</td>
+</tr>
+<tr>
+<td>name</td>
+<td>varchar(256)</td>
+<td>任务名</td>
+</tr>
+<tr>
+<td>status</td>
+<td>tinyint</td>
+<td>任务状态：0新建、1激活、2未激活</td>
+</tr>
+<tr>
+<td>cron</td>
+<td>varchar(256)</td>
+<td>cron表达式，用于生成定时任务</td>
+</tr>
+<tr>
+<td>notify_http_param</td>
+<td>varchar(8192)</td>
+<td>回调上下文</td>
+</tr>
+</tbody></table>
+<p><strong>定时任务表</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>task_id</td>
+<td>bigint</td>
+<td>自增主键ID</td>
+</tr>
+<tr>
+<td>ctime</td>
+<td>bigint</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>utime</td>
+<td>bigint</td>
+<td>修改时间</td>
+</tr>
+<tr>
+<td>timer_id</td>
+<td>bigint</td>
+<td>对应的定时器ID</td>
+</tr>
+<tr>
+<td>app</td>
+<td>varchar(128)</td>
+<td>业务方标识</td>
+</tr>
+<tr>
+<td>output</td>
+<td>var(1024)</td>
+<td>执行结果</td>
+</tr>
+<tr>
+<td>status</td>
+<td>tinyint</td>
+<td>任务状态：0待执行、1成功、2失败</td>
+</tr>
+<tr>
+<td>run_timer</td>
+<td>bigint</td>
+<td>开始运行时间</td>
+</tr>
+<tr>
+<td>cost_time</td>
+<td>bigint</td>
+<td>误差时间</td>
+</tr>
+</tbody></table>
+<p><strong>单个分片结构</strong>：</p>
+<p>Key：时间 + bucket编号 &#x3D; “2024121115:54:51_01”</p>
+<p>Member：timerId + unix当前时间戳</p>
+<p>Score：unix当前时间戳</p>
+<p>一个可能的优化点：</p>
+<p>在任务状态上建立索引  —–&gt;  存在<strong>数据倾斜</strong></p>
+
+    </div>
+  </div>
+
+  
+    
+  <div class="sea-prev-next-wrapper">
+    
+      <div class="prev">
+        <span><</span>
+        <a class="link" href="/2024/12/27/%E5%8F%91%E5%B8%96%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/">
+          发帖功能实现
+        </a>
+      </div>
+    
+    
+      <div class="next">
+        <a class="link" href="/2024/12/27/%E6%8D%A2%E5%8F%96Mac%20OS%E7%AC%AC%E4%B8%80%E6%AD%A5/">
+          换取Mac OS
+        </a>
+        <span>></span>
+      </div>
+    
+  </div>
+
+  
+</article>
+
+
+  </main>
+  <footer id="sea-footer-container">
+  <div class="sea-footer-row">
+    <div class="sea-footer-menu-link">
+      
+    </div>
+  </div>
+  
+  
+  <div class="sea-footer-row">
+    <div class="sea-footer-copyright">
+      <span>©</span>
+      
+        2025
+      
+      <span>·</span>
+      John Doe
+    </div>
+    <span class="split-line">|</span>
+    <div class="sea-footer-theme-by">
+      Theme by <a class="theme" href="https://github.com/hai-zou/hexo-theme-sea" target="_blank">Sea</a>
+    </div>
+  </div>
+</footer>
+
+  
+<script src="/js/main.js"></script>
+
+
+<script src="/js/theme.js"></script>
+
+</body>
+</html>

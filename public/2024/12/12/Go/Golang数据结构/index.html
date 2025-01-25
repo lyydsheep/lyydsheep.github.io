@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>lyydsheep</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="theme-color" content="#10b981">
+
+  <link rel="canonical" href="http://example.com/2024/12/12/Go/Golang%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+
+  <link rel="shortcut icon" href="/">
+
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+
+  
+  <meta name="description" content="记录Go数据结构相关知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lyydsheep">
+<meta property="og:url" content="http://example.com/2024/12/12/Go/Golang%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="lyydsheep">
+<meta property="og:description" content="记录Go数据结构相关知识">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202410051022321.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202410051035476.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202410051037987.png">
+<meta property="article:published_time" content="2024-12-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-12-27T11:03:15.342Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202410051022321.png">
+
+  <style>
+    :root {
+      --sea-color-primary: #10b981;
+    }
+  </style>
+
+  
+<script src="/js/theme_mode.js"></script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+  <header class="sea-header">
+    <nav class="sea-nav-wrap">
+  <h1 class="sea-nav-logo" title="">
+    <a href="/">lyydsheep</a>
+  </h1>
+  <div class="sea-nav-menus">
+    <div id="sea-nav-toggle">
+      <svg t="1716965724278" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10878" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M950.857143 768v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429v-73.142857c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z m0-292.571429v73.142858c0 20.004571-16.566857 36.571429-36.571429 36.571428H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571428v-73.142858c0-20.004571 16.566857-36.571429 36.571429-36.571428h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571428z m0-292.571428v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429V182.857143c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z" p-id="10879"></path></svg>
+    </div>
+
+    <div class="sea-menu-wrap">
+  
+
+  <span class="sea-menu-sep">|</span>
+
+  
+
+  <span class="sea-menu-icon" id="sea-theme-dark">
+    <svg t="1725413107294" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10118" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M557.553778 976.355556c-257.265778 0-466.56-207.160889-466.56-464.426667 0-253.923556 206.577778-464.284444 460.501333-464.284445h0.355556c10.766222 0 20.622222 3.953778 25.443555 13.610667 4.878222 9.756444 3.740444 20.394667-2.915555 29.027556-55.722667 72.220444-85.162667 158.108444-85.162667 249.372444 0 225.891556 183.779556 409.386667 409.671111 409.386667l5.248-0.256c10.325333-0.142222 20.977778 5.859556 25.841778 15.644444a28.302222 28.302222 0 0 1-2.915556 30.051556C837.902222 910.08 703.203556 976.355556 557.553778 976.355556zM495.274667 105.016889C299.192889 135.281778 147.882667 306.161778 147.882667 509.809778c0 225.877333 183.779556 409.656889 409.671111 409.656889 108.686222 0 210.403556-42.055111 286.577778-116.977778-231.566222-27.192889-411.804444-224.625778-411.804445-463.36 0-83.427556 21.617778-163.299556 62.947556-234.112z" fill="" p-id="10119"></path><path d="M578.830222 879.132444c-186.865778 0-345.784889-133.418667-377.841778-317.269333a14.222222 14.222222 0 1 1 28.017778-4.878222c29.681778 170.183111 176.810667 293.703111 349.824 293.703111a14.222222 14.222222 0 1 1 0 28.444444zM209.991111 531.2c-7.537778 0-13.838222-6.997333-14.193778-14.606222-0.312889-6.584889-0.483556-13.795556-0.483555-20.465778 0-7.864889 6.357333-14.492444 14.222222-14.492444s14.222222 6.229333 14.222222 14.094222c0 6.229333 0.170667 13.425778 0.455111 19.584 0.369778 7.850667-5.674667 15.886222-13.525333 15.886222h-0.696889z" fill="" p-id="10120"></path><path d="M622.350222 309.930667m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10121"></path><path d="M787.072 188.273778m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10122"></path><path d="M731.960889 415.303111m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" p-id="10123"></path></svg>
+  </span>
+  <span class="sea-menu-icon" id="sea-theme-light">
+    <svg t="1725410359322" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4274" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M512 768c-141.376 0-256-114.624-256-256s114.624-256 256-256 256 114.624 256 256-114.624 256-256 256z m0-85.333333a170.666667 170.666667 0 1 0 0-341.333334 170.666667 170.666667 0 0 0 0 341.333334zM469.333333 85.333333a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0V85.333333z m0 768a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0v-85.333334zM85.333333 554.666667a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334H85.333333z m768 0a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334h-85.333334zM161.834667 222.165333a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m576 576a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m-515.669334 64a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z m576-576a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z" p-id="4275"></path></svg>
+  </span>
+
+  <span id="sea-menu-close-icon">
+    <svg t="1725435896874" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4408" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M556.8 512l265.6-265.6c12.8-12.8 12.8-32 0-44.8s-32-12.8-44.8 0L512 467.2 246.4 201.6c-12.8-12.8-32-12.8-44.8 0s-12.8 32 0 44.8l265.6 265.6-265.6 265.6c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 12.8 9.6 22.4 9.6s16-3.2 22.4-9.6l265.6-265.6 265.6 265.6c6.4 6.4 16 9.6 22.4 9.6s16-3.2 22.4-9.6c12.8-12.8 12.8-32 0-44.8L556.8 512z" p-id="4409"></path></svg>
+  </span>
+</div>
+<div id="sea-nav-dimmer"></div>
+  </div>
+</nav>
+  </header>
+  <main id="sea-main-wrapper">
+    <article class="sea-page-card-wrapper">
+  <header class="sea-article-header">
+    <h1 class="sea-article-title"></h1>
+    
+      <div class="sea-post-meta sea-post-meta__center">
+        <div class="sea-post-time">
+  <svg t="1716964550804" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2621" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M805.49888 981.49888l-602.3168-0.76288c-86.59456-8.192-154.56768-81.3056-154.56768-170.01472L48.6144 291.73248c0-94.1568 76.60032-170.75712 170.7776-170.75712l586.10176 0c94.1568 0 170.73152 76.60032 170.73152 170.75712L976.22528 810.7008C976.2304 904.87296 899.63008 981.49888 805.49888 981.49888L805.49888 981.49888zM219.3664 190.57152c-55.79776 0-101.20192 45.38368-101.20192 101.18144l0 518.96832c0 55.79776 45.40416 101.20704 101.20192 101.20704l586.13248 0c55.77728 0 101.16096-45.40928 101.16096-101.20704L906.65984 291.73248c0-55.79776-45.38368-101.18656-101.16096-101.18656L219.3664 190.54592 219.3664 190.57152zM698.84416 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L745.22624 244.1216C745.22624 269.7472 724.46976 290.51904 698.84416 290.51904L698.84416 290.51904zM315.65824 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L362.04032 244.1216C362.04032 269.7472 341.28896 290.51904 315.65824 290.51904L315.65824 290.51904zM534.8864 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C581.26848 774.01088 560.4864 794.78784 534.8864 794.78784L534.8864 794.78784zM930.79552 452.608 121.24672 452.608c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l809.5744 0c25.6 0 46.38208 20.77696 46.38208 46.38208C977.2032 431.82592 956.42624 452.608 930.79552 452.608L930.79552 452.608zM327.92576 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208C374.30784 628.25472 353.52576 649.03168 327.92576 649.03168L327.92576 649.03168zM534.8864 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208S560.4864 649.03168 534.8864 649.03168L534.8864 649.03168zM741.27872 649.03168l-44.26752 0c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.77696 46.38208 46.38208C787.6608 628.25472 766.90944 649.03168 741.27872 649.03168L741.27872 649.03168zM327.92576 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C374.30784 774.01088 353.52576 794.78784 327.92576 794.78784L327.92576 794.78784zM741.27872 794.78784l-44.26752 0c-25.60512 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.78208 46.38208 46.38208C787.6608 774.01088 766.90944 794.78784 741.27872 794.78784L741.27872 794.78784z" p-id="2622"></path></svg>
+  <time datetime="2024-12-11T16:00:00.000Z">2024-12-12</time>
+</div>
+        
+        
+  <div class="sea-post-tags">
+    <svg t="1716964811431" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6117" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M384 977.152c-20.5312 0-39.8336-7.9872-54.3232-22.4256l-260.4032-260.4032c-14.4896-14.4896-22.4256-33.7408-22.4256-54.3232s7.9872-39.8336 22.4256-54.3232l439.6032-439.6032c24.9344-24.9344 70.2464-43.7248 105.5232-43.7248h230.4c42.3424 0 76.8 34.4576 76.8 76.8v230.4c0 35.2256-18.7904 80.5888-43.6736 105.5232l-439.6032 439.6032a76.1856 76.1856 0 0 1-54.3232 22.4256zM614.4 153.6c-21.248 0-54.272 13.6704-69.2736 28.7232l-439.6032 439.6032c-4.8128 4.8128-7.424 11.2128-7.424 18.1248s2.6624 13.312 7.424 18.0736l260.4032 260.4032c4.8128 4.8128 11.2128 7.424 18.1248 7.424s13.312-2.6624 18.1248-7.424l439.6032-439.6032c15.0016-15.0016 28.7232-48.0768 28.7232-69.3248V179.2a25.6 25.6 0 0 0-25.6-25.6h-230.4z" p-id="6118"></path><path d="M742.4 358.4c-42.3424 0-76.8-34.4576-76.8-76.8S700.0576 204.8 742.4 204.8s76.8 34.4576 76.8 76.8S784.7424 358.4 742.4 358.4z m0-102.4a25.6 25.6 0 1 0 0 51.2 25.6 25.6 0 0 0 0-51.2z" p-id="6119"></path></svg>
+    <a class="tag-link" href="/tags/Go/" rel="tag">Go</a>
+  </div>
+
+      </div>
+    
+  </header>
+  <div class="sea-doc">
+    
+    
+      <div class="sea-article-catalog">
+        <h2>Table of contents</h2>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Go%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">Go数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#string"><span class="toc-number">1.1.</span> <span class="toc-text">string</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#string%E5%92%8C-byte%E7%9A%84%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.1.1.</span> <span class="toc-text">string和[]byte的互相转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#slice"><span class="toc-number">1.2.</span> <span class="toc-text">slice</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#slice%E5%BA%95%E5%B1%82%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.1.</span> <span class="toc-text">slice底层结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#slice%E9%97%AE%E9%A2%98%E8%A7%A3%E5%AF%86"><span class="toc-number">1.2.2.</span> <span class="toc-text">slice问题解密</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+    <div class="sea-article-content">
+      <h1 id="Go数据结构"><a href="#Go数据结构" class="headerlink" title="Go数据结构"></a>Go数据结构</h1><h2 id="string"><a href="#string" class="headerlink" title="string"></a>string</h2><p>Go语言中，string可以看作是所有<strong>8bit 字节</strong>的集合，一个字节数组。</p>
+<ul>
+<li>字符串可以为空串，但不能为nil</li>
+<li>字符串的字面值是只读的，不可以被修改<ul>
+<li>字符串是不能被修改的，但是变量可以重新赋值</li>
+</ul>
+</li>
+</ul>
+<p>在源码中也给出了string的结构：其中<code>str</code>是<strong>指向字符串首地址的指针</strong>、<code>len</code>表示<strong>字符串的长度</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> stringStruct <span class="keyword">struct</span> &#123;</span><br><span class="line">    str unsafe.Pointer</span><br><span class="line">    <span class="built_in">len</span> <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>🌰：</p>
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410051022321.png" alt="image-20241005102225290" style="zoom:67%;" />
+
+<p>值得注意的是，<strong>len表示字符串长度是以字节数计量的</strong>，而非字符数。</p>
+<p>举个🌰：字符串<code>hello</code>的字节数和字符数是5，长度也是5；而字符串<code>hello啊</code>的字节数是8、字符数是6，而长度同字节数一样是8</p>
+<p>所以对包含非单字节编码的字符的字符串进行<code>len()</code>操作，可能会得到意想不到的结果</p>
+<h3 id="string和-byte的互相转换"><a href="#string和-byte的互相转换" class="headerlink" title="string和[]byte的互相转换"></a>string和[]byte的互相转换</h3><p>string和[]byte的转化（一般）会发生一次内存拷贝，并申请一块新的切片内存空间</p>
+<p><strong>[]byte转为string的大致过程：</strong></p>
+<ul>
+<li>申请一块新的内存空间，并记录首地址<code>addr</code>和字节长度<code>len</code></li>
+<li>构建string对象，指针地址为<code>addr</code>，<code>len</code>字段赋值为<code>len</code></li>
+<li>将源字节切片中的数据拷贝到刚申请的内存空间中</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410051035476.png" alt="image-20241005103541446"></p>
+<p>string转为[]byte的大致过程：</p>
+<ul>
+<li><p>申请一块新的内存空间</p>
+</li>
+<li><p>将string指针所指向的内存区域拷贝<code>len</code>字节到刚申请的空间中</p>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410051037987.png" alt="image-20241005103722955"></p>
+</li>
+</ul>
+<p>⚠️：当<strong>转化为的字符串被用于临时场景时</strong>，string和[]byte之间的转换并<strong>不会发生拷贝</strong></p>
+<p>例如：</p>
+<ul>
+<li>字符串比较：string(ss) &#x3D;&#x3D; “hello”</li>
+<li>字符串拼接：”hello” + string(ss) + “world”</li>
+<li>用于查找：k, v :&#x3D; map[string(ss)]</li>
+</ul>
+<p>在上述场景中，[]byte转换的字符串只有临时作用，在后续程序中不会再次使用，所以并不会拷贝到内存，而是直接返回一个string，这个string的指针就指向字节切片的内存地址</p>
+<h2 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h2><p>在Go语言中，slice是基于数组封装出来的抽象数据结构。因此在解析slice之前，需要先认识认识golang中的数组。</p>
+<p>Go语言中的数组是一种值类型，和C语言中的指针类型不同，所以在Go中对数组进行复制、传参都是进行<strong>值复制</strong>操作，就和<code>int</code>、<code>float64</code>这些基本数据类型类似</p>
+<p>数组类型在golang中由<strong>数组大小和数据类型</strong>共同决定，验证例子如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arr := [<span class="number">3</span>]<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line">fmt.Printf(<span class="string">&quot;arr`s type is %T&quot;</span>, arr)</span><br><span class="line"><span class="comment">//arr`s type is [3]int</span></span><br></pre></td></tr></table></figure>
+
+<p>正因为数组类型在初始时就被确定（大小和数据类型），所以在面对一些动态存储的场景时数组就有点力不从心了。</p>
+<p><strong>slice</strong>就是为了解决数组在长度上不可增长的问题，基于数组实现了<strong>变长数组</strong>的机制</p>
+<h3 id="slice底层结构"><a href="#slice底层结构" class="headerlink" title="slice底层结构"></a>slice底层结构</h3><p>slice底层结构如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> slice <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="comment">// 底层数组指针</span></span><br><span class="line">    array unsafe.Pointer</span><br><span class="line">    <span class="comment">// slice的长度</span></span><br><span class="line">    <span class="built_in">len</span> <span class="type">int</span></span><br><span class="line">    <span class="comment">// 容量</span></span><br><span class="line">    <span class="built_in">cap</span> <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>slice扩容两步骤：</p>
+<ol>
+<li>计算所需容量<ol>
+<li>如果<strong>新切片的长度＞旧切片的容量的两倍</strong>，那么新切片的容量等于长度</li>
+<li>否则<ol>
+<li>如果<strong>旧切片的容量＜256</strong>，那么新切片的容量就是原容量的两倍</li>
+<li>否则新切片的容量就是<strong>1.25 * 原切片容量+3&#x2F;4 * 256</strong></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>内存对齐，确定最终容量<ol>
+<li>按照Go内存管理的级别确对齐内存，最终容量以此为准</li>
+</ol>
+</li>
+</ol>
+<h3 id="slice问题解密"><a href="#slice问题解密" class="headerlink" title="slice问题解密"></a>slice问题解密</h3><ul>
+<li><p>slice通过函数传递的是什么？</p>
+<ul>
+<li><p>传递的是底层slice结构体的拷贝</p>
+</li>
+<li><pre><code class="go">func PrintSliceStruct(s *[]int) &#123;
+    ss := (*reflect.SliceHeader)(unsafe.Pointer(s))
+    fmt.Printf(&quot;slice struct: %+v, slice is %v\n&quot;, ss, s)
+&#125;
+
+func test(s []int) &#123;
+    fmt.Printf(&quot;slice address in main is %p	&quot;, &amp;s)
+    PrintSliceStruct(&amp;s)
+&#125;
+
+func main() &#123;
+    s := make([]int, 5, 10)
+    fmt.Printf(&quot;slice address in main is %p	&quot;, &amp;s)
+    PrintSliceStruct(&amp;s)
+    test(s)
+    /*
+    slice address in main is 0xc000008048	slice struct: &amp;&#123;Data:824633788048 Len:5 Cap:10&#125;, slice is &amp;[0 0 0 0 0]
+    slice address in main is 0xc000008078	slice struct: &amp;&#123;Data:824633788048 Len:5 Cap:10&#125;, slice is &amp;[0 0 0 0 0]
+     */
+&#125;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 在函数里面改变slice，外层会受到影响吗？</span><br><span class="line"></span><br><span class="line">  - 只要修改的底层数组是同一个，那么就会受到影响</span><br></pre></td></tr></table></figure>
+func test1(s []int) &#123;
+    s[0] = 7
+    fmt.Printf(&quot;test1 value %v\n&quot;, s)
+&#125;
+
+func test2(s []int) &#123;
+    s = append(s, 4)
+    fmt.Printf(&quot;test2 value %v\n&quot;, s)
+&#125;
+
+func main() &#123;
+    s := []int&#123;1, 2, 3&#125;
+    fmt.Printf(&quot;initial value of s: %v\n&quot;, s)
+    test1(s) // 底层数组相同，会受到影响
+    fmt.Printf(&quot;after test1, value of s: %v\n&quot;, s)
+    test2(s) // 底层数组发生变化，不受影响
+    fmt.Printf(&quot;after test2, value of s: %v\n&quot;, s)
+    /*
+    initial value of s: [1 2 3]
+    test1 value [7 2 3]
+    after test1, value of s: [7 2 3]
+    test2 value [7 2 3 4]
+    after test2, value of s: [7 2 3]
+     */
+&#125;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>## sync.map
+
+这里是sync.map
+</code></pre>
+
+    </div>
+  </div>
+
+  
+    
+  <div class="sea-prev-next-wrapper">
+    
+      <div class="prev">
+        <span><</span>
+        <a class="link" href="/2024/12/12/%E4%BC%98%E8%B4%A8%E5%A5%BD%E6%96%87%E5%90%88%E9%9B%86/">
+          优质好文合集
+        </a>
+      </div>
+    
+    
+      <div class="next">
+        <a class="link" href="/2024/09/27/goroutine/">
+          goroutine、channel
+        </a>
+        <span>></span>
+      </div>
+    
+  </div>
+
+  
+</article>
+
+
+  </main>
+  <footer id="sea-footer-container">
+  <div class="sea-footer-row">
+    <div class="sea-footer-menu-link">
+      
+    </div>
+  </div>
+  
+  
+  <div class="sea-footer-row">
+    <div class="sea-footer-copyright">
+      <span>©</span>
+      
+        2025
+      
+      <span>·</span>
+      John Doe
+    </div>
+    <span class="split-line">|</span>
+    <div class="sea-footer-theme-by">
+      Theme by <a class="theme" href="https://github.com/hai-zou/hexo-theme-sea" target="_blank">Sea</a>
+    </div>
+  </div>
+</footer>
+
+  
+<script src="/js/main.js"></script>
+
+
+<script src="/js/theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>lyydsheep</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="theme-color" content="#10b981">
+
+  <link rel="canonical" href="http://example.com/2024/12/27/Sync/">
+
+  <link rel="shortcut icon" href="/">
+
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+
+  
+  <meta name="description" content="sync、contextSyncsync.WaitGroup在Go语言中可以使用sync.WaitGroup实现并发任务的同步以及协程等待 sync.WaitGroup是一个结构体，内置了一个计数器，有三个方法  Add(delta int)，计数器增加delta Done()，计数器-1 Wait()，阻塞当前协程的运行，直至计数器为0  🌰： 12345678910111213var wg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lyydsheep">
+<meta property="og:url" content="http://example.com/2024/12/27/Sync/index.html">
+<meta property="og:site_name" content="lyydsheep">
+<meta property="og:description" content="sync、contextSyncsync.WaitGroup在Go语言中可以使用sync.WaitGroup实现并发任务的同步以及协程等待 sync.WaitGroup是一个结构体，内置了一个计数器，有三个方法  Add(delta int)，计数器增加delta Done()，计数器-1 Wait()，阻塞当前协程的运行，直至计数器为0  🌰： 12345678910111213var wg">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-27T11:03:15.343Z">
+<meta property="article:modified_time" content="2024-12-27T11:03:15.343Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+  <style>
+    :root {
+      --sea-color-primary: #10b981;
+    }
+  </style>
+
+  
+<script src="/js/theme_mode.js"></script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+  <header class="sea-header">
+    <nav class="sea-nav-wrap">
+  <h1 class="sea-nav-logo" title="">
+    <a href="/">lyydsheep</a>
+  </h1>
+  <div class="sea-nav-menus">
+    <div id="sea-nav-toggle">
+      <svg t="1716965724278" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10878" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M950.857143 768v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429v-73.142857c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z m0-292.571429v73.142858c0 20.004571-16.566857 36.571429-36.571429 36.571428H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571428v-73.142858c0-20.004571 16.566857-36.571429 36.571429-36.571428h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571428z m0-292.571428v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429V182.857143c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z" p-id="10879"></path></svg>
+    </div>
+
+    <div class="sea-menu-wrap">
+  
+
+  <span class="sea-menu-sep">|</span>
+
+  
+
+  <span class="sea-menu-icon" id="sea-theme-dark">
+    <svg t="1725413107294" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10118" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M557.553778 976.355556c-257.265778 0-466.56-207.160889-466.56-464.426667 0-253.923556 206.577778-464.284444 460.501333-464.284445h0.355556c10.766222 0 20.622222 3.953778 25.443555 13.610667 4.878222 9.756444 3.740444 20.394667-2.915555 29.027556-55.722667 72.220444-85.162667 158.108444-85.162667 249.372444 0 225.891556 183.779556 409.386667 409.671111 409.386667l5.248-0.256c10.325333-0.142222 20.977778 5.859556 25.841778 15.644444a28.302222 28.302222 0 0 1-2.915556 30.051556C837.902222 910.08 703.203556 976.355556 557.553778 976.355556zM495.274667 105.016889C299.192889 135.281778 147.882667 306.161778 147.882667 509.809778c0 225.877333 183.779556 409.656889 409.671111 409.656889 108.686222 0 210.403556-42.055111 286.577778-116.977778-231.566222-27.192889-411.804444-224.625778-411.804445-463.36 0-83.427556 21.617778-163.299556 62.947556-234.112z" fill="" p-id="10119"></path><path d="M578.830222 879.132444c-186.865778 0-345.784889-133.418667-377.841778-317.269333a14.222222 14.222222 0 1 1 28.017778-4.878222c29.681778 170.183111 176.810667 293.703111 349.824 293.703111a14.222222 14.222222 0 1 1 0 28.444444zM209.991111 531.2c-7.537778 0-13.838222-6.997333-14.193778-14.606222-0.312889-6.584889-0.483556-13.795556-0.483555-20.465778 0-7.864889 6.357333-14.492444 14.222222-14.492444s14.222222 6.229333 14.222222 14.094222c0 6.229333 0.170667 13.425778 0.455111 19.584 0.369778 7.850667-5.674667 15.886222-13.525333 15.886222h-0.696889z" fill="" p-id="10120"></path><path d="M622.350222 309.930667m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10121"></path><path d="M787.072 188.273778m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10122"></path><path d="M731.960889 415.303111m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" p-id="10123"></path></svg>
+  </span>
+  <span class="sea-menu-icon" id="sea-theme-light">
+    <svg t="1725410359322" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4274" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M512 768c-141.376 0-256-114.624-256-256s114.624-256 256-256 256 114.624 256 256-114.624 256-256 256z m0-85.333333a170.666667 170.666667 0 1 0 0-341.333334 170.666667 170.666667 0 0 0 0 341.333334zM469.333333 85.333333a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0V85.333333z m0 768a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0v-85.333334zM85.333333 554.666667a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334H85.333333z m768 0a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334h-85.333334zM161.834667 222.165333a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m576 576a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m-515.669334 64a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z m576-576a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z" p-id="4275"></path></svg>
+  </span>
+
+  <span id="sea-menu-close-icon">
+    <svg t="1725435896874" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4408" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M556.8 512l265.6-265.6c12.8-12.8 12.8-32 0-44.8s-32-12.8-44.8 0L512 467.2 246.4 201.6c-12.8-12.8-32-12.8-44.8 0s-12.8 32 0 44.8l265.6 265.6-265.6 265.6c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 12.8 9.6 22.4 9.6s16-3.2 22.4-9.6l265.6-265.6 265.6 265.6c6.4 6.4 16 9.6 22.4 9.6s16-3.2 22.4-9.6c12.8-12.8 12.8-32 0-44.8L556.8 512z" p-id="4409"></path></svg>
+  </span>
+</div>
+<div id="sea-nav-dimmer"></div>
+  </div>
+</nav>
+  </header>
+  <main id="sea-main-wrapper">
+    <article class="sea-page-card-wrapper">
+  <header class="sea-article-header">
+    <h1 class="sea-article-title"></h1>
+    
+      <div class="sea-post-meta sea-post-meta__center">
+        <div class="sea-post-time">
+  <svg t="1716964550804" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2621" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M805.49888 981.49888l-602.3168-0.76288c-86.59456-8.192-154.56768-81.3056-154.56768-170.01472L48.6144 291.73248c0-94.1568 76.60032-170.75712 170.7776-170.75712l586.10176 0c94.1568 0 170.73152 76.60032 170.73152 170.75712L976.22528 810.7008C976.2304 904.87296 899.63008 981.49888 805.49888 981.49888L805.49888 981.49888zM219.3664 190.57152c-55.79776 0-101.20192 45.38368-101.20192 101.18144l0 518.96832c0 55.79776 45.40416 101.20704 101.20192 101.20704l586.13248 0c55.77728 0 101.16096-45.40928 101.16096-101.20704L906.65984 291.73248c0-55.79776-45.38368-101.18656-101.16096-101.18656L219.3664 190.54592 219.3664 190.57152zM698.84416 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L745.22624 244.1216C745.22624 269.7472 724.46976 290.51904 698.84416 290.51904L698.84416 290.51904zM315.65824 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L362.04032 244.1216C362.04032 269.7472 341.28896 290.51904 315.65824 290.51904L315.65824 290.51904zM534.8864 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C581.26848 774.01088 560.4864 794.78784 534.8864 794.78784L534.8864 794.78784zM930.79552 452.608 121.24672 452.608c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l809.5744 0c25.6 0 46.38208 20.77696 46.38208 46.38208C977.2032 431.82592 956.42624 452.608 930.79552 452.608L930.79552 452.608zM327.92576 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208C374.30784 628.25472 353.52576 649.03168 327.92576 649.03168L327.92576 649.03168zM534.8864 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208S560.4864 649.03168 534.8864 649.03168L534.8864 649.03168zM741.27872 649.03168l-44.26752 0c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.77696 46.38208 46.38208C787.6608 628.25472 766.90944 649.03168 741.27872 649.03168L741.27872 649.03168zM327.92576 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C374.30784 774.01088 353.52576 794.78784 327.92576 794.78784L327.92576 794.78784zM741.27872 794.78784l-44.26752 0c-25.60512 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.78208 46.38208 46.38208C787.6608 774.01088 766.90944 794.78784 741.27872 794.78784L741.27872 794.78784z" p-id="2622"></path></svg>
+  <time datetime="2024-12-27T11:03:15.343Z">2024-12-27</time>
+</div>
+        
+        
+      </div>
+    
+  </header>
+  <div class="sea-doc">
+    
+    
+      <div class="sea-article-catalog">
+        <h2>Table of contents</h2>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sync%E3%80%81context"><span class="toc-number">1.</span> <span class="toc-text">sync、context</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sync"><span class="toc-number">1.1.</span> <span class="toc-text">Sync</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sync-WaitGroup"><span class="toc-number">1.1.1.</span> <span class="toc-text">sync.WaitGroup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sync-Once"><span class="toc-number">1.1.2.</span> <span class="toc-text">sync.Once</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8Einit-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">与init()的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sync-Map"><span class="toc-number">1.1.3.</span> <span class="toc-text">sync.Map</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Context"><span class="toc-number">1.2.</span> <span class="toc-text">Context</span></a></li></ol></li></ol>
+      </div>
+    
+    <div class="sea-article-content">
+      <h1 id="sync、context"><a href="#sync、context" class="headerlink" title="sync、context"></a>sync、context</h1><h2 id="Sync"><a href="#Sync" class="headerlink" title="Sync"></a>Sync</h2><h3 id="sync-WaitGroup"><a href="#sync-WaitGroup" class="headerlink" title="sync.WaitGroup"></a>sync.WaitGroup</h3><p>在Go语言中可以使用<code>sync.WaitGroup</code>实现并发任务的同步以及协程等待</p>
+<p><code>sync.WaitGroup</code>是一个结构体，内置了一个计数器，有三个方法</p>
+<ul>
+<li>Add(delta int)，计数器增加<code>delta</code></li>
+<li>Done()，计数器<code>-1</code></li>
+<li>Wait()，<strong>阻塞当前协程的运行，直至计数器为0</strong></li>
+</ul>
+<p>🌰：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	wg.Add(<span class="number">10</span>)</span><br><span class="line">	<span class="keyword">for</span> <span class="keyword">range</span> <span class="number">10</span> &#123;</span><br><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">			<span class="keyword">defer</span> wg.Done()</span><br><span class="line">			fmt.Println(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">		&#125;()</span><br><span class="line">	&#125;</span><br><span class="line">	wg.Wait()</span><br><span class="line">	fmt.Println(<span class="string">&quot;end!&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>⚠️：<code>sync.WaitGroup</code>对象的计数器不能为负数，当调用Done()方法后，必须确保计数器值大于等于零，否则会<code>panic</code></p>
+<h3 id="sync-Once"><a href="#sync-Once" class="headerlink" title="sync.Once"></a>sync.Once</h3><p>程序中有一些逻辑只需要执行一次，最典型的就是项目中的配置文件，通常的做法有两种，一是在项目启动时就将代码执行并将结果保存在内存中，二是需要使用时再执行相应的逻辑代码，而<code>sync.Once</code>就属于后者</p>
+<p><code>sync.Once</code>可以在代码的任意位置初始化和调用，并且线程安全。<code>sync.Once</code>最大的用处就是<strong>延迟初始化（调用）并只初始化一次</strong>，避免过早执行代码逻辑导致内存空间的浪费</p>
+<p>🌰：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> once sync.Once</span><br><span class="line"><span class="keyword">var</span> instance *Config</span><br><span class="line"><span class="keyword">var</span> i = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Config <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Init</span><span class="params">()</span></span> &#123;</span><br><span class="line">	once.Do(<span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		instance = &amp;Config&#123;&#125;</span><br><span class="line">		fmt.Println(i)</span><br><span class="line">		i++</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> <span class="keyword">range</span> <span class="number">10</span> &#123;</span><br><span class="line">		Init()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由例子可知，被<code>once.Do()</code>包裹的函数只会执行一次，即使调用多次<code>Init()</code>函数</p>
+<h4 id="与init-的区别"><a href="#与init-的区别" class="headerlink" title="与init()的区别"></a>与init()的区别</h4><p><code>init()</code>方法和<code>sync.Once</code>都可以用来进行一些初始化操作，<strong>二者的区别主要在于被调用（初始化）的时机</strong></p>
+<p><code>init()</code>方法是在其所在的package被首次加载时执行的，可以确保在<code>main</code>函数之前执行，适用于程序启动时的初始化操作</p>
+<p><code>sync.Once</code>可以在代码的任意位置调用，适用于在<strong>并发环境下确保某个逻辑只执行一次</strong></p>
+<h3 id="sync-Map"><a href="#sync-Map" class="headerlink" title="sync.Map"></a>sync.Map</h3><p>Go内置的Map不是并发安全的，在多个goroutine操作情况下，会出现意想不到的结果。想要并发安全地使用Map结构，要么是进行加锁操作，要么就是使用<code>sync.Map</code>结构</p>
+<p><code>sync.Map</code>有如下常用方法</p>
+<ul>
+<li><code>Load()</code>：写入一个键值对</li>
+<li><code>Store()</code>：读取一个键值对</li>
+<li><code>Range()</code>：遍历map，类似于JS中的<code>for each</code></li>
+<li><code>Delete()</code>：删除操作</li>
+<li><code>LoadOrStore()</code>：读取或存储数据</li>
+</ul>
+<p>🌰：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> m sync.Map</span><br><span class="line">	m.Store(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;zhao&quot;</span>)</span><br><span class="line">	m.Store(<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;world&quot;</span>)</span><br><span class="line"></span><br><span class="line">	v, ok := m.Load(<span class="string">&quot;hello&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> ok &#123;</span><br><span class="line">		fmt.Println(v)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	m.Range(<span class="function"><span class="keyword">func</span><span class="params">(key, value any)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;key is %v	val is %v\n&quot;</span>, key, value)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	v, ok = m.LoadOrStore(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;yun&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> ok &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;name`s new val is %v\n&quot;</span>, v)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	m.Delete(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">	v, ok = m.Load(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> ok &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;name`s val is %v\n&quot;</span>, v)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><p>用于并发控制</p>
+<p>上下文的信息传递</p>
+
+    </div>
+  </div>
+
+  
+    
+  <div class="sea-prev-next-wrapper">
+    
+      <div class="prev">
+        <span><</span>
+        <a class="link" href="/2024/12/27/%E6%8D%A2%E5%8F%96Mac%20OS%E7%AC%AC%E4%B8%80%E6%AD%A5/">
+          换取Mac OS
+        </a>
+      </div>
+    
+    
+      <div class="next">
+        <a class="link" href="/2024/12/27/component/">
+          
+        </a>
+        <span>></span>
+      </div>
+    
+  </div>
+
+  
+</article>
+
+
+  </main>
+  <footer id="sea-footer-container">
+  <div class="sea-footer-row">
+    <div class="sea-footer-menu-link">
+      
+    </div>
+  </div>
+  
+  
+  <div class="sea-footer-row">
+    <div class="sea-footer-copyright">
+      <span>©</span>
+      
+        2025
+      
+      <span>·</span>
+      John Doe
+    </div>
+    <span class="split-line">|</span>
+    <div class="sea-footer-theme-by">
+      Theme by <a class="theme" href="https://github.com/hai-zou/hexo-theme-sea" target="_blank">Sea</a>
+    </div>
+  </div>
+</footer>
+
+  
+<script src="/js/main.js"></script>
+
+
+<script src="/js/theme.js"></script>
+
+</body>
+</html>

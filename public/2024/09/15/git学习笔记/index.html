@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Git学习笔记 | lyydsheep</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="theme-color" content="#10b981">
+
+  <link rel="canonical" href="http://example.com/2024/09/15/git%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+  <link rel="shortcut icon" href="/">
+
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+
+  
+  <meta name="description" content="浅学Git笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git学习笔记">
+<meta property="og:url" content="http://example.com/2024/09/15/git%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="lyydsheep">
+<meta property="og:description" content="浅学Git笔记">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-09-15T02:48:00.000Z">
+<meta property="article:modified_time" content="2024-12-27T11:03:15.343Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+
+  <style>
+    :root {
+      --sea-color-primary: #10b981;
+    }
+  </style>
+
+  
+<script src="/js/theme_mode.js"></script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+  <header class="sea-header">
+    <nav class="sea-nav-wrap">
+  <h1 class="sea-nav-logo" title="">
+    <a href="/">lyydsheep</a>
+  </h1>
+  <div class="sea-nav-menus">
+    <div id="sea-nav-toggle">
+      <svg t="1716965724278" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10878" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M950.857143 768v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429v-73.142857c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z m0-292.571429v73.142858c0 20.004571-16.566857 36.571429-36.571429 36.571428H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571428v-73.142858c0-20.004571 16.566857-36.571429 36.571429-36.571428h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571428z m0-292.571428v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429V182.857143c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z" p-id="10879"></path></svg>
+    </div>
+
+    <div class="sea-menu-wrap">
+  
+
+  <span class="sea-menu-sep">|</span>
+
+  
+
+  <span class="sea-menu-icon" id="sea-theme-dark">
+    <svg t="1725413107294" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10118" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M557.553778 976.355556c-257.265778 0-466.56-207.160889-466.56-464.426667 0-253.923556 206.577778-464.284444 460.501333-464.284445h0.355556c10.766222 0 20.622222 3.953778 25.443555 13.610667 4.878222 9.756444 3.740444 20.394667-2.915555 29.027556-55.722667 72.220444-85.162667 158.108444-85.162667 249.372444 0 225.891556 183.779556 409.386667 409.671111 409.386667l5.248-0.256c10.325333-0.142222 20.977778 5.859556 25.841778 15.644444a28.302222 28.302222 0 0 1-2.915556 30.051556C837.902222 910.08 703.203556 976.355556 557.553778 976.355556zM495.274667 105.016889C299.192889 135.281778 147.882667 306.161778 147.882667 509.809778c0 225.877333 183.779556 409.656889 409.671111 409.656889 108.686222 0 210.403556-42.055111 286.577778-116.977778-231.566222-27.192889-411.804444-224.625778-411.804445-463.36 0-83.427556 21.617778-163.299556 62.947556-234.112z" fill="" p-id="10119"></path><path d="M578.830222 879.132444c-186.865778 0-345.784889-133.418667-377.841778-317.269333a14.222222 14.222222 0 1 1 28.017778-4.878222c29.681778 170.183111 176.810667 293.703111 349.824 293.703111a14.222222 14.222222 0 1 1 0 28.444444zM209.991111 531.2c-7.537778 0-13.838222-6.997333-14.193778-14.606222-0.312889-6.584889-0.483556-13.795556-0.483555-20.465778 0-7.864889 6.357333-14.492444 14.222222-14.492444s14.222222 6.229333 14.222222 14.094222c0 6.229333 0.170667 13.425778 0.455111 19.584 0.369778 7.850667-5.674667 15.886222-13.525333 15.886222h-0.696889z" fill="" p-id="10120"></path><path d="M622.350222 309.930667m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10121"></path><path d="M787.072 188.273778m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10122"></path><path d="M731.960889 415.303111m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" p-id="10123"></path></svg>
+  </span>
+  <span class="sea-menu-icon" id="sea-theme-light">
+    <svg t="1725410359322" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4274" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M512 768c-141.376 0-256-114.624-256-256s114.624-256 256-256 256 114.624 256 256-114.624 256-256 256z m0-85.333333a170.666667 170.666667 0 1 0 0-341.333334 170.666667 170.666667 0 0 0 0 341.333334zM469.333333 85.333333a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0V85.333333z m0 768a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0v-85.333334zM85.333333 554.666667a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334H85.333333z m768 0a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334h-85.333334zM161.834667 222.165333a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m576 576a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m-515.669334 64a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z m576-576a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z" p-id="4275"></path></svg>
+  </span>
+
+  <span id="sea-menu-close-icon">
+    <svg t="1725435896874" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4408" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M556.8 512l265.6-265.6c12.8-12.8 12.8-32 0-44.8s-32-12.8-44.8 0L512 467.2 246.4 201.6c-12.8-12.8-32-12.8-44.8 0s-12.8 32 0 44.8l265.6 265.6-265.6 265.6c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 12.8 9.6 22.4 9.6s16-3.2 22.4-9.6l265.6-265.6 265.6 265.6c6.4 6.4 16 9.6 22.4 9.6s16-3.2 22.4-9.6c12.8-12.8 12.8-32 0-44.8L556.8 512z" p-id="4409"></path></svg>
+  </span>
+</div>
+<div id="sea-nav-dimmer"></div>
+  </div>
+</nav>
+  </header>
+  <main id="sea-main-wrapper">
+    <article class="sea-page-card-wrapper">
+  <header class="sea-article-header">
+    <h1 class="sea-article-title">Git学习笔记</h1>
+    
+      <div class="sea-post-meta sea-post-meta__center">
+        <div class="sea-post-time">
+  <svg t="1716964550804" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2621" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M805.49888 981.49888l-602.3168-0.76288c-86.59456-8.192-154.56768-81.3056-154.56768-170.01472L48.6144 291.73248c0-94.1568 76.60032-170.75712 170.7776-170.75712l586.10176 0c94.1568 0 170.73152 76.60032 170.73152 170.75712L976.22528 810.7008C976.2304 904.87296 899.63008 981.49888 805.49888 981.49888L805.49888 981.49888zM219.3664 190.57152c-55.79776 0-101.20192 45.38368-101.20192 101.18144l0 518.96832c0 55.79776 45.40416 101.20704 101.20192 101.20704l586.13248 0c55.77728 0 101.16096-45.40928 101.16096-101.20704L906.65984 291.73248c0-55.79776-45.38368-101.18656-101.16096-101.18656L219.3664 190.54592 219.3664 190.57152zM698.84416 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L745.22624 244.1216C745.22624 269.7472 724.46976 290.51904 698.84416 290.51904L698.84416 290.51904zM315.65824 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L362.04032 244.1216C362.04032 269.7472 341.28896 290.51904 315.65824 290.51904L315.65824 290.51904zM534.8864 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C581.26848 774.01088 560.4864 794.78784 534.8864 794.78784L534.8864 794.78784zM930.79552 452.608 121.24672 452.608c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l809.5744 0c25.6 0 46.38208 20.77696 46.38208 46.38208C977.2032 431.82592 956.42624 452.608 930.79552 452.608L930.79552 452.608zM327.92576 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208C374.30784 628.25472 353.52576 649.03168 327.92576 649.03168L327.92576 649.03168zM534.8864 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208S560.4864 649.03168 534.8864 649.03168L534.8864 649.03168zM741.27872 649.03168l-44.26752 0c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.77696 46.38208 46.38208C787.6608 628.25472 766.90944 649.03168 741.27872 649.03168L741.27872 649.03168zM327.92576 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C374.30784 774.01088 353.52576 794.78784 327.92576 794.78784L327.92576 794.78784zM741.27872 794.78784l-44.26752 0c-25.60512 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.78208 46.38208 46.38208C787.6608 774.01088 766.90944 794.78784 741.27872 794.78784L741.27872 794.78784z" p-id="2622"></path></svg>
+  <time datetime="2024-09-15T02:48:00.000Z">2024-09-15</time>
+</div>
+        
+        
+  <div class="sea-post-tags">
+    <svg t="1716964811431" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6117" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M384 977.152c-20.5312 0-39.8336-7.9872-54.3232-22.4256l-260.4032-260.4032c-14.4896-14.4896-22.4256-33.7408-22.4256-54.3232s7.9872-39.8336 22.4256-54.3232l439.6032-439.6032c24.9344-24.9344 70.2464-43.7248 105.5232-43.7248h230.4c42.3424 0 76.8 34.4576 76.8 76.8v230.4c0 35.2256-18.7904 80.5888-43.6736 105.5232l-439.6032 439.6032a76.1856 76.1856 0 0 1-54.3232 22.4256zM614.4 153.6c-21.248 0-54.272 13.6704-69.2736 28.7232l-439.6032 439.6032c-4.8128 4.8128-7.424 11.2128-7.424 18.1248s2.6624 13.312 7.424 18.0736l260.4032 260.4032c4.8128 4.8128 11.2128 7.424 18.1248 7.424s13.312-2.6624 18.1248-7.424l439.6032-439.6032c15.0016-15.0016 28.7232-48.0768 28.7232-69.3248V179.2a25.6 25.6 0 0 0-25.6-25.6h-230.4z" p-id="6118"></path><path d="M742.4 358.4c-42.3424 0-76.8-34.4576-76.8-76.8S700.0576 204.8 742.4 204.8s76.8 34.4576 76.8 76.8S784.7424 358.4 742.4 358.4z m0-102.4a25.6 25.6 0 1 0 0 51.2 25.6 25.6 0 0 0 0-51.2z" p-id="6119"></path></svg>
+    <a class="tag-link" href="/tags/Git/" rel="tag">Git</a>
+  </div>
+
+      </div>
+    
+  </header>
+  <div class="sea-doc">
+    
+    
+      <div class="sea-article-catalog">
+        <h2>Table of contents</h2>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">Git基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.</span> <span class="toc-text">最小配置</span></a></li></ol></li></ol>
+      </div>
+    
+    <div class="sea-article-content">
+      <h1 id="Git基础"><a href="#Git基础" class="headerlink" title="Git基础"></a>Git基础</h1><blockquote>
+<p>推荐两个学习Git的网站</p>
+<p><a target="_blank" rel="noopener" href="https://learngitbranching.js.org/?locale=zh_CN">Git在线练习</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1HM411377j/?spm_id_from=333.337.search-card.all.click&vd_source=a15269894d9b8114cb5f9bb663d22be9">Git科普视频</a></p>
+<p>“惟手熟尔”</p>
+</blockquote>
+<h2 id="最小配置"><a href="#最小配置" class="headerlink" title="最小配置"></a>最小配置</h2><ul>
+<li><p>配置user信息</p>
+<ul>
+<li><p>配置user.name:<code>git config --global user.name &#39;lyydsheep&#39;</code></p>
+</li>
+<li><p>配置user.email:<code>git config --global user.email &#39;2230561977@qq.com&#39;</code></p>
+</li>
+<li><pre><code class="Go">//显示不同级别的配置信息
+git config --list --local
+git config --list --global
+git config --list --system
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 新建仓库</span><br><span class="line"></span><br><span class="line">在git中有两种新建仓库的方式</span><br><span class="line"></span><br><span class="line">- `git init`：在本地新建一个仓库</span><br><span class="line">- `git clone url`：从远程服务器上克隆一个仓库</span><br><span class="line"></span><br><span class="line">## 工作区和缓存区</span><br><span class="line"></span><br><span class="line">![image-20240915102716820](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151027874.png)</span><br><span class="line"></span><br><span class="line">## 添加和提交文件</span><br><span class="line"></span><br><span class="line">- `git status`：查看仓库状态</span><br><span class="line">- `git add`：添加到暂存区</span><br><span class="line">    - 可以使用通配符：`git add *.txt`</span><br><span class="line">    - 也可以使用目录：`git add .`</span><br><span class="line">- `git commit`：只提交**暂存区**中的内容，不会提交**工作区**的内容</span><br><span class="line">- `git log`：查看仓库历史提交记录</span><br><span class="line">    - `git log --oneline`：简洁地呈现日志</span><br><span class="line"></span><br><span class="line">## git reset回退版本</span><br><span class="line"></span><br><span class="line">使用`git reset`命令可以回退到指定的提交版本，`git reset`有三种模式</span><br><span class="line"></span><br><span class="line">- `git reset --soft xxx`：回退到xxx版本，且保存xxx版本之后的工作区和暂存区的修改</span><br><span class="line">- `git reset --hard xxx`：回退到xxx版本，并删除xxx版本之后工作区和暂存区的修改</span><br><span class="line">- `git reset --mixed xxx`：回退到xxx版本，只保留xxx版本之后工作区的修改</span><br><span class="line"></span><br><span class="line">![img](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151025720.png)</span><br><span class="line"></span><br><span class="line">## 使用git diff查看差异</span><br><span class="line"></span><br><span class="line">- `git diff`命令可以对两个东西进行比较，用于查看差异</span><br><span class="line">  - 可以是工作区、暂存区、本地仓库之间的差异</span><br><span class="line">  - 可以是不同版本之间的差异</span><br><span class="line">  - 也可以是不同分支之间的差异</span><br><span class="line"></span><br><span class="line">![img](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151024958.png)</span><br><span class="line"></span><br><span class="line">- `git diff`：默认查**看工作区**和**暂存区**之间的差异</span><br><span class="line">- `git diff HEAD`：查看**工作区、暂存区**和**本地仓库**的差异</span><br><span class="line">- `git diff cached`：查看**暂存区**和**本地仓库**之间的差异</span><br><span class="line">- `git diff &lt;commit_hash&gt; &lt;commit_hash&gt;`或者`git diff HEAD~ HEAD`：查看**不同提交**之间的差异</span><br><span class="line">- `git diff &lt;branch_name&gt; &lt;branch_name&gt;`：比较**不同分支**之间的差异</span><br><span class="line"></span><br><span class="line">![img](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151025464.png)</span><br><span class="line"></span><br><span class="line">## 使用git rm删除文件</span><br><span class="line"></span><br><span class="line">- `git rm &lt;file_name&gt;`：**一次性将文件从工作区和暂存区中删除**</span><br><span class="line"></span><br><span class="line">![img](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151025557.png)</span><br><span class="line"></span><br><span class="line">## .gitignore忽略文件</span><br><span class="line"></span><br><span class="line">在.gitignore文件中写入匹配符，git会忽略对被匹配上的文件的管理</span><br><span class="line"></span><br><span class="line">## SSH配置和克隆仓库</span><br><span class="line"></span><br><span class="line">[如何在同一电脑上生成配置多个ssh key 公钥 私钥（保姆级教程）](https://juejin.cn/post/7085718883079815176)</span><br><span class="line"></span><br><span class="line">- 在`.ssh`文件夹下，使用`ssh-keygen -t rsa -b 4096`生成私钥文件和公钥文件</span><br><span class="line">  - 将公钥文件的信息配置到GitHub上</span><br><span class="line">  - 保存好私钥文件中的信息</span><br><span class="line">- `git clone repo-address`：克隆一个远程仓库</span><br><span class="line">- `git push &lt;remote&gt; &lt;branch&gt;`：推送更新内容</span><br><span class="line">- `git pull &lt;remote&gt;`：拉取更新内容</span><br><span class="line"></span><br><span class="line">## 关联本地仓库和远程仓库</span><br><span class="line"></span><br><span class="line">- 添加远程仓库</span><br><span class="line">  - `git remote add 远程仓库名 远程仓库地址`</span><br><span class="line">  - `git push -u 远程仓库名 远程仓库分支`</span><br><span class="line">- 查看远程仓库</span><br><span class="line">  - `git remote -v`</span><br><span class="line">- 拉取远程仓库内容</span><br><span class="line">  - `git pull 远程仓库名 远程仓库分支:本地仓库分支`</span><br><span class="line"></span><br><span class="line">## 分支基本操作</span><br><span class="line"></span><br><span class="line">- 查看分支列表：`git branch`</span><br><span class="line">- 创建分支：`git branch &lt;name&gt;`</span><br><span class="line">- 切换分支：`git switch &lt;name&gt;`</span><br><span class="line">- 合并分支：`git merge &lt;name&gt;`，将`&lt;name&gt;`分支合并到当前的分支</span><br><span class="line">- 删除分支：</span><br><span class="line">  - `git branch -d &lt;name&gt;`：删除已合并的分支</span><br><span class="line">  - `git branch -D &lt;name&gt;`：强制删除分支</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## rebase和merge</span><br><span class="line"></span><br><span class="line">- `git rebase`：</span><br><span class="line">  - 优点：不会新增额外的提交记录，形成线性历史，比较直观和干净</span><br><span class="line">  - 缺点：会改变提交历史，改变了当前分支branch out节点，避免在共享分支使用</span><br><span class="line">  - 例如当前在main分支下：</span><br><span class="line">    - `git rebase dev`：将main分支的修改嫁接到dev分支后面</span><br><span class="line">    - ![img](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151025165.png)</span><br><span class="line">- `git merge`：</span><br><span class="line">  - 优点：不会破坏原分支的提交记录，方便回溯和查看</span><br><span class="line">  - 缺点：会产生额外的提交节点，分支图比较复杂</span><br><span class="line">  - 例如当前在main分支下：</span><br><span class="line">    - `gie merge dev`：合并dev分支的修改</span><br><span class="line"></span><br><span class="line"># Git和GitHub操作指南</span><br><span class="line"></span><br><span class="line">## 初始化仓库并简单配置</span><br><span class="line"></span><br><span class="line">&gt; 对仓库进行初始化</span><br><span class="line"></span><br><span class="line">- 使用`git init`完成对仓库的初始化操作</span><br><span class="line"></span><br><span class="line">&gt; 对仓库进行简单配置</span><br><span class="line"></span><br><span class="line">- 使用`git config --global user.name &quot;lyydsheep&quot;`设置仓库的用户名</span><br><span class="line">- 同样地，可以为仓库配置邮箱`git config --global user.email &quot;2230561977@qq.com&quot;`</span><br><span class="line">  - 通过命令`git config --global --list `就可以**查看**我们为该仓库进行的配置</span><br><span class="line"></span><br><span class="line">关于`system`、 `global`、`local`</span><br><span class="line"></span><br><span class="line">- system-系统级: 在git安装以后，git的默认配置项都在这里</span><br><span class="line">- global-全局级：登录用户全局级别的git配置</span><br><span class="line">- local -仓库级: 对不同的仓库进行自定义配置</span><br><span class="line"></span><br><span class="line">三个关键字所能配置的**属性集合是一样的，**不同在于**优先级**</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>local &gt; global &gt; system</p>
+<pre><code>
+&gt; 为仓库创建一个分支
+
+- 使用`git branch -M main`就能为仓库创建一个main分支
+
+## 最简单的Git工作流程：工作区、暂存区、仓库
+
+**相关命令**
+
+- Git status：用于查看当前仓库的状态
+- Git add filename:将filename文件添加至暂存区
+  - 单个添加太慢了，不如使用`Git add .`将**所有**修改过的文件添加至暂存区
+- Git commit -m &quot;comment&quot;:将暂存区的文件提交至仓库中
+  - -m &quot;comment&quot;:是为这次提交进行注释
+- Git log:查看历史提交记录
+
+&gt; 命令与文件状态变化过程
+
+![img](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151024558.png)
+
+## 将本地仓库同步到远程GitHub仓库
+
+为什么选择`SSH`协议而不是`HTTPS`协议？
+
+- 使用`HTTPS`协议可能在日后使用过程中需要**多次**输入用户名和密码，较麻烦
+- `SSH`协议**仅需第一次**配置好公私钥，今后就无需再输入用户名和密码
+
+具体步骤：
+
+1. 为本地仓库创建一个远程的GitHub仓库 
+   - 在GitHub网页上new一个仓库
+   - 通过`git remote add origin ``git@github.com``:lyydsheep/learn_gogogogo.git`命令可以将本地仓库和远程仓库进行关联
+   -  使用`git remote`可以查看远程仓库的名称
+2. 配置公私钥，获取`push`远程仓库的权限
+   -  使用`ssh-keygen -t rsa -C &quot;2230561977@qq.com&quot;`命令生成公私钥 
+   - 将公钥的具体内容复制到`ssh and GPG keys`模块中
+     - `Settings` -&gt; `ssh and GPG keys` -&gt; `New SSH key`
+
+![img](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151024035.png)
+
+![img](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151024012.png)
+
+1. 使用`git push -u origin main`命令将本地文件推送至远程仓库
+     - 前提是**本地仓库要有**`main`**分支**
+
+
+![img](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151024373.png)
+
+[在Goland中使用Git进行协作开发的流程 | 青训营笔记 - 掘金](https://juejin.cn/post/7196266492269199419)
+
+**go** mod init 应用名称 就是在应用名称的根目录下，生成一个**go**.mod文件。
+
+![img](https://raw.githubusercontent.com/lyydsheep/pic/main/202409151024647.png)
+</code></pre>
+
+    </div>
+  </div>
+
+  
+    
+  <div class="sea-prev-next-wrapper">
+    
+      <div class="prev">
+        <span><</span>
+        <a class="link" href="/2024/09/19/MySQL/MySQL%E7%B4%A2%E5%BC%95%E5%AD%A6%E4%B9%A0/">
+          
+        </a>
+      </div>
+    
+    
+      <div class="next">
+        <a class="link" href="/2024/09/14/%E4%BC%A0%E8%BE%93%E5%B1%82%E7%9F%A5%E8%AF%86%E7%82%B9/">
+          TCP、UDP知识点
+        </a>
+        <span>></span>
+      </div>
+    
+  </div>
+
+  
+</article>
+
+
+  </main>
+  <footer id="sea-footer-container">
+  <div class="sea-footer-row">
+    <div class="sea-footer-menu-link">
+      
+    </div>
+  </div>
+  
+  
+  <div class="sea-footer-row">
+    <div class="sea-footer-copyright">
+      <span>©</span>
+      
+        2025
+      
+      <span>·</span>
+      John Doe
+    </div>
+    <span class="split-line">|</span>
+    <div class="sea-footer-theme-by">
+      Theme by <a class="theme" href="https://github.com/hai-zou/hexo-theme-sea" target="_blank">Sea</a>
+    </div>
+  </div>
+</footer>
+
+  
+<script src="/js/main.js"></script>
+
+
+<script src="/js/theme.js"></script>
+
+</body>
+</html>

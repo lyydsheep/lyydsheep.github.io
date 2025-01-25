@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>发帖功能实现 | lyydsheep</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="theme-color" content="#10b981">
+
+  <link rel="canonical" href="http://example.com/2024/12/27/%E5%8F%91%E5%B8%96%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/">
+
+  <link rel="shortcut icon" href="/">
+
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+
+  
+  <meta name="description" content="TDD以及缓存方案">
+<meta property="og:type" content="article">
+<meta property="og:title" content="发帖功能实现">
+<meta property="og:url" content="http://example.com/2024/12/27/%E5%8F%91%E5%B8%96%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="lyydsheep">
+<meta property="og:description" content="TDD以及缓存方案">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409092129324.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409092140450.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409102004630.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409102014800.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409102014565.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409102026434.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409161517114.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409072112298.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409161518765.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409161550256.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409271441109.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409270907841.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409301530245.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409301530677.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409301941675.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202410031541579.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202410041010143.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202410041013265.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202410061411490.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202410061421861.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202410061512142.png">
+<meta property="article:published_time" content="2024-12-27T11:03:15.344Z">
+<meta property="article:modified_time" content="2024-12-27T11:03:15.344Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/lyydsheep/pic/main/202409092129324.png">
+
+  <style>
+    :root {
+      --sea-color-primary: #10b981;
+    }
+  </style>
+
+  
+<script src="/js/theme_mode.js"></script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+  <header class="sea-header">
+    <nav class="sea-nav-wrap">
+  <h1 class="sea-nav-logo" title="">
+    <a href="/">lyydsheep</a>
+  </h1>
+  <div class="sea-nav-menus">
+    <div id="sea-nav-toggle">
+      <svg t="1716965724278" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10878" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M950.857143 768v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429v-73.142857c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z m0-292.571429v73.142858c0 20.004571-16.566857 36.571429-36.571429 36.571428H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571428v-73.142858c0-20.004571 16.566857-36.571429 36.571429-36.571428h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571428z m0-292.571428v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429V182.857143c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z" p-id="10879"></path></svg>
+    </div>
+
+    <div class="sea-menu-wrap">
+  
+
+  <span class="sea-menu-sep">|</span>
+
+  
+
+  <span class="sea-menu-icon" id="sea-theme-dark">
+    <svg t="1725413107294" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10118" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M557.553778 976.355556c-257.265778 0-466.56-207.160889-466.56-464.426667 0-253.923556 206.577778-464.284444 460.501333-464.284445h0.355556c10.766222 0 20.622222 3.953778 25.443555 13.610667 4.878222 9.756444 3.740444 20.394667-2.915555 29.027556-55.722667 72.220444-85.162667 158.108444-85.162667 249.372444 0 225.891556 183.779556 409.386667 409.671111 409.386667l5.248-0.256c10.325333-0.142222 20.977778 5.859556 25.841778 15.644444a28.302222 28.302222 0 0 1-2.915556 30.051556C837.902222 910.08 703.203556 976.355556 557.553778 976.355556zM495.274667 105.016889C299.192889 135.281778 147.882667 306.161778 147.882667 509.809778c0 225.877333 183.779556 409.656889 409.671111 409.656889 108.686222 0 210.403556-42.055111 286.577778-116.977778-231.566222-27.192889-411.804444-224.625778-411.804445-463.36 0-83.427556 21.617778-163.299556 62.947556-234.112z" fill="" p-id="10119"></path><path d="M578.830222 879.132444c-186.865778 0-345.784889-133.418667-377.841778-317.269333a14.222222 14.222222 0 1 1 28.017778-4.878222c29.681778 170.183111 176.810667 293.703111 349.824 293.703111a14.222222 14.222222 0 1 1 0 28.444444zM209.991111 531.2c-7.537778 0-13.838222-6.997333-14.193778-14.606222-0.312889-6.584889-0.483556-13.795556-0.483555-20.465778 0-7.864889 6.357333-14.492444 14.222222-14.492444s14.222222 6.229333 14.222222 14.094222c0 6.229333 0.170667 13.425778 0.455111 19.584 0.369778 7.850667-5.674667 15.886222-13.525333 15.886222h-0.696889z" fill="" p-id="10120"></path><path d="M622.350222 309.930667m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10121"></path><path d="M787.072 188.273778m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10122"></path><path d="M731.960889 415.303111m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" p-id="10123"></path></svg>
+  </span>
+  <span class="sea-menu-icon" id="sea-theme-light">
+    <svg t="1725410359322" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4274" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M512 768c-141.376 0-256-114.624-256-256s114.624-256 256-256 256 114.624 256 256-114.624 256-256 256z m0-85.333333a170.666667 170.666667 0 1 0 0-341.333334 170.666667 170.666667 0 0 0 0 341.333334zM469.333333 85.333333a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0V85.333333z m0 768a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0v-85.333334zM85.333333 554.666667a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334H85.333333z m768 0a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334h-85.333334zM161.834667 222.165333a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m576 576a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m-515.669334 64a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z m576-576a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z" p-id="4275"></path></svg>
+  </span>
+
+  <span id="sea-menu-close-icon">
+    <svg t="1725435896874" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4408" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M556.8 512l265.6-265.6c12.8-12.8 12.8-32 0-44.8s-32-12.8-44.8 0L512 467.2 246.4 201.6c-12.8-12.8-32-12.8-44.8 0s-12.8 32 0 44.8l265.6 265.6-265.6 265.6c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 12.8 9.6 22.4 9.6s16-3.2 22.4-9.6l265.6-265.6 265.6 265.6c6.4 6.4 16 9.6 22.4 9.6s16-3.2 22.4-9.6c12.8-12.8 12.8-32 0-44.8L556.8 512z" p-id="4409"></path></svg>
+  </span>
+</div>
+<div id="sea-nav-dimmer"></div>
+  </div>
+</nav>
+  </header>
+  <main id="sea-main-wrapper">
+    <article class="sea-page-card-wrapper">
+  <header class="sea-article-header">
+    <h1 class="sea-article-title">发帖功能实现</h1>
+    
+      <div class="sea-post-meta sea-post-meta__center">
+        <div class="sea-post-time">
+  <svg t="1716964550804" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2621" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M805.49888 981.49888l-602.3168-0.76288c-86.59456-8.192-154.56768-81.3056-154.56768-170.01472L48.6144 291.73248c0-94.1568 76.60032-170.75712 170.7776-170.75712l586.10176 0c94.1568 0 170.73152 76.60032 170.73152 170.75712L976.22528 810.7008C976.2304 904.87296 899.63008 981.49888 805.49888 981.49888L805.49888 981.49888zM219.3664 190.57152c-55.79776 0-101.20192 45.38368-101.20192 101.18144l0 518.96832c0 55.79776 45.40416 101.20704 101.20192 101.20704l586.13248 0c55.77728 0 101.16096-45.40928 101.16096-101.20704L906.65984 291.73248c0-55.79776-45.38368-101.18656-101.16096-101.18656L219.3664 190.54592 219.3664 190.57152zM698.84416 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L745.22624 244.1216C745.22624 269.7472 724.46976 290.51904 698.84416 290.51904L698.84416 290.51904zM315.65824 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L362.04032 244.1216C362.04032 269.7472 341.28896 290.51904 315.65824 290.51904L315.65824 290.51904zM534.8864 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C581.26848 774.01088 560.4864 794.78784 534.8864 794.78784L534.8864 794.78784zM930.79552 452.608 121.24672 452.608c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l809.5744 0c25.6 0 46.38208 20.77696 46.38208 46.38208C977.2032 431.82592 956.42624 452.608 930.79552 452.608L930.79552 452.608zM327.92576 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208C374.30784 628.25472 353.52576 649.03168 327.92576 649.03168L327.92576 649.03168zM534.8864 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208S560.4864 649.03168 534.8864 649.03168L534.8864 649.03168zM741.27872 649.03168l-44.26752 0c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.77696 46.38208 46.38208C787.6608 628.25472 766.90944 649.03168 741.27872 649.03168L741.27872 649.03168zM327.92576 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C374.30784 774.01088 353.52576 794.78784 327.92576 794.78784L327.92576 794.78784zM741.27872 794.78784l-44.26752 0c-25.60512 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.78208 46.38208 46.38208C787.6608 774.01088 766.90944 794.78784 741.27872 794.78784L741.27872 794.78784z" p-id="2622"></path></svg>
+  <time datetime="2024-12-27T11:03:15.344Z">2024-12-27</time>
+</div>
+        
+        
+  <div class="sea-post-tags">
+    <svg t="1716964811431" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6117" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M384 977.152c-20.5312 0-39.8336-7.9872-54.3232-22.4256l-260.4032-260.4032c-14.4896-14.4896-22.4256-33.7408-22.4256-54.3232s7.9872-39.8336 22.4256-54.3232l439.6032-439.6032c24.9344-24.9344 70.2464-43.7248 105.5232-43.7248h230.4c42.3424 0 76.8 34.4576 76.8 76.8v230.4c0 35.2256-18.7904 80.5888-43.6736 105.5232l-439.6032 439.6032a76.1856 76.1856 0 0 1-54.3232 22.4256zM614.4 153.6c-21.248 0-54.272 13.6704-69.2736 28.7232l-439.6032 439.6032c-4.8128 4.8128-7.424 11.2128-7.424 18.1248s2.6624 13.312 7.424 18.0736l260.4032 260.4032c4.8128 4.8128 11.2128 7.424 18.1248 7.424s13.312-2.6624 18.1248-7.424l439.6032-439.6032c15.0016-15.0016 28.7232-48.0768 28.7232-69.3248V179.2a25.6 25.6 0 0 0-25.6-25.6h-230.4z" p-id="6118"></path><path d="M742.4 358.4c-42.3424 0-76.8-34.4576-76.8-76.8S700.0576 204.8 742.4 204.8s76.8 34.4576 76.8 76.8S784.7424 358.4 742.4 358.4z m0-102.4a25.6 25.6 0 1 0 0 51.2 25.6 25.6 0 0 0 0-51.2z" p-id="6119"></path></svg>
+    <a class="tag-link" href="/tags/Go/" rel="tag">Go</a> , <a class="tag-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a>
+  </div>
+
+      </div>
+    
+  </header>
+  <div class="sea-doc">
+    
+    
+      <div class="sea-article-catalog">
+        <h2>Table of contents</h2>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%91%E5%B8%96%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">发帖功能实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">需求分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%BE%8B"><span class="toc-number">1.1.1.</span> <span class="toc-text">用例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E7%9A%84%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="toc-number">1.1.2.</span> <span class="toc-text">内容的可见性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="toc-number">1.1.3.</span> <span class="toc-text">流程分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TDD%E4%B8%8E%E7%BC%96%E8%BE%91%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.</span> <span class="toc-text">TDD与编辑接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%BE%AA%E7%8E%AF"><span class="toc-number">1.2.1.</span> <span class="toc-text">核心循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#suite%E6%B5%8B%E8%AF%95%E7%BB%84%E7%BB%87%E5%A5%97%E4%BB%B6"><span class="toc-number">1.2.2.</span> <span class="toc-text">suite测试组织套件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TDD%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%B8%80%EF%BC%89"><span class="toc-number">1.2.3.</span> <span class="toc-text">TDD集成测试实践（一）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TDD%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%BA%8C%EF%BC%89"><span class="toc-number">1.2.4.</span> <span class="toc-text">TDD集成测试实践（二）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DDD%EF%BC%9A%E5%AE%9E%E4%BD%93-%E2%80%94%E2%80%94-%E5%80%BC%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.3.</span> <span class="toc-text">DDD：实体 —— 值对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5"><span class="toc-number">1.4.</span> <span class="toc-text">数据同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%8C%E8%B4%A3%E5%88%92%E5%88%86"><span class="toc-number">1.4.1.</span> <span class="toc-text">职责划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%B4%E6%8A%A4%E4%BA%8B%E5%8A%A1"><span class="toc-number">1.4.2.</span> <span class="toc-text">维护事务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81"><span class="toc-number">1.5.</span> <span class="toc-text">维护状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E5%B8%B8%E9%87%8F%E5%AE%9A%E4%B9%89"><span class="toc-number">1.5.1.</span> <span class="toc-text">状态常量定义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8MongoDB%E5%AD%98%E5%82%A8"><span class="toc-number">1.6.</span> <span class="toc-text">使用MongoDB存储</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MongoDB%E7%AE%80%E4%BB%8B"><span class="toc-number">1.6.1.</span> <span class="toc-text">MongoDB简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%B9%B6%E6%8F%92%E5%85%A5%E6%96%87%E6%A1%A3"><span class="toc-number">1.6.2.</span> <span class="toc-text">初始化客户端并插入文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E6%96%87%E6%A1%A3"><span class="toc-number">1.6.3.</span> <span class="toc-text">查找文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E6%96%87%E6%A1%A3"><span class="toc-number">1.6.4.</span> <span class="toc-text">更新文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95"><span class="toc-number">1.6.5.</span> <span class="toc-text">创建索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MongoDB%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE"><span class="toc-number">1.6.6.</span> <span class="toc-text">MongoDB存储数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8OSS%E6%9D%A5%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE"><span class="toc-number">1.7.</span> <span class="toc-text">利用OSS来存储数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%8E%A5%E5%8F%A3%E4%B8%8E%E7%BC%93%E5%AD%98"><span class="toc-number">1.8.</span> <span class="toc-text">查询接口与缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.8.1.</span> <span class="toc-text">列表接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90-1"><span class="toc-number">1.8.1.1.</span> <span class="toc-text">需求分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%BD%A2%E6%80%81"><span class="toc-number">1.8.1.2.</span> <span class="toc-text">分页形态</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.8.2.</span> <span class="toc-text">缓存设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="toc-number">1.8.2.1.</span> <span class="toc-text">缓存过期时间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5"><span class="toc-number">1.8.2.2.</span> <span class="toc-text">淘汰策略</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.8.3.</span> <span class="toc-text">注意事项</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+    <div class="sea-article-content">
+      <h1 id="发帖功能实现"><a href="#发帖功能实现" class="headerlink" title="发帖功能实现"></a>发帖功能实现</h1><h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><h3 id="用例"><a href="#用例" class="headerlink" title="用例"></a>用例</h3><blockquote>
+<p>通过使用用例来展示某个需求的具体使用场景</p>
+</blockquote>
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409092129324.png" width=300>
+
+<ul>
+<li>创作者<ul>
+<li>增删改查</li>
+</ul>
+</li>
+<li>读者<ul>
+<li>查</li>
+</ul>
+</li>
+</ul>
+<h3 id="内容的可见性"><a href="#内容的可见性" class="headerlink" title="内容的可见性"></a>内容的可见性</h3><blockquote>
+<p>创作者创作了一篇文章，那么这篇文章什么情况下可以被读者看到呢？</p>
+</blockquote>
+<p>根据生活经验，可以很容易想到：一篇文章只有在发表（通过审核）并且处于公开状态下才能被用户所看到。如此，一篇帖子就有了发表和未发表两个状态，我们可以很轻松地得出一篇帖子的<strong>状态</strong>转换图</p>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409092140450.png" alt="image-20240909214045416"></p>
+<p>想象这么一个场景，用户正在浏览文章，与此同时作者也在修改文章，那么用户会实时看到作者的修改吗？</p>
+<p>这当然不会，在创作者发布之前，这些修改对读者都是不可见的</p>
+<p>一种很显然的解决办法就是<strong>分开存储</strong>，即一个<strong>制作表</strong>，一个<strong>线上表</strong></p>
+<p>用户看到的是线上表中的数据，而作者修改的都是制作表中的数据，这样作者的修改对于用户而言都是不可知的，只有当线上表更新后，用户才能看到修改</p>
+<p>整理上述分析，可以得到更详细的状态图：</p>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409102004630.png" alt="image-20240910200443544"></p>
+<h3 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h3><p>我们将两个表（制作表、线上表）的状态，分别用一位二进制表示，可以得出3中起始状态（有一种状态不可能存在）</p>
+<ul>
+<li>0 0：制作表和线上表都没有数据</li>
+<li>1 0：只有制作表中有数据</li>
+<li>1 1：制作表和线上表都有数据</li>
+</ul>
+<p>分析每一种起始状态可能的后续状态</p>
+<ul>
+<li>0 0<ul>
+<li>1 0：作者写了一半，木有发表</li>
+<li>1 1：作者写好并发表了文章</li>
+<li><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409102014800.png" alt="image-20240910201425755"></li>
+</ul>
+</li>
+<li>1 0<ul>
+<li>1 1：作者写好并发表了文章</li>
+<li><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409102014565.png" alt="image-20240910201456526"></li>
+</ul>
+</li>
+<li>1 1<ul>
+<li>1 1：作者修改文章</li>
+<li><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409102026434.png" alt="image-20240910202622396"></li>
+</ul>
+</li>
+</ul>
+<h2 id="TDD与编辑接口"><a href="#TDD与编辑接口" class="headerlink" title="TDD与编辑接口"></a>TDD与编辑接口</h2><p><strong>TDD：测试驱动开发，先写测试，再写实现</strong></p>
+<ul>
+<li>通过撰写测试，<strong>理清楚接口该如何定义，站在用户的角度看是否合适</strong></li>
+<li>通过撰写测试用例，<strong>理清楚整个功能要考虑的主流程、异常流程</strong></li>
+</ul>
+<h3 id="核心循环"><a href="#核心循环" class="headerlink" title="核心循环"></a>核心循环</h3><ul>
+<li>根据对需求的理解，<strong>初步定义接口</strong>，无所谓接口合不合适，反正还得改</li>
+<li>根据接口定义测试</li>
+<li>执行核心循环<ul>
+<li>增加测试用例</li>
+<li>提供&#x2F;修改实现</li>
+<li>执行测试用例</li>
+</ul>
+</li>
+</ul>
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409161517114.png" alt="image-20240916151718031" style="zoom:67%;" />
+
+<h3 id="suite测试组织套件"><a href="#suite测试组织套件" class="headerlink" title="suite测试组织套件"></a>suite测试组织套件</h3><p><a target="_blank" rel="noopener" href="https://annatarhe.github.io/2020/08/19/how-to-do-test-in-go.html">参考文章</a></p>
+<p>有的时候在测试之前需要连接db、redis、rpc之类的东西，然后再测试结束后将这些连接关闭。也就是说，我们的单元（集成）测试具有<strong>生命周期</strong>。如果是手动编写连接、关闭连接的代码会使得测试部分显得异常臃肿，好在有<code>suite</code>可以帮助我们有效地管理测试的生命周期</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;testing&quot;</span></span><br><span class="line">    <span class="string">&quot;github.com/stretchr/testify/assert&quot;</span></span><br><span class="line">    <span class="string">&quot;github.com/stretchr/testify/suite&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义测试结构体</span></span><br><span class="line"><span class="keyword">type</span> ExampleTestSuite <span class="keyword">struct</span> &#123;</span><br><span class="line">    suite.Suite</span><br><span class="line">    msg <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试前的预备</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(suite *ExampleTestSuite)</span></span> SetupTest() &#123;</span><br><span class="line">    suite.msg = <span class="string">&quot;iu is my wife&quot;</span></span><br><span class="line">    db, _ = sql.Open(<span class="string">&quot;xxx&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(suite *ExampleTestSuite)</span></span> TestExample() &#123;</span><br><span class="line">    m := &amp;obj&#123;</span><br><span class="line">        Msg: suite.msg</span><br><span class="line">    &#125;</span><br><span class="line">    err := insert(m)</span><br><span class="line">    assert.Nil(suite.T(), err)</span><br><span class="line">    assert.Equal(suite.T(), suite.msg, m.Msg)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试后的清理</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(suite *ExampleTestSuite)</span></span> TearDownTest() &#123;</span><br><span class="line">    db.Close()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 入口</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestExampleTestSuite</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">    suite.Run(t, <span class="built_in">new</span>(ExampleTestSuite))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>五个步骤</p>
+<ul>
+<li><strong>定义测试结构体</strong><ul>
+<li>测试结构体中应包含所需要的第三方字段，例如<code>suite.Suite</code>,<code>gorm.DB</code>, <code>redis.Cmdable</code>等</li>
+</ul>
+</li>
+<li><strong>入口函数</strong><ul>
+<li><code>func TestExampleTestSuite(t *testing.T)</code></li>
+<li>函数体中仅有<code>suite.Run(t, new(xxx))</code>一行代码</li>
+</ul>
+</li>
+<li><strong>测试前的准备工作</strong><ul>
+<li><code>func (suite *ExampleTestSuite) SetupTest()</code></li>
+</ul>
+</li>
+<li>测试<ul>
+<li><code>func (suite *ExampleTestSuite) TestExample()</code></li>
+</ul>
+</li>
+<li><strong>测试后的清理</strong><ul>
+<li><code>func (suite *ExampleTestSuite) TearDownTest()</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="TDD集成测试实践（一）"><a href="#TDD集成测试实践（一）" class="headerlink" title="TDD集成测试实践（一）"></a>TDD集成测试实践（一）</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 测试套件</span></span><br><span class="line"><span class="keyword">type</span> ArticleSuite <span class="keyword">struct</span> &#123;</span><br><span class="line">	suite.Suite</span><br><span class="line">	server *gin.Engine</span><br><span class="line">	db     *gorm.DB</span><br><span class="line">	l      *zap.Logger</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// SetupTest 都用startup里的初始化方法，当然使用wire生成啦</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *ArticleSuite)</span></span> SetupTest() &#123;</span><br><span class="line">	<span class="keyword">var</span> err <span class="type">error</span></span><br><span class="line">	s.l, err = zap.NewDevelopment()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	s.db = startup.InitDB(s.l)</span><br><span class="line">	gin.SetMode(gin.ReleaseMode)</span><br><span class="line">	s.server = gin.Default()</span><br><span class="line">	<span class="comment">// 在这里放好userClaims，表示登录状态</span></span><br><span class="line">	s.server.Use(<span class="function"><span class="keyword">func</span><span class="params">(ctx *gin.Context)</span></span> &#123;</span><br><span class="line">		ctx.Set(<span class="string">&quot;userClaims&quot;</span>, jwt.UserClaims&#123;</span><br><span class="line">			UserId: <span class="number">123</span>,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">	artHdl := startup.InitArticleHandler()</span><br><span class="line">	artHdl.RegisterRoutes(s.server)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *ArticleSuite)</span></span> TestEdit() &#123;</span><br><span class="line">	t := s.T()</span><br><span class="line">	testCases := []<span class="keyword">struct</span> &#123;</span><br><span class="line">		name <span class="type">string</span></span><br><span class="line">		<span class="comment">// 准备数据</span></span><br><span class="line">		before <span class="function"><span class="keyword">func</span><span class="params">(t *testing.T)</span></span></span><br><span class="line">		<span class="comment">// 校验数据</span></span><br><span class="line">		after   <span class="function"><span class="keyword">func</span><span class="params">(t *testing.T)</span></span></span><br><span class="line">		article Article</span><br><span class="line">		<span class="comment">// 预期数据</span></span><br><span class="line">		expectCode <span class="type">int</span></span><br><span class="line">		expectRes  Result[<span class="type">int</span>]</span><br><span class="line">	&#125;&#123;</span><br><span class="line">		&#123;</span><br><span class="line">			name: <span class="string">&quot;新建帖子——保存成功&quot;</span>,</span><br><span class="line">			before: <span class="function"><span class="keyword">func</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">			&#125;,</span><br><span class="line">			after: <span class="function"><span class="keyword">func</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">				<span class="comment">// 对每一列数据都要进行检验</span></span><br><span class="line">				<span class="keyword">var</span> article dao.Article</span><br><span class="line">				err := s.db.Where(<span class="string">&quot;id=?&quot;</span>, <span class="number">1</span>).First(&amp;article).Error</span><br><span class="line">				require.NoError(t, err)</span><br><span class="line">				assert.True(t, article.Ctime &gt; <span class="number">0</span>)</span><br><span class="line">				assert.True(t, article.Utime &gt; <span class="number">0</span>)</span><br><span class="line">				article.Ctime = <span class="number">0</span></span><br><span class="line">				article.Utime = <span class="number">0</span></span><br><span class="line">				assert.Equal(t, dao.Article&#123;</span><br><span class="line">					Id:       <span class="number">1</span>,</span><br><span class="line">					Title:    <span class="string">&quot;这是标题&quot;</span>,</span><br><span class="line">					Content:  <span class="string">&quot;这是内容&quot;</span>,</span><br><span class="line">					AuthorId: <span class="number">123</span>,</span><br><span class="line">				&#125;, article)</span><br><span class="line">			&#125;,</span><br><span class="line">            article: Article&#123;</span><br><span class="line">                Title: <span class="string">&quot;这是标题&quot;</span>,</span><br><span class="line">                Content: <span class="string">&quot;这是内容&quot;</span>,</span><br><span class="line">            &#125;</span><br><span class="line">			expectCode: http.StatusOK,</span><br><span class="line">			expectRes: Result[<span class="type">int</span>]&#123;</span><br><span class="line">				Data: <span class="number">1</span>,</span><br><span class="line">			&#125;,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> _, tc := <span class="keyword">range</span> testCases &#123;</span><br><span class="line">		t.Run(tc.name, <span class="function"><span class="keyword">func</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">			<span class="comment">//tc.before(t)</span></span><br><span class="line">			<span class="comment">// 以json格式输入</span></span><br><span class="line">			articleJson, err := json.Marshal(tc.article)</span><br><span class="line">			require.NoError(t, err)</span><br><span class="line">			req, err := http.NewRequest(http.MethodPost, <span class="string">&quot;/article/edit&quot;</span>, bytes.NewBuffer(articleJson))</span><br><span class="line">			req.Header.Set(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/json&quot;</span>)</span><br><span class="line">			require.NoError(t, err)</span><br><span class="line">			resp := httptest.NewRecorder()</span><br><span class="line">			s.server.ServeHTTP(resp, req)</span><br><span class="line">			<span class="keyword">var</span> res Result[<span class="type">int</span>]</span><br><span class="line">			assert.Equal(t, tc.expectCode, resp.Code)</span><br><span class="line">			err = json.NewDecoder(resp.Body).Decode(&amp;res)</span><br><span class="line">			assert.Equal(t, tc.expectRes, res)</span><br><span class="line">			<span class="comment">//tc.after(t)</span></span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试后所作的动作</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *ArticleSuite)</span></span> TearDownTest() &#123;</span><br><span class="line">	s.db.Exec(<span class="string">&quot;truncate table articles&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestArticleSuite</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	suite.Run(t, <span class="built_in">new</span>(ArticleSuite))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Article <span class="keyword">struct</span> &#123;</span><br><span class="line">	Title   <span class="type">string</span> <span class="string">`json:&quot;title&quot;`</span></span><br><span class="line">	Content <span class="type">string</span> <span class="string">`json:&quot;content&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Result[T any] <span class="keyword">struct</span> &#123;</span><br><span class="line">	Msg  <span class="type">string</span> <span class="string">`json:&quot;msg&quot;`</span></span><br><span class="line">	Code <span class="type">int</span>    <span class="string">`json:&quot;code&quot;`</span></span><br><span class="line">	Data T      <span class="string">`json:&quot;data&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>DDD侧重于设计架构、高层次战略</p>
+</li>
+<li><p>TDD专注于某个功能的实现</p>
+</li>
+</ul>
+<p>在开发过程中，可以使用如下技巧，确保类型实现了特定接口接口</p>
+<p>例如，确保<code>ArticleHandler</code>类型实现了<code>handler</code>接口</p>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409072112298.png" alt="image-20240907211201251"></p>
+<h3 id="TDD集成测试实践（二）"><a href="#TDD集成测试实践（二）" class="headerlink" title="TDD集成测试实践（二）"></a>TDD集成测试实践（二）</h3><p>在实现完创建文章功能后，接着就要实现修改文章功能</p>
+<p>依据TDD核心循环，需要再添加测试用例</p>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409161518765.png" alt="image-20240916151741659"></p>
+<p>由于我们将要实现的是修改文章功能，也就是说<strong>文章是事先存在的，前端请求将会带上文章的Id</strong>，那么在测试时需要在<code>before</code>函数中做好数据的准备工作</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">before: <span class="function"><span class="keyword">func</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">    err := s.db.Create(&amp;dao.Article&#123;</span><br><span class="line">        Id:      <span class="number">2</span>,</span><br><span class="line">        Title:   <span class="string">&quot;旧的标题&quot;</span>,</span><br><span class="line">        Content: <span class="string">&quot;旧的标题&quot;</span>,</span><br><span class="line">        <span class="comment">// 和时间有关的测试，最好不用time.Now(), 因为每一次都不一样，不方便进行断言</span></span><br><span class="line">        AuthorId: <span class="number">123</span>,</span><br><span class="line">        Ctime:    <span class="number">677</span>,</span><br><span class="line">        Utime:    <span class="number">677</span>,</span><br><span class="line">    &#125;).Error</span><br><span class="line">    require.NoError(t, err)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>更新文章涉及到更新数据库，有两个值得注意的点</p>
+<ul>
+<li><p>修改<code>utime</code>这个跟时间有关的字段，而在进行和时间有关的测试时，尽量不要使用<code>time.Now()</code>函数，因为每一次运行<code>time.Now()</code>结果都不相同，不便于后续的断言操作</p>
+</li>
+<li><p>两种更新操作写法</p>
+<ul>
+<li><pre><code class="go">// 利用了gorm忽略零值的特性，根据主键（锁定要更新的行）进行更新操作
+// 可读性差
+// 忽略零值是指如果某个字段是原本是零值，那么就不更新该字段
+err := dao.db.WithContext(ctx).Updates(&amp;article).Error
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```go</span><br><span class="line">  // 可读性较强</span><br><span class="line">  err := dao.db.WithContext(ctx).Model(&amp;article).</span><br><span class="line">  		Where(&quot;id=?&quot;, article.Id).Updates(map[string]any&#123;</span><br><span class="line">  		&quot;title&quot;:   article.Title,</span><br><span class="line">  		&quot;content&quot;: article.Content,</span><br><span class="line">  		&quot;utime&quot;:   article.Utime,</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>忽略零值可参考 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/update.html#%E6%9B%B4%E6%96%B0%E5%A4%9A%E5%88%97">更新 | GORM</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="DDD：实体-——-值对象"><a href="#DDD：实体-——-值对象" class="headerlink" title="DDD：实体 —— 值对象"></a>DDD：实体 —— 值对象</h2><p>下图所示就是一个非常经典的领域设计驱动中的领域对象中<strong>实体</strong>和<strong>值对象</strong>的一个体现</p>
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409161550256.png" alt="image-20240916155000184" style="zoom:67%;" />
+
+<ul>
+<li>实体：<strong>独立存在的</strong></li>
+<li>值对象：<strong>依赖于实体而存在，通常作为实体的属性出现</strong></li>
+</ul>
+<p>可以结合实例理解一下：在用户领域，一个人是一个实体，他是独立存在的；而在帖子领域，一个人是依赖于帖子才能成为作者，是一个值对象</p>
+<p><strong>在DDD里面，一个领域的实体，在另一个领域中通常作为值对象、另一个实体的属性出现</strong></p>
+<h2 id="数据同步"><a href="#数据同步" class="headerlink" title="数据同步"></a>数据同步</h2><h3 id="职责划分"><a href="#职责划分" class="headerlink" title="职责划分"></a>职责划分</h3><blockquote>
+<p>由之前的分析可知，我们需要一个制作表和线上表，那么该有哪一个部分来同步两个表的数据呢？</p>
+</blockquote>
+<p>理论上，项目是单体应用还是微服务应用是选择时需要参考的因素</p>
+<ul>
+<li>web&#x2F;聚合服务<ul>
+<li>调用不同的service来同步数据，可以理解为作者和读者各有各的服务</li>
+</ul>
+</li>
+<li>service<ul>
+<li>调用不同的repository来保存数据，从存储的角度看来，作者看到的帖子和读者看到的帖子是不一样的</li>
+</ul>
+</li>
+<li>repository<ul>
+<li>操作不同的数据源</li>
+</ul>
+</li>
+</ul>
+<p><strong>业务简单就一个repository，复杂就用多个repository</strong></p>
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409271441109.png" alt="image-20240927144102855" style="zoom:50%;" />
+
+<h3 id="维护事务"><a href="#维护事务" class="headerlink" title="维护事务"></a>维护事务</h3><p>同步制作库和线上库要么同时成功，要么同时失败，因此将数据同步操作做成一个事务再合适不过了</p>
+<p>可以在两个层面上维护事务，一个是<code>repository</code>，另一个是<code>dao</code>。但是<code>repository</code>在DDD中应该是操作数据库和缓存的，如果在这一层面维护事务，结果就是跨层操作并强耦合于GORM（而且写起来不优雅🤪）。另一种方案是在<code>dao</code>层中维护事务（这就方便多啦😊），具体实现如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(dao *BasicArticleDAO)</span></span> Sync(ctx context.Context, article Article) (<span class="type">int</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	id := article.Id</span><br><span class="line">	<span class="comment">// 利用GORM控制事务的生命周期</span></span><br><span class="line">	err := dao.db.WithContext(ctx).Transaction(<span class="function"><span class="keyword">func</span><span class="params">(tx *gorm.DB)</span></span> <span class="type">error</span> &#123;</span><br><span class="line">		<span class="keyword">var</span> err <span class="type">error</span></span><br><span class="line">		<span class="keyword">if</span> id &gt; <span class="number">0</span> &#123;</span><br><span class="line">			err = dao.UpdateById(ctx, article)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			id, err = dao.Insert(ctx, article)</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> err</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> dao.Upsert(ctx, PublishArticle&#123;</span><br><span class="line">			Article: article,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">return</span> id, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>⚠️：GORM的<code>transaction</code>方法在底层实现时就已经帮我们维护了<strong>事务的生命周期</strong></p>
+<blockquote>
+<p>重点是如何在GORM下实现Upsert函数</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(dao *BasicArticleDAO)</span></span> Upsert(ctx context.Context, article PublishArticle) <span class="type">error</span> &#123;</span><br><span class="line">	now := time.Now().UnixMilli()</span><br><span class="line">	article.Utime = now</span><br><span class="line">	article.Ctime = now</span><br><span class="line">	<span class="comment">// Upsert函数在GORM下的实现</span></span><br><span class="line">	<span class="keyword">return</span> dao.db.WithContext(ctx).Clauses(clause.OnConflict&#123;</span><br><span class="line">		DoUpdates: clause.Assignments(<span class="keyword">map</span>[<span class="type">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">			<span class="string">&quot;title&quot;</span>:   article.Title,</span><br><span class="line">			<span class="string">&quot;content&quot;</span>: article.Content,</span><br><span class="line">			<span class="string">&quot;utime&quot;</span>:   article.Utime,</span><br><span class="line">		&#125;),</span><br><span class="line">	&#125;).Create(&amp;article).Error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>向<code>Clauses</code>函数中传递<code>OnConflict</code>结构体，表示如果发生冲突的话应该做什么事情</p>
+<p><code>OnConfilt</code>中有一些比较有用的字段</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DoUpdate		---&gt; 做更新操作</span></span><br><span class="line"><span class="comment">// DoNothing	---&gt; 什么也不做</span></span><br><span class="line"><span class="comment">// Where		---&gt; 数据冲突了并且符合where子句，就执行更新操作</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>🌟：在一个事务中，一直都是同一个数据库连接</strong></p>
+<h2 id="维护状态"><a href="#维护状态" class="headerlink" title="维护状态"></a>维护状态</h2><p>在先前的分析中，我们知道需要有线上库和制作库两个数据存储的地方，这两个地方存储的数据本质上是一样的，因此不必创建新的领域对象来维护，<strong>使用衍生类型更加方便</strong></p>
+<h3 id="状态常量定义"><a href="#状态常量定义" class="headerlink" title="状态常量定义"></a>状态常量定义</h3><p>利用常量表示一篇帖子的不同状态，这些常量可以直接利用<code>iota</code>在<code>domain</code>中定义。<strong>一般定义常量，最好不要把零值做成有意义的值</strong>，否则难以区分是用户没有输入还是前端传递默认数据</p>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409270907841.png" alt="image-20240927090706192"></p>
+<h2 id="使用MongoDB存储"><a href="#使用MongoDB存储" class="headerlink" title="使用MongoDB存储"></a>使用MongoDB存储</h2><p>类似于大文本之类的东西，除了可以使用关系型数据库，也可以考虑使用其他存储应用，例如MongoDB</p>
+<p><strong>MongoDB属于NoSQL，NoSQL即Not Only SQL</strong>，不仅仅是SQL</p>
+<p>NoSQL数据库的产生是为了解决大规模数据集合、多种数据种类带来的挑战，尤其是大数据应用难题</p>
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409301530245.png" alt="image-20240930153021471" style="zoom:50%;" />
+
+<h3 id="MongoDB简介"><a href="#MongoDB简介" class="headerlink" title="MongoDB简介"></a>MongoDB简介</h3><p>MongoDB的基本特性</p>
+<ul>
+<li><strong>面向集合存储</strong>：MongoDB集合中可以存储多个文档<ul>
+<li>类比于MySQL，MongoDB中的一个集合就像是一张表，集合中的一个文档就相当于表中的一条记录</li>
+</ul>
+</li>
+<li><strong>模式自由</strong>：MongoDB采用无结构模式存储数据，也就是说，在储存数据之前不需要定义数据的结构<ul>
+<li>就像当于在MySQL中不需要预先建立表结构就能插入数据</li>
+</ul>
+</li>
+<li><strong>支持分片</strong>：MongoDB支持分片，并且MongoDB自动解决了分片的各种问题，包括自动化扩容</li>
+</ul>
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409301530677.png" alt="image-20240930153009489" style="zoom:67%;" />
+
+<p>选择MongoDB的两个理由：</p>
+<ul>
+<li><p><strong>灵活的文档模型</strong>：于MySQL不同，不需要事前在MongoDB中定义文档模型，并且可以灵活修改</p>
+</li>
+<li><p><strong>易于横向扩展</strong>：可以通过增加MongoDB实例来应付流量和数据增长</p>
+</li>
+</ul>
+<h3 id="初始化客户端并插入文档"><a href="#初始化客户端并插入文档" class="headerlink" title="初始化客户端并插入文档"></a>初始化客户端并插入文档</h3><blockquote>
+<p>需要使用MongoDB官网的go-driver</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202409301941675.png" alt="image-20240930194117517"></p>
+<h3 id="查找文档"><a href="#查找文档" class="headerlink" title="查找文档"></a>查找文档</h3><p>在MongoDB中有两种构造查询条件的方式：</p>
+<ul>
+<li><strong>bson</strong></li>
+<li><strong>结构体</strong></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用bson构造查询条件</span></span><br><span class="line">filter := bson.D&#123;bson.E&#123;Key: <span class="string">&quot;id&quot;</span>, Value: <span class="number">123</span>&#125;&#125;</span><br><span class="line"><span class="keyword">var</span> art Article</span><br><span class="line">err = col.FindOne(ctx, filter).Decode(&amp;art)</span><br><span class="line">assert.NoError(t, err)</span><br><span class="line">fmt.Printf(<span class="string">&quot;find article %v\n&quot;</span>, art)</span><br><span class="line"><span class="comment">// 使用结构体构造查询条件</span></span><br><span class="line">err = col.FindOne(ctx, Article&#123;Id: <span class="number">123</span>&#125;).Decode(&amp;art)</span><br><span class="line"><span class="keyword">if</span> errors.Is(err, mongo.ErrNoDocuments) &#123;</span><br><span class="line">	fmt.Printf(<span class="string">&quot;find none&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>⚠️：使用结构体构造查询条件时，mongodb-go-driver默认使用结构体的全部字段作为匹配条件，需要注意某些字段<strong>默认零值</strong>。当然，可以使用<code>bson:&quot;field_name,omitempty&quot;</code>标签来告知mongodb-go-driver忽略字段零值</p>
+<p>🌟：可以使用<code>mongo.ErrNoDocuments</code>错误值检验是否有查询到文档</p>
+<h3 id="更新文档"><a href="#更新文档" class="headerlink" title="更新文档"></a>更新文档</h3><ul>
+<li>构造更新条件，同构造查询条件</li>
+<li>构造更新字段<ul>
+<li><strong>bson</strong></li>
+<li><strong>结构体</strong></li>
+</ul>
+</li>
+</ul>
+<p>⚠️：同样的，需要注意<strong>底层是否会采用字段零值</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sets := bson.D&#123;bson.E&#123;Key: <span class="string">&quot;$set&quot;</span>,</span><br><span class="line">	Value: bson.E&#123;Key: <span class="string">&quot;content&quot;</span>, Value: <span class="string">&quot;serious content&quot;</span>&#125;&#125;&#125;</span><br><span class="line">res, err := col.UpdateOne(ctx, filter, sets)</span><br><span class="line"><span class="comment">// 使用结构体构造更新字段</span></span><br><span class="line">res, err = col.UpdateOne(ctx, filter, bson.D&#123;bson.E&#123;Key: <span class="string">&quot;$set&quot;</span>, Value: Article&#123;</span><br><span class="line">	Title: <span class="string">&quot;new title&quot;</span>,</span><br><span class="line">&#125;&#125;&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h3><p>类似于MySQL，<strong>一般是根据业务中常用的查询条件，来决定在什么列上构建索引</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">indexRes, err := col.Indexes().CreateOne(ctx, mongo.IndexModel&#123;</span><br><span class="line">	Keys:    bson.M&#123;<span class="string">&quot;id&quot;</span>: <span class="number">1</span>&#125;,</span><br><span class="line">	Options: options.Index().SetUnique(<span class="literal">true</span>),</span><br><span class="line">&#125;)</span><br><span class="line">fmt.Println(indexRes)</span><br></pre></td></tr></table></figure>
+
+<h3 id="MongoDB存储数据"><a href="#MongoDB存储数据" class="headerlink" title="MongoDB存储数据"></a>MongoDB存储数据</h3><p>由于MongoDB中的<code>_id</code>字段不是自增并且是一个<strong>12字节</strong>的切片，因此不能直接使用这个字段作为主键</p>
+<p>主键的可选方案：</p>
+<ul>
+<li><strong>将整个id修改为string类型</strong></li>
+<li><strong>使用ID生成策略</strong>，例如<strong>雪花算法</strong><ul>
+<li><strong>1比特保留位</strong></li>
+<li><strong>41比特时间戳</strong></li>
+<li><strong>10比特机器位</strong>，一般叫做<code>Worker ID</code></li>
+<li><strong>12比特自增序号</strong></li>
+<li><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410031541579.png" alt="image-20241003154159484"></li>
+</ul>
+</li>
+<li><strong>使用GUID</strong></li>
+<li><strong>定义一个新的接口</strong>，但这样就失去了DAO层的统一接口</li>
+</ul>
+<p><strong>⚠️：在MongoDB中，尽量使用衍生类型而不是嵌套结构体。因为嵌套结构体中子结构体的字段标签在操作过程中无法正常生效</strong></p>
+<h2 id="利用OSS来存储数据"><a href="#利用OSS来存储数据" class="headerlink" title="利用OSS来存储数据"></a>利用OSS来存储数据</h2><blockquote>
+<p>利用OSS存储线上数据，而后直接通过CDN加速访问</p>
+</blockquote>
+<p>OSS（Object Storage Service）是指兑现存储，<strong>被大量用于存储文件、流媒体、图片等</strong></p>
+<p>OSS中的两个核心概念：</p>
+<ul>
+<li><strong>Bucket</strong>：逻辑上的分组关系，例如某个业务使用一个桶，另一个业务使用另外一个桶</li>
+<li><strong>Object</strong>：对象，也就是需要存储的东西</li>
+</ul>
+<p>ACL（Access Control List）：权限控制方案</p>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410041010143.png" alt="image-20241004101033272"></p>
+<p>OSS通常和CDN结合在一起使用，<strong>即在OSS上存储的数据，可以通过CDN来访问</strong></p>
+<p>一种很常见的性能和可用性优化手段，就是使用<strong>OSS和CDN来存储网站的静态资源</strong>，此时OSS被当作CDN的一个回源站点</p>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410041013265.png" alt="image-20241004101307223"></p>
+<h2 id="查询接口与缓存"><a href="#查询接口与缓存" class="headerlink" title="查询接口与缓存"></a>查询接口与缓存</h2><p>在实现查询文章功能过程中，需要从不同用户角度出发进行思考</p>
+<ul>
+<li>对于创作者来说，需要查询自己的<strong>文章列表</strong>以及<strong>某一篇文章的详细内容</strong>，分别对应着两个接口<ul>
+<li>列表接口</li>
+<li>详情接口</li>
+</ul>
+</li>
+<li>对于读者，他能够<strong>搜索某篇文章</strong>、<strong>浏览推荐文章列表</strong>、<strong>阅读文章的具体内容</strong>。由此可见，需要提供以下接口<ul>
+<li>搜索接口</li>
+<li>推荐接口</li>
+<li>阅读文章接口</li>
+</ul>
+</li>
+</ul>
+<p>目前仅实现创作者的<strong>列表接口和详情接口</strong>，以及读者的<strong>阅读文章接口</strong></p>
+<h3 id="列表接口"><a href="#列表接口" class="headerlink" title="列表接口"></a>列表接口</h3><h4 id="需求分析-1"><a href="#需求分析-1" class="headerlink" title="需求分析"></a>需求分析</h4><p>参考掘金的列表展示：</p>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410061411490.png" alt="image-20241006141112588"></p>
+<p>可以发现，在列表中展示的文章对象有如下特征：</p>
+<ul>
+<li>标题</li>
+<li>创建时间</li>
+<li>简介</li>
+<li>…</li>
+</ul>
+<p>根据这些特征我们就能定义出与前端相对应的<code>ArticleVO</code></p>
+<p>另一个值得注意的点是，<strong>掘金在列表中展示的文章只有一小部分，当页面下滑时才会加载更多的文章</strong>，这就相当于一个<strong>分页查询</strong>操作</p>
+<h4 id="分页形态"><a href="#分页形态" class="headerlink" title="分页形态"></a>分页形态</h4><p><strong>分页的核心目标就是避免一次操作太多数据，引发性能问题</strong>。况且，列表页在展示的时候，也不许那么多的内容😏</p>
+<p>分页接口一般有三种定义形式：</p>
+<ul>
+<li><strong>直接定义<code>Offset</code>和<code>Limit</code>字段</strong></li>
+<li><strong>直接定义一个<code>Page</code>字段，并约定好Page的大小</strong></li>
+<li><strong>直接定义一个<code>Cursor</code>字段</strong></li>
+</ul>
+<img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410061421861.png" alt="image-20241006142108823" style="zoom: 50%;" />
+
+<h3 id="缓存设计"><a href="#缓存设计" class="headerlink" title="缓存设计"></a>缓存设计</h3><blockquote>
+<p>缓存第一页分页</p>
+</blockquote>
+<p>大部分情况下，不会对分页结果进行缓存，<strong>因为如果数据的筛选条件、排序条件、分页条件、分页的偏移量和数据量中的任何一个发生了变化，缓存就很难使用了</strong></p>
+<p>但可以只<strong>缓存第一页</strong>，毕竟大部分用户只看列表的第一页</p>
+<p>有了缓存之后，<strong>每次进行更新操作都要将缓存删除，防止缓存不一致问题</strong></p>
+<blockquote>
+<p>业务相关的预加载</p>
+</blockquote>
+<p><strong>预加载本质上就是预判用户将要读取的内容，提前将内容存入缓存中</strong></p>
+<p>而且，因为是预测性质的，所以过期时间设置得很短</p>
+<p><img src="https://raw.githubusercontent.com/lyydsheep/pic/main/202410061512142.png" alt="image-20241006151243081"></p>
+<blockquote>
+<p>不缓存大文档（调优😂）</p>
+</blockquote>
+<p>可以考虑在Redis内存消耗和缓存性能之间做一个权衡</p>
+<p>也就是说，并不是所有的值都需要缓存，<strong>有一些很占用内存空间的文章就不必缓存</strong></p>
+<h4 id="缓存过期时间"><a href="#缓存过期时间" class="headerlink" title="缓存过期时间"></a>缓存过期时间</h4><p>缓存的过期时间和缓存命中率有关，一般情况下，<strong>过期时间越长，命中率越高，但数据一致性会变差；过期时间越短，命中率越低，但数据一致性会更好</strong></p>
+<ul>
+<li>业务相关的缓存预加载，过期时间要短</li>
+<li>根据用户身份按权给予不同的缓存时间</li>
+</ul>
+<h4 id="淘汰策略"><a href="#淘汰策略" class="headerlink" title="淘汰策略"></a>淘汰策略</h4><p>淘汰策略是指在缓存内存不够用的情况下，淘汰某一部分数据时的计划</p>
+<p>常规方案就是<strong>LRU和LFU</strong></p>
+<p>还有一些方案：</p>
+<ul>
+<li>优先淘汰普通创作者的数据，留下大v的数据</li>
+<li>优先淘汰大对象，释放出更多的内存空间</li>
+<li>优先淘汰小对象，相比于大对象，小对象在从数据库（或OSS）中获取更加迅速</li>
+</ul>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li>使用<code>wrapbodyandtoken</code>统一处理Body和Token中的数据</li>
+<li>考虑到中文字符由多个字节组成，在处理包含中文的字符串时，应实现将其转为<code>[]rune</code>再进行<code>len()</code>操作</li>
+<li>需要将存储对象转换为<code>json</code>格式后才能存入Redis中，否则会报错</li>
+</ul>
+
+    </div>
+  </div>
+
+  
+    
+  <div class="sea-prev-next-wrapper">
+    
+      <div class="prev">
+        <span><</span>
+        <a class="link" href="/2024/12/27/%E5%88%86%E5%B8%83%E5%BC%8F%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/">
+          
+        </a>
+      </div>
+    
+    
+      <div class="next">
+        <a class="link" href="/2024/12/27/%E5%AE%9A%E6%97%B6%E5%BE%AE%E6%9C%8D%E5%8A%A1/">
+          
+        </a>
+        <span>></span>
+      </div>
+    
+  </div>
+
+  
+</article>
+
+
+  </main>
+  <footer id="sea-footer-container">
+  <div class="sea-footer-row">
+    <div class="sea-footer-menu-link">
+      
+    </div>
+  </div>
+  
+  
+  <div class="sea-footer-row">
+    <div class="sea-footer-copyright">
+      <span>©</span>
+      
+        2025
+      
+      <span>·</span>
+      John Doe
+    </div>
+    <span class="split-line">|</span>
+    <div class="sea-footer-theme-by">
+      Theme by <a class="theme" href="https://github.com/hai-zou/hexo-theme-sea" target="_blank">Sea</a>
+    </div>
+  </div>
+</footer>
+
+  
+<script src="/js/main.js"></script>
+
+
+<script src="/js/theme.js"></script>
+
+</body>
+</html>
