@@ -1,0 +1,3 @@
+[submodule "sea"]
+    path = theme/sea
+    url = git://github.com/hai-zou/hexo-theme-sea
