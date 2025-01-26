@@ -2,9 +2,9 @@
 title: MySQL事务学习
 publish: true
 description: 记录一些有关MySQL事务的知识点
-date: 2024-09-23 
-tag: MySQL
-sticky: 2
+date: 2024-09-23
+tags:
+  - MySQL
 ---
 
 

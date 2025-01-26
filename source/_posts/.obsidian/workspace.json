@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Go/阅读、点赞、收藏功能.md",
+                "file": "传输层知识点.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "阅读、点赞、收藏功能"
+              "title": "传输层知识点"
             }
           }
         ]
@@ -164,6 +164,12 @@
   },
   "active": "79592f3cf391e8aa",
   "lastOpenFiles": [
+    "网络层知识点.md",
+    "网络代理.md",
+    "MySQL/MySQL事务学习.md",
+    "Redis/Redis对象.md",
+    "发帖功能实现.md",
+    "Go/阅读、点赞、收藏功能.md",
     "Go/榜单模型与分布式任务调度.md",
     "Go/接入配置模块.md",
     "Go/接入日志模块.md",
@@ -180,15 +186,9 @@
     "MySQL/MySQL索引学习.md",
     "MySQL/MySQL实战45讲.md",
     "MySQL/MySQL日志学习.md",
-    "MySQL/MySQL事务学习.md",
     "Redis/Redis运行原理.md",
     "Redis/Redis持久化.md",
-    "Redis/Redis对象.md",
     "Redis/Redis场景应用.md",
-    "他们眼中的简历.md",
-    "Sync.md",
-    "style.md",
-    "component.md",
-    "《设计模式之美》阅读笔记.md"
+    "他们眼中的简历.md"
   ]
 }

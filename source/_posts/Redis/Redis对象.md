@@ -2,10 +2,9 @@
 title: Redis对象
 publish: true
 description: 记录Redis对象知识点
-tag: 
-- Redis
-- 数据结构
-sticky: 2
+tags:
+  - Redis
+  - 数据结构
 ---
 
 # Redis对象
