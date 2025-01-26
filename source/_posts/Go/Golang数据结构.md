@@ -3,6 +3,7 @@ description: 记录Go数据结构相关知识
 tags:
   - Go
 date: 2024-12-12
+title: Go书籍结构
 ---
 
 

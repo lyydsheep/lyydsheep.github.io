@@ -1,7 +1,6 @@
 ---
 title: 换取Mac OS
-publish: false
-
+published: "false"
 ---
 
 ## 大纲

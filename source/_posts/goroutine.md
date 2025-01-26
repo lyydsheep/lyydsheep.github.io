@@ -3,8 +3,8 @@ title: goroutine、channel
 publish: true
 description: 记录一些有关goroutine的知识点
 date: 2024-09-27
-tag: Golang
-sticky: 2
+tags:
+  - Golang
 ---
 
 # goroutine

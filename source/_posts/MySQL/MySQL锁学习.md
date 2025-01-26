@@ -1,9 +1,9 @@
 ---
 title: MySQL锁学习
-publish: true
 description: 记录一些有关MySQL锁的知识点
-date: 2024-09-27 
-tag: MySQL
+date: 2024-09-27
+tags:
+  - MySQL
 ---
 
 # 锁

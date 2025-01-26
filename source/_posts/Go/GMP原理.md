@@ -1,3 +1,11 @@
+---
+date: 2024-10-10
+title: GMP
+tags:
+  - Go
+  - Golang
+---
+
 [Golang深入理解GPM模型](https://www.bilibili.com/video/BV19r4y1w7Nx/?spm_id_from=333.1387.homepage.video_card.click)学习笔记
 
 协程调度器的核心作用就是将协程关联到内核线程，内核线程无需切换就能执行用户态中的不同功能，提高了并发度

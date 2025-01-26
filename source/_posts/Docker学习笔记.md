@@ -1,7 +1,9 @@
 ---
 tags:
-- Docker
+  - Docker
 description: 记录有关Docker的一些知识点
+date: 2024-11-11
+title: Docker学习笔记
 ---
 
 # Docker学习笔记

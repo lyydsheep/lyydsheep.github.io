@@ -1,0 +1,194 @@
+{
+  "main": {
+    "id": "86718ca1828bbd5f",
+    "type": "split",
+    "children": [
+      {
+        "id": "07347128d99085b9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "79592f3cf391e8aa",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Go/阅读、点赞、收藏功能.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "阅读、点赞、收藏功能"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "28bbac52f276dc56",
+    "type": "split",
+    "children": [
+      {
+        "id": "71341416f9bb8d91",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "589866a9f9787f81",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "cb4e9918e9a2214f",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "677c5e21840cb221",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "ff67b36e0c8eeefc",
+    "type": "split",
+    "children": [
+      {
+        "id": "a1c2c88b565b8f65",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "101e35cc5b0446ff",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Go/阅读、点赞、收藏功能.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for 阅读、点赞、收藏功能"
+            }
+          },
+          {
+            "id": "86bfa6b27280f9c3",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Go/阅读、点赞、收藏功能.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from 阅读、点赞、收藏功能"
+            }
+          },
+          {
+            "id": "90a0edf0b623ff71",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "f51be59d3aaf70b6",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Go/阅读、点赞、收藏功能.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of 阅读、点赞、收藏功能"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "79592f3cf391e8aa",
+  "lastOpenFiles": [
+    "Go/榜单模型与分布式任务调度.md",
+    "Go/接入配置模块.md",
+    "Go/接入日志模块.md",
+    "Go/Go电商实战笔记.md",
+    "Go/Golang数据结构.md",
+    "Go/Go embed使用.md",
+    "Go/GMP原理.md",
+    "Go/GC.md",
+    "interview experience/其他.md",
+    "interview experience/阿里巴巴.md",
+    "interview experience/字节跳动.md",
+    "MySQL/MySQL锁学习.md",
+    "MySQL/MySQL连接池优化.md",
+    "MySQL/MySQL索引学习.md",
+    "MySQL/MySQL实战45讲.md",
+    "MySQL/MySQL日志学习.md",
+    "MySQL/MySQL事务学习.md",
+    "Redis/Redis运行原理.md",
+    "Redis/Redis持久化.md",
+    "Redis/Redis对象.md",
+    "Redis/Redis场景应用.md",
+    "他们眼中的简历.md",
+    "Sync.md",
+    "style.md",
+    "component.md",
+    "《设计模式之美》阅读笔记.md"
+  ]
+}

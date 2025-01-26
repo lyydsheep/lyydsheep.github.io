@@ -1,15 +1,9 @@
 ---
 title: 记录使用本地缓存代替Redis
-#sticky: 999
 description: 记录抽象接口思路
-#descriptionHTML: 
-tag:
- - Golang
-#top: 1
-sidebar: true
-#categories: [Golang]
-readingTime: true
-#recommend: 3
+tags:
+  - Golang
+date: 2024-06-10
 ---
 
 # 使用本地缓存代替Redis

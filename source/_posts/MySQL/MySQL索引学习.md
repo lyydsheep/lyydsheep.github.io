@@ -1,7 +1,7 @@
 ---
 publish: true
-tag: MySQL
-sticky: 2
+tags:
+  - MySQL
 date: 2024-09-19 18:29:00
 ---
 

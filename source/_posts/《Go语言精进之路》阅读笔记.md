@@ -1,7 +1,9 @@
 ---
 title: 《Go语言精进之路》阅读笔记
 description: 记录《Go语言精进之路》一些有意思的知识点
-tag: Go
+tags:
+  - Go
+date: 2024-09-23
 ---
 
 # 《Go语言精进之路》阅读笔记

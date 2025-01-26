@@ -1,8 +1,9 @@
 ---
 description: 记录Go整洁开发的一些技巧
 tags:
-- Go
-- 项目
+  - Go
+  - 项目
+title: Go电商实战
 ---
 
 
