@@ -1,0 +1,4 @@
+articles:
+  path: 'articles' # 路由
+  per_page: 10 # 分页数
+  order_by: -date # 文章排序
