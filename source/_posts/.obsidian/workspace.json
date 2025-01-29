@@ -1,53 +1,110 @@
 {
   "main": {
-    "id": "86718ca1828bbd5f",
+    "id": "bf4b36affd0fb6e1",
     "type": "split",
     "children": [
       {
-        "id": "07347128d99085b9",
+        "id": "a5acb13800e7f8f2",
         "type": "tabs",
         "children": [
           {
-            "id": "79592f3cf391e8aa",
+            "id": "bd89d7293ad15f1c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "传输层知识点.md",
+                "file": "interview experience/其他.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "传输层知识点"
+              "title": "其他"
+            }
+          },
+          {
+            "id": "5214323b79795213",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "interview experience/阿里巴巴.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "阿里巴巴"
+            }
+          },
+          {
+            "id": "5faae6c37556a2b0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "他们眼中的简历.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "他们眼中的简历"
+            }
+          },
+          {
+            "id": "c57e8cf670518cd7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "他们眼中的简历.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "他们眼中的简历"
+            }
+          },
+          {
+            "id": "73c7511efd6be1ec",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Asyncflow/草稿.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "草稿"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "28bbac52f276dc56",
+    "id": "bf28234530d9aecf",
     "type": "split",
     "children": [
       {
-        "id": "71341416f9bb8d91",
+        "id": "3f537dd565ffdd47",
         "type": "tabs",
         "children": [
           {
-            "id": "589866a9f9787f81",
+            "id": "a8d35f83d0d97572",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "byModifiedTime"
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
             }
           },
           {
-            "id": "cb4e9918e9a2214f",
+            "id": "86af3e3fcbce633f",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -64,7 +121,7 @@
             }
           },
           {
-            "id": "677c5e21840cb221",
+            "id": "52b9aefeb040e01c",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -77,23 +134,23 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
-    "id": "ff67b36e0c8eeefc",
+    "id": "78a40b77b42d745f",
     "type": "split",
     "children": [
       {
-        "id": "a1c2c88b565b8f65",
+        "id": "31c706db3657979a",
         "type": "tabs",
         "children": [
           {
-            "id": "101e35cc5b0446ff",
+            "id": "eb1c80c9ce3cb989",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Go/阅读、点赞、收藏功能.md",
+                "file": "MySQL/MySQL实战45讲.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,25 +160,24 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 阅读、点赞、收藏功能"
+              "title": "Backlinks for MySQL实战45讲"
             }
           },
           {
-            "id": "86bfa6b27280f9c3",
+            "id": "c7e306627252de3d",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Go/阅读、点赞、收藏功能.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from 阅读、点赞、收藏功能"
+              "title": "Outgoing links"
             }
           },
           {
-            "id": "90a0edf0b623ff71",
+            "id": "949834aa4daee01f",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -134,15 +190,13 @@
             }
           },
           {
-            "id": "f51be59d3aaf70b6",
+            "id": "69d71acd9c8d1641",
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Go/阅读、点赞、收藏功能.md"
-              },
+              "state": {},
               "icon": "lucide-list",
-              "title": "Outline of 阅读、点赞、收藏功能"
+              "title": "Outline"
             }
           }
         ]
@@ -159,36 +213,43 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "79592f3cf391e8aa",
+  "active": "5faae6c37556a2b0",
   "lastOpenFiles": [
-    "网络层知识点.md",
-    "网络代理.md",
-    "MySQL/MySQL事务学习.md",
-    "Redis/Redis对象.md",
-    "发帖功能实现.md",
-    "Go/阅读、点赞、收藏功能.md",
-    "Go/榜单模型与分布式任务调度.md",
-    "Go/接入配置模块.md",
-    "Go/接入日志模块.md",
-    "Go/Go电商实战笔记.md",
-    "Go/Golang数据结构.md",
-    "Go/Go embed使用.md",
-    "Go/GMP原理.md",
-    "Go/GC.md",
-    "interview experience/其他.md",
-    "interview experience/阿里巴巴.md",
-    "interview experience/字节跳动.md",
-    "MySQL/MySQL锁学习.md",
-    "MySQL/MySQL连接池优化.md",
-    "MySQL/MySQL索引学习.md",
     "MySQL/MySQL实战45讲.md",
-    "MySQL/MySQL日志学习.md",
-    "Redis/Redis运行原理.md",
-    "Redis/Redis持久化.md",
+    "传输层知识点.md",
+    "Pasted image 20250127224009.png",
+    "template.md",
+    "interview experience/阿里巴巴.md",
+    "interview experience/其他.md",
+    "interview experience/字节跳动.md",
+    "Asyncflow/草稿.md",
+    "Kafka实践.md",
+    "他们眼中的简历.md",
+    "定时微服务.md",
+    "Go/接入配置模块.md",
+    "Go/榜单模型与分布式任务调度.md",
+    "Go/Golang数据结构.md",
     "Redis/Redis场景应用.md",
-    "他们眼中的简历.md"
+    "Go",
+    "MySQL/MySQL锁学习.md",
+    "Redis",
+    "MySQL/MySQL事务学习.md",
+    "MySQL",
+    "Kafka理论知识.md",
+    "Excalidraw/Drawing 2024-12-17 15.07.21.excalidraw.md",
+    "Go/Go电商实战笔记.md",
+    "Go/GMP原理.md",
+    "设计模式.md",
+    "Go/GC.md",
+    "Asyncflow",
+    "MySQL/MySQL连接池优化.md",
+    "理睬.md",
+    "Go/接入日志模块.md",
+    "Excalidraw",
+    "Untitled.canvas"
   ]
 }

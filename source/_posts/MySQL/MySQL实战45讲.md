@@ -1,5 +1,5 @@
 ---
-date: 2025-01-24
+date: 2025-01-27
 ---
 
 ## 01
@@ -39,3 +39,9 @@ date: 2025-01-24
 
 ## 09
 - 对于写多读少的场景，页面在写完后马上访问的概率比较小，此时change buffer的效果最好。例如：账单类、日志类系统
+
+## 10
+- `show index form tableNmae`命令，可以查看索引的基数
+- `analyze table tableName` 命令，可以原来重新统计索引信息
+- 使用`force index`强制使用索引
+![image.png](https://raw.githubusercontent.com/lyydsheep/pic/main/20250127224059.png)
