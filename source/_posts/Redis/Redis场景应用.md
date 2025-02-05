@@ -2,6 +2,7 @@
 title: Redis场景应用
 publish: true
 description: 记录Redis场景应用知识点
+date: 2024-04-10
 ---
 
 # Redis场景应用

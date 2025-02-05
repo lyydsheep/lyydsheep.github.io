@@ -2,8 +2,9 @@
 title: Redis运行原理
 publish: true
 description: 记录Redis运行原理知识
-tag:
-- Redis
+tags:
+  - Redis
+date: 2024-06-06
 ---
 
 

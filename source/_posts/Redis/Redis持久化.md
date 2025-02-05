@@ -2,6 +2,7 @@
 title: Redis持久化
 publish: true
 description: 记录Redis持久化知识点
+date: 2024-06-19
 ---
 
 

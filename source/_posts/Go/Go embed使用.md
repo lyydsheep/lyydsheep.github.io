@@ -3,6 +3,7 @@ description: 记录go:embed的一些使用方法
 tags:
   - Go
 title: Go embed
+date: 2024-12-29
 ---
 
 

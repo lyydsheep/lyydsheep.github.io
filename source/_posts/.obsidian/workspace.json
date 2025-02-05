@@ -22,34 +22,21 @@
             }
           },
           {
-            "id": "c57e8cf670518cd7",
+            "id": "03101316c2dcd31c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "他们眼中的简历.md",
+                "file": "interview experience/记录一些琐碎.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "他们眼中的简历"
-            }
-          },
-          {
-            "id": "73c7511efd6be1ec",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Asyncflow/草稿.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "草稿"
+              "title": "记录一些琐碎"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -189,39 +176,40 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "bd89d7293ad15f1c",
+  "active": "03101316c2dcd31c",
   "lastOpenFiles": [
-    "interview experience/其他.md",
-    "Go/Go pprof 性能排查调优.md",
-    "Go/阅读、点赞、收藏功能.md",
-    "MySQL/MySQL实战45讲.md",
-    "MySQL/MySQL事务学习.md",
-    "Make命令使用.md",
-    "传输层知识点.md",
-    "他们眼中的简历.md",
-    "Pasted image 20250127224009.png",
-    "template.md",
-    "interview experience/阿里巴巴.md",
+    "interview experience/腾讯.md",
+    "interview experience/记录一些琐碎.md",
     "interview experience/字节跳动.md",
+    "MySQL 连接池爆满问题.md",
+    "interview experience/腾讯",
+    "Go/Go pprof 性能排查调优.md",
+    "他们眼中的简历.md",
+    "goroutine.md",
+    "style.md",
+    "component.md",
+    "异步框架.md",
+    "Go/阅读、点赞、收藏功能.md",
     "Asyncflow/草稿.md",
-    "Kafka实践.md",
-    "定时微服务.md",
-    "Go/接入配置模块.md",
     "Go/榜单模型与分布式任务调度.md",
-    "Go/Golang数据结构.md",
+    "Go/Go电商实战笔记.md",
+    "Go/Go embed使用.md",
+    "Redis/Redis持久化.md",
+    "Redis/Redis对象.md",
+    "Redis/Redis运行原理.md",
     "Redis/Redis场景应用.md",
+    "interview experience/其他.md",
+    "interview experience/阿里巴巴.md",
+    "分布式理论基础.md",
+    "优质开源软件合集.md",
+    "短链系统.md",
+    "more.md",
+    "定时微服务.md",
+    "Pasted image 20250127224009.png",
     "Go",
-    "MySQL/MySQL锁学习.md",
     "Redis",
     "MySQL",
-    "Kafka理论知识.md",
-    "Excalidraw/Drawing 2024-12-17 15.07.21.excalidraw.md",
-    "Go/Go电商实战笔记.md",
-    "Go/GMP原理.md",
-    "设计模式.md",
-    "Go/GC.md",
     "Asyncflow",
-    "MySQL/MySQL连接池优化.md",
     "Excalidraw",
     "Untitled.canvas"
   ]
