@@ -1,7 +1,8 @@
 ---
 date: 2025-02-04
 title: MySQL 连接池爆满问题
-tags:
+tags: 
+published: "false"
 ---
 ## Gorm 连接池常见参数
 - `MaxIdleConns`：最大空闲连接数，即数据库连接池中最多存放多少连接
