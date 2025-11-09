@@ -1,5 +1,5 @@
 ---
-date: 2025-10-18
+date: 2025-11-09
 title: k8s
 ---
 
@@ -305,6 +305,153 @@ Deployment 可以保证在升级时只有一定数量的 Pod 是 down，默认�
 
 Deployment 同时也可以确保只创建出超过期望数量的一定数量的 Pod，默认最多 25% 是 surge。
 
+
+
+**清理策略**
+
+可以通过设置`.spec.revisionHistoryLimit`项来指定 deployment 最多保留多少 revision 历史记录。默认的会保留所有的 revision；如果该项设置为 0，deployment 就不允许回退了。
+
+
+
+### DaemonSet
+DaemonSet 确保全部 Node 上运行一个 Pod 副本。当有 Node 加入集群时，也会为它们新增一个 Pod。当有 Node 从集群中移除时，这些 Pod 也会被回收。删除 DaemonSet 会将其创建的所有 Pod 删除。
+
+
+
+**典型用法**
+
++ 运行集群存储 Daemon
++ 在每个 Node 上运行日志收集 Daemon
++ 在每个 Node 上运行监控 Daemon
+
+
+
+### Job
+Job 负责批处理任务，即仅执行一次的任务，它保证批处理任务的一个或多个 Pod成功结束。
+
+**特殊说明**
+
++ spec.template 格式同 Pod
++ RestartPolicy 仅支持 Never 或 OnFailure
++ 单个 Pod 时，默认 Pod 成功运行后 Job 即结束
++ spec.completions 标志 Job 结束需要成功运行的 Pod 个数，默认为 1
++ spec.parallelism 表示并行运行的 Pod 个数，默认为 1
++ activeDeadlineSeconds 表示失败 Pod 的重试最大时间，超过这个时间不会继续重试
+
+
+
+### Cron Job
+管理基于时间的 Job，即
+
++ 在给定时间只运行一次
++ 周期性地在给定时间点运行
+
+**典型用法**
+
++ 在给定时间点调度 Job 运行
++ 创建周期性运行的 Job，例如：数据库备份、发送邮件
+
+**配置**
+
++ spec.schedule：调度，必需字段，指定任务运行周期，格式同 Cron
++ spec.jobTemplate：Job 模板
++ spec.startingDeadlineSeconds：启动 Job 的期限，如果因为任何原因错过了被调度的时间，那么错过执行时间的 Job 将被认为是失败的。如果没有指定，则没有期限
++ spec.concurrencyPolicy：并发策略，指定了如何处理被 Cron Job 创建的 Job 的并发执行
+    - Allow：允许并发运行 Job
+    - Forbid：禁止并发执行，如果前一个 Job 没有完成工作，则跳过下一个 Job
+    - Replace：取消当前运行的 Job，用一个新的来替换
++ spec.suspend：挂起，如果设置为 true，后续所有执行都会被挂起
++ spec.successfulJobsHistoryLimit 和 spec.failedJobsHistoryLimit：表示可以保留多少完成和失败的 Job，默认情况分别设置为 3 和 1。
+
+
+
+## Service
+**实现机制的迭代**
+
+在 v1.0 版本中，代理完全在 userspace，在 v1.1 版本中，新增了 iptables 代理，在 v1.8 版本中新增了 IP vs 代理。
+
++ userspace
+    - kube-proxy 监听 apiserver，如果Service 发生了变化，那么就修改本地的 iptables 规则。代理来自当前 Pod 的用户请求
+
+![](https://raw.githubusercontent.com/lyydsheep/pic/main/202511091519946.png)
+
++ iptables
+    - kube-proxy 只负责修改本地的 iptables，不再代理用户请求，通过 iptables 将对数据包进行 NAT 转换
+
+![](https://raw.githubusercontent.com/lyydsheep/pic/main/20251109152048.png)
+
++ ipvs
+
+![](https://raw.githubusercontent.com/lyydsheep/pic/main/20251109152123.png)
+
+```bash
+# 修改 kube-proxy 模式
+kubelet edit configmap kube-proxy -n kube-system 
+mode: ipvs 
+# 删除已有的pod，通过新的配置创建 Pod
+kubectl delete pod -n kube-system -l k8s-app=kube-proxy 
+```
+
+
+
+### 类型
++ ClusterIP：默认类型，自动分配一个仅 Cluster 内部访问的 VIP
++ NodePort：在 Cluster 基础上为 Service 绑定一个宿主机端口，外界就能通过<NodeIP>:NodePort 形式来访问该服务
++ LoadBalancer：在 NodePort 基础上，借助 cloud provider 创建一个外部 LB，并将请求转发到<NodeIP>:NodePort
++ ExternalName：把集群外部服务引入到集群内部来，在集群内部直接使用
+
+#### ClusterIP
+![](https://raw.githubusercontent.com/lyydsheep/pic/main/20251109152213.png)
+
+**svc dns 域名**
+
++ svcName.nsName.svc.domainName.
+    - domainName：默认为 cluster.local
+
+**svc.spec.internalTrafficPolicy**
+
++ Cluster：将流量路由到所有的端点
++ Local：只将流量路由到当前 Pod 所在的 Node上，如果 Node 上没有对应的 Pod，那么流量会被丢弃
+
+**svc.spec.externalTrafficPolicy**
+
++ Cluster：将流量路由到所有的端点
++ Local：只将流量路由到当前 Pod 所在的 Node上，如果 Node 上没有对应的 Pod，那么流量会被丢弃
+
+**svc.spec.sessionAffinity**
+
++ 会话亲和性，用于实现持久化链接
+
+![](https://raw.githubusercontent.com/lyydsheep/pic/main/20251109152500.png)
+
+#### NodePort
+![image.png](https://raw.githubusercontent.com/lyydsheep/pic/main/20251109152610.png)
+
+在 clusterIP 基础上，将 service 的端口和物理主机网卡进行绑定，将内部服务暴露给外部用户访问
+
+#### **ExternalName**
+将集群内部的请求映射到集群外部的域名（例如集群外的数据库），它是通过 DNS 别名（CNAME）来实现的
+
+### Endpoints
+Service 底层维护了一个同名的 Endpoints 对象，在 Endpoints 对象中存储了 Service 关联的 Pods 的IP 和端口信息。通过 Endpoints 中的信息，Service 就能通过适当的算法将请求转发到具体的 Pod
+
++ 有标签选择器
+    - 自动创建一个同名的 Endpoints 资源对象，存储标签选择器（当前命名空间）匹配的Pod信息
++ 没有定义标签选择器
+    - 不会创建同名的 Endpoints 资源对象，需要管理员手动创建并填写对应的端点信息
+
+![image.png](https://raw.githubusercontent.com/lyydsheep/pic/main/20251109152622.png)
+
+## 存储
+### 存储分类
++ 元数据
+    - configMap：用于保存配置数据（明文）
+    - Secret：用于保存敏感性数据（编码）
+    - Downward API：容器运行时从 kubernetes API 服务器获取有关它们自身的信息
++ 真实数据
+    - Volume：用于存储临时或持久性数据
+    - PersistentVolume：申请制的持久化存储
+
 ## 常用命令
 ```shell
 # 获取当前资源，pod
@@ -345,5 +492,30 @@ kubectl autoscale deployment nginx-deployment --min=10 --max=15 --cpu-percent=80
 kubectl set image deployment/name-deployment name-container=abc/app:v2.0
 
 kubectl rollout undo deployment/name-deployment
-```
 
+# 对 deployment 打补丁，设置滚动更新策略
+kubectl patch deployment demo-deployment -p '{"spec":{"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}}'
+
+# 暂停滚动更新
+kubectl rollout pause deploy demo-deployment
+
+# 恢复滚动更新
+kubectl rollout resume deploy demo-deployment
+
+# 查看滚动更新状态
+kubectl rollout status deployment/demo-deployment
+
+# 查看历史版本
+kubectl rollout history deployments demo-deployment
+
+# 回滚到指定的版本
+kubectl rollout undo deployment/demo-deployment --to-revision=2
+
+# 修改 kube-proxy 模式
+kubelet edit configmap kube-proxy -n kube-system 
+mode: ipvs 
+kubectl delete pod -n kube-system -l k8s-app=kube-proxy # 删除已有的pod，通过新的配置创建 Pod
+
+# while 循环
+while true; do curl myapp-clusterip.default.svc.cluster.local./hostname.html && sleep 11; done
+```
