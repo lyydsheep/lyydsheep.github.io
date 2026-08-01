@@ -1,0 +1,20 @@
+<article class="paper-page">
+  <header class="paper-page__header">
+    <span class="note-label">NOTE / {{ date(page.date, 'YYYY.MM.DD') }}</span>
+    <h1>{{ page.title }}</h1>
+    <p>{{ config.description }}</p>
+  </header>
+  <div class="paper-page__grid">
+    <aside class="paper-page__aside">
+      <span>ON THIS PAGE</span>
+      {% set tocContent = toc(page.content) %}
+      {% if tocContent %}{{ tocContent }}{% else %}<p>一篇正在展开的笔记。</p>{% endif %}
+      <a href="{{ url_for('/') }}">← BACK TO NOTES</a>
+    </aside>
+    <div class="paper-content">{{ render(page.content) }}</div>
+  </div>
+  <nav class="paper-page__neighbors">
+    {% if page.prev %}<a href="{{ url_for(page.prev.path) }}">← {{ page.prev.title }}</a>{% endif %}
+    {% if page.next %}<a href="{{ url_for(page.next.path) }}">{{ page.next.title }} →</a>{% endif %}
+  </nav>
+</article>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="{{ config.language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ page.description or config.description }}">
+  <title>{% if page.title %}{{ page.title }} | {{ config.title }}{% else %}{{ config.title }} | {{ config.subtitle }}{% endif %}</title>
+  <link rel="stylesheet" href="{{ url_for('/css/notebook.css') }}">
+</head>
+<body class="notebook-site">
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-logo" href="{{ url_for('/') }}" aria-label="{{ config.title }} home">
+        <span class="site-logo__mark">LY</span>
+        <span><strong>{{ config.title }}</strong><small>{{ config.subtitle }}</small></span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        {% for item in config.menu %}
+          <a href="{{ url_for(item.url) }}">{{ item.name }}</a>
+        {% endfor %}
+      </nav>
+      <span class="site-page">PAGE {{ page.current or '01' }} / NOTEBOOK</span>
+    </div>
+  </header>
+
+  <main class="site-main">{{ body }}</main>
+
+  <footer class="site-footer">
+    <span>© 2026 {{ config.author }}</span>
+    <span>made slowly / shared openly</span>
+    <div class="site-footer__links">
+      {% for item in config.socialLink %}<a href="{{ url_for(item.link) }}">{{ item.name }}</a>{% endfor %}
+    </div>
+  </footer>
+</body>
+</html>

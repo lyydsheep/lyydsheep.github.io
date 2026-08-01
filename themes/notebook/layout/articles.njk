@@ -1,0 +1,9 @@
+<section class="archive-page">
+  <header class="archive-page__header"><span class="note-label">INDEX / ALL NOTES</span><h1>Notebook archive.</h1><p>{{ site.posts.length }} notes, collected over time.</p></header>
+  <div class="archive-list">
+    {% for post in page.posts.toArray() %}
+      <a href="{{ url_for(post.path) }}" class="archive-row"><span>{{ date(post.date, 'YYYY.MM.DD') }}</span><strong>{{ post.title }}</strong><span>↗</span></a>
+    {% endfor %}
+  </div>
+  {% if page.prev or page.next %}<nav class="archive-pagination">{{ paginator({ prev_text: '← NEWER', next_text: 'OLDER →' }) }}</nav>{% endif %}
+</section>

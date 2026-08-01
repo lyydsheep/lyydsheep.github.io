@@ -1,0 +1,58 @@
+{% set posts = page.posts.toArray() %}
+<section class="notebook-cover">
+  <div class="notebook-cover__margin">20</div>
+  <div class="notebook-cover__content">
+    <p class="note-label">PERSONAL NOTEBOOK / 2026</p>
+    <h1>Make room<br><span>for wonder.</span></h1>
+    <p class="cover-intro">技术、工具、阅读和生活里的未完成思考。这里不追求结论，只记录那些值得留下的东西。</p>
+    <div class="cover-meta"><span>SHANGHAI / CN</span><span>OPEN SINCE 2019</span><span>✎</span></div>
+  </div>
+  <div class="notebook-cover__corner">LYYD'S<br>NOTEBOOK</div>
+</section>
+
+<section class="notebook-dashboard" id="writing">
+  <div class="section-heading"><span>01 / RECENT NOTES</span><a href="{{ url_for('/articles/') }}">VIEW ALL →</a></div>
+  {% if posts.length %}
+    {% set featured = posts[0] %}
+    <div class="note-feature">
+      <div class="note-feature__pin">FEATURED</div>
+      <div class="note-feature__body">
+        <span class="note-date">{{ date(featured.date, 'YYYY.MM.DD') }} / NOTE</span>
+        <h2><a href="{{ url_for(featured.path) }}">{{ featured.title }}</a></h2>
+        <p>{% if featured.excerpt %}{{ strip_html(featured.excerpt) }}{% else %}{{ strip_html(truncate(featured.content, {length: 220, separator: ' '})) }}{% endif %}</p>
+        <a class="read-link" href="{{ url_for(featured.path) }}">READ THE NOTE ↗</a>
+      </div>
+      <div class="note-feature__scribble">keep<br>looking<br>closer</div>
+    </div>
+
+    <div class="note-list">
+      {% for post in posts.slice(1, 7) %}
+        <a class="note-row" href="{{ url_for(post.path) }}">
+          <span class="note-row__number">{{ loop.index + 1 }}</span>
+          <span class="note-row__date">{{ date(post.date, 'MM.DD') }}</span>
+          <strong>{{ post.title }}</strong>
+          <span class="note-row__arrow">↗</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty-note">还没有公开的笔记。</p>
+  {% endif %}
+</section>
+
+<section class="notebook-lower">
+  <div class="paper-note paper-note--yellow">
+    <span class="note-label">CURRENTLY</span>
+    <h3>Building smaller tools.</h3>
+    <p>把复杂问题拆小一点，把注意力留给真正重要的部分。</p>
+  </div>
+  <div class="paper-note paper-note--blue">
+    <span class="note-label">INDEX</span>
+    <div class="index-links"><a href="{{ url_for('/archives/') }}">Archives ↗</a><a href="{{ url_for('/categories/') }}">Categories ↗</a><a href="{{ url_for('/tags/') }}">Tags ↗</a></div>
+  </div>
+  <div class="paper-note paper-note--red">
+    <span class="note-label">A SMALL RULE</span>
+    <p>写下能帮助未来的自己的东西。</p>
+    <span class="signature">— L</span>
+  </div>
+</section>

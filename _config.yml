@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: faiz
-subtitle: ''
-description: ''
+title: lyydsheep
+subtitle: notes from a curious builder
+description: 记录技术、工具、阅读与正在形成的想法。
 keywords:
-author: John Doe
-language: en
+author: lyydsheep
+language: zh-CN
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://lyydsheep.github.io
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -91,7 +91,21 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: sea
+theme: notebook
+
+menu:
+  - name: Notes
+    url: /articles/
+  - name: Archive
+    url: /archives/
+  - name: About
+    url: /about/
+
+socialLink:
+  - name: GitHub
+    link: https://github.com/lyydsheep
+  - name: RSS
+    link: /atom.xml
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
