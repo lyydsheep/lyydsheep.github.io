@@ -15,6 +15,24 @@ comments: false
   - **内容**：Agent 后端的 API、队列、worker、流式传输、结构化输出、session 与成本控制。
   - **阅读重点**：区分生产级必需的不变量与只在达到一定规模后才需要的架构。
 
+- [ ] [LLM-as-a-Verifier](https://github.com/llm-as-a-verifier/llm-as-a-verifier)
+  - **作者**：Jacky Kwok 等
+  - **加入日期**：2026-08-25
+  - **内容**：用细粒度 LLM 评分和概率枢轴锦标赛从多条 Agent 轨迹中选优。
+  - **阅读重点**：评估 test-time scaling 的质量收益、verifier 成本和 prefix cache 优化。
+
+- [ ] [How to Understand the Next Wave of AI Before Everyone Else](https://www.youtube.com/watch?v=4qjEgPojjzM)
+  - **作者**：Matthew Berman、Tibo
+  - **加入日期**：2026-08-25
+  - **内容**：关于 Codex、个人 Agent、开发工作流、递归自我改进和超高速推理的访谈。
+  - **阅读重点**：优先看 Agent、Codex 融合、递归改进与超高速推理章节。
+
+- [ ] [Headlong: a microharness for persistent agents](https://www.laude.org/updates/headlong-a-microharness-for-persistent-agents)
+  - **作者**：Laude Institute、MIT
+  - **加入日期**：2026-08-25
+  - **内容**：一个以 Bash、持续思考循环和 JSONL 轨迹 DAG 构建的 persistent-agent microharness。
+  - **阅读重点**：理解持续 Agent 的记忆压缩、自我修改、沙箱、成本和多用户隔离问题。
+
 - [ ] [从零“手搓”一个小型 LLM](https://km.woa.com/knowledge/10851/node/17)
   - **作者**：yongzheng、patrickguo
   - **加入日期**：2026-08-24
@@ -49,6 +67,14 @@ comments: false
   - **加入日期**：2026-08-24
   - **内容**：微信支付在 AI 开发、UAT、Harness Engineering、知识工程与组织协作上的实践。
   - **阅读重点**：理解确定性验证流程如何约束 Agent 的不确定性。
+
+## 模型训练
+
+- [ ] [Reinforcement Learning for LLMs](https://cameronrwolfe.substack.com/p/llm-rl)
+  - **作者**：Cameron R. Wolfe
+  - **加入日期**：2026-08-25
+  - **内容**：从 RL 基础、policy gradient、REINFORCE 和 PPO 到 GRPO 变体与 Agentic RL 的系统教程。
+  - **阅读重点**：理解 LLM 的 MDP/bandit 建模、reward/advantage 估计和 critic-free 算法的取舍。
 
 ## 后端工程
 
