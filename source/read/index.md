@@ -9,6 +9,16 @@ comments: false
 
 ## 2026 年 9 月
 
+<span id="2026-09-11"></span>
+
+- [高敏感性业务微信支付怎么做 AI 工程进化](https://km.woa.com/knowledge/10851/node/47)
+  - **作者**：anderszhou
+  - **加入日期**：2026-08-24
+  - **完成日期**：2026-09-11
+  - **分类**：Agent 与基础设施
+  - **内容**：微信支付在 AI 开发、UAT、Harness Engineering、知识工程与组织协作上的实践。
+  - **阅读重点**：理解确定性验证流程如何约束 Agent 的不确定性。
+
 <span id="2026-09-10"></span>
 
 - [从友商的八折优惠事故中，我们能学到什么？](https://km.woa.com/knowledge/10385/node/133)
